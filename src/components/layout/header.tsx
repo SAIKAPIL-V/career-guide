@@ -37,8 +37,12 @@ export default function Header() {
           ))}
         </nav>
         <div className="flex flex-1 items-center justify-end space-x-4">
-          <Button variant="ghost" className="hidden md:inline-flex">Log In</Button>
-          <Button className="hidden md:inline-flex">Sign Up</Button>
+          <Button variant="ghost" asChild className="hidden md:inline-flex">
+            <Link href="/login">Log In</Link>
+          </Button>
+          <Button asChild className="hidden md:inline-flex">
+            <Link href="/signup">Sign Up</Link>
+          </Button>
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" className="md:hidden" size="icon">
@@ -46,7 +50,7 @@ export default function Header() {
                 <span className="sr-only">Open menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="left" className="w-full max-w-sm">
+            <SheetContent side="left" className="w-full max-w-sm p-0">
               <div className="flex flex-col h-full">
                 <div className="flex items-center justify-between p-4 border-b">
                    <Link href="/" className="flex items-center space-x-2" onClick={() => setIsMobileMenuOpen(false)}>
@@ -71,8 +75,12 @@ export default function Header() {
                   ))}
                 </nav>
                 <div className="p-4 border-t space-y-2">
-                   <Button variant="outline" className="w-full">Log In</Button>
-                   <Button className="w-full">Sign Up</Button>
+                   <Button asChild variant="outline" className="w-full" onClick={() => setIsMobileMenuOpen(false)}>
+                    <Link href="/login">Log In</Link>
+                   </Button>
+                   <Button asChild className="w-full" onClick={() => setIsMobileMenuOpen(false)}>
+                    <Link href="/signup">Sign Up</Link>
+                   </Button>
                 </div>
               </div>
             </SheetContent>
