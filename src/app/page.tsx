@@ -10,6 +10,7 @@ import {
   ArrowRight,
   CalendarDays,
 } from 'lucide-react';
+import Link from 'next/link';
 
 export default function Home() {
   const howItWorks = [
@@ -116,9 +117,13 @@ export default function Home() {
           <p className="mt-4 text-lg opacity-90 max-w-2xl mx-auto">
             Take our free assessment today and get the clarity you need to make confident decisions about your future.
           </p>
-          <Button size="lg" variant="secondary" className="mt-8 text-lg font-bold group">
-            Start Your Free Assessment <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-          </Button>
+          <Link href="/assessment" legacyBehavior>
+            <Button asChild size="lg" variant="secondary" className="mt-8 text-lg font-bold group">
+              <a>
+                Start Your Free Assessment <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </a>
+            </Button>
+          </Link>
         </div>
       </section>
     </div>
