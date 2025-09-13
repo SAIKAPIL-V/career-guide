@@ -47,9 +47,11 @@ export default function Assessment12thPage() {
       if (currentQuestion < questions.length - 1) {
         setCurrentQuestion(currentQuestion + 1);
       } else {
+        // Store answers and redirect to the new dashboard
+        const finalAnswers = [...newAnswers, selectedOption]; // Include the last selected option
         localStorage.setItem('assessmentType', '12th');
-        localStorage.setItem('assessmentAnswers', JSON.stringify(newAnswers));
-        router.push('/assessment/results');
+        localStorage.setItem('assessmentAnswers', JSON.stringify(finalAnswers));
+        router.push('/dashboard');
       }
     }
   };
@@ -87,7 +89,7 @@ export default function Assessment12thPage() {
                 ))}
               </RadioGroup>
               <Button onClick={handleNext} disabled={!selectedOption} size="lg">
-                {currentQuestion < questions.length - 1 ? 'Next' : 'Finish Assessment'}
+                {currentQuestion < questions.length - 1 ? 'Next' : 'Finish & See Dashboard'}
               </Button>
             </div>
           </CardContent>
