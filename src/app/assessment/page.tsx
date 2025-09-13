@@ -21,29 +21,25 @@ export default function AssessmentPage() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <Link href="/assessment/10th" legacyBehavior>
-                <a className="group block text-center p-8 border rounded-lg hover:bg-primary/5 hover:border-primary transition-all duration-300">
-                  <h3 className="font-headline text-3xl font-bold">Class 10</h3>
-                  <p className="text-muted-foreground mt-2">
-                    Get guidance on choosing your stream (Arts, Science, Commerce, etc.).
-                  </p>
-                  <Button variant="link" className="mt-4 text-primary font-bold">
-                    Start Assessment
-                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </a>
+              <Link href="/assessment/10th" className="group block text-center p-8 border rounded-lg hover:bg-primary/5 hover:border-primary transition-all duration-300">
+                <h3 className="font-headline text-3xl font-bold">Class 10</h3>
+                <p className="text-muted-foreground mt-2">
+                  Get guidance on choosing your stream (Arts, Science, Commerce, etc.).
+                </p>
+                <Button variant="link" className="mt-4 text-primary font-bold">
+                  Start Assessment
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
               </Link>
-              <Link href="/assessment/12th" legacyBehavior>
-                <a className="group block text-center p-8 border rounded-lg hover:bg-primary/5 hover:border-primary transition-all duration-300">
-                  <h3 className="font-headline text-3xl font-bold">Class 12</h3>
-                  <p className="text-muted-foreground mt-2">
-                    Discover the best degree courses and career opportunities for you.
-                  </p>
-                  <Button variant="link" className="mt-4 text-primary font-bold">
-                    Start Assessment
-                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </a>
+              <Link href="/assessment/12th" className="group block text-center p-8 border rounded-lg hover:bg-primary/5 hover:border-primary transition-all duration-300">
+                <h3 className="font-headline text-3xl font-bold">Class 12</h3>
+                <p className="text-muted-foreground mt-2">
+                  Discover the best degree courses and career opportunities for you.
+                </p>
+                <Button variant="link" className="mt-4 text-primary font-bold">
+                  Start Assessment
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
               </Link>
             </div>
           </CardContent>
