@@ -122,15 +122,25 @@ export default function DashboardPage() {
         }
       }
 
-      // If no local answers and no saved data, show an error
+      // If no local answers and no saved data, redirect to assessment
+      if(!loading && !user) {
+        router.push('/assessment');
+        return;
+      }
+      
+      // If user is logged in but has no saved data, show an error
+      if (user) {
+        setError('No saved recommendations found. Please take an assessment to view your dashboard.');
+      }
+
       setLoading(false);
-      setError('No assessment found. Please take an assessment to view your dashboard.');
+
     };
 
     if (!authLoading) {
         fetchRecommendations();
     }
-  }, [user, authLoading]);
+  }, [user, authLoading, router, loading]);
 
   const handleSaveResults = async () => {
     if (!user || !results) return;
@@ -238,10 +248,10 @@ export default function DashboardPage() {
             Your Personalized Dashboard
           </h1>
           <p className="mt-2 text-lg text-muted-foreground">
-            Welcome! Here are the AI-powered insights based on your assessment.
+            {user ? `Welcome back, ${user.email}! ` : 'Welcome! '} Here are the AI-powered insights based on your assessment.
           </p>
         </div>
-         {user && results && (
+         {user && results && localStorage.getItem('assessmentAnswers') && (
             <Button onClick={handleSaveResults} disabled={isSaving}>
               {isSaving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
               Save to Profile
@@ -269,12 +279,19 @@ export default function DashboardPage() {
                 <Card className="shadow-lg animate-float-up" style={{animationDelay: '0.2s'}}>
                     <CardHeader>
                         <CardTitle className="text-primary text-2xl font-bold">Career Spotlight: {spotlight.title}</CardTitle>
-                        <CardDescription>{spotlight.description}</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
                         <div>
+                            <h4 className="font-semibold text-lg mb-2">Overview</h4>
+                             <ul className="list-disc list-inside text-muted-foreground space-y-1">
+                                {spotlight.description.split('. ').filter(s => s).map((sentence, index) => <li key={index}>{sentence}</li>)}
+                            </ul>
+                        </div>
+                        <div>
                             <h4 className="font-semibold text-lg mb-2">A Day in the Life</h4>
-                            <p className="text-muted-foreground">{spotlight.dayInTheLife}</p>
+                             <ul className="list-disc list-inside text-muted-foreground space-y-1">
+                                {spotlight.dayInTheLife.split('. ').filter(s => s).map((sentence, index) => <li key={index}>{sentence}</li>)}
+                            </ul>
                         </div>
                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
@@ -332,5 +349,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-
-    
