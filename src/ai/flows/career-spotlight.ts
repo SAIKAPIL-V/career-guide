@@ -8,7 +8,7 @@
  */
 
 import {ai} from '@/ai/genkit';
-import {z} from 'genkit/zod';
+import {z} from 'zod';
 
 const CareerSpotlightInputSchema = z.object({
   career: z.string().describe('The career path to generate a spotlight for.'),
