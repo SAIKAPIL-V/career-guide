@@ -8,7 +8,7 @@ import {
   CardDescription,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Loader2, CalendarCheck, Lightbulb, Briefcase, GraduationCap, LinkIcon } from 'lucide-react';
+import { Loader2, CalendarCheck, Lightbulb, Briefcase, GraduationCap, LinkIcon, Save } from 'lucide-react';
 import Link from 'next/link';
 
 import {
@@ -20,6 +20,11 @@ import {
   PersonalizedCourseRecommendationsOutput,
 } from '@/ai/flows/personalized-course-recommendations';
 import { careerSpotlight, CareerSpotlightOutput } from '@/ai/flows/career-spotlight';
+import { useAuth } from '@/context/auth-context';
+import { useRouter } from 'next/navigation';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
+import { useToast } from '@/hooks/use-toast';
 
 type ResultsData =
   | PersonalizedCareerRecommendationsOutput
@@ -48,63 +53,117 @@ export default function DashboardPage() {
   const [spotlight, setSpotlight] = useState<CareerSpotlightOutput | null>(null);
   const [assessmentType, setAssessmentType] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const { user, loading: authLoading } = useAuth();
+  const router = useRouter();
+  const { toast } = useToast();
 
   useEffect(() => {
-    const fetchRecommendations = async () => {
-      const storedAnswers = localStorage.getItem('assessmentAnswers');
-      const type = localStorage.getItem('assessmentType');
+    if (!authLoading && !user) {
+      router.push('/login');
+      return;
+    }
 
-      if (storedAnswers && type) {
-        setAssessmentType(type);
-        const parsedAnswers = JSON.parse(storedAnswers);
-
-        try {
-          let resultData: ResultsData;
-          if (type === '10th') {
-            resultData = await personalizedCourseRecommendations({
-              interests: parsedAnswers.join(', '),
-              strengths: 'Varies based on answers',
-              academicPerformance: 'Average',
-              careerAspirations: 'Not specified',
-            });
-          } else {
-            resultData = await personalizedCareerRecommendations({
-              interests: parsedAnswers.join(', '),
-              aptitude: 'Varies based on answers',
-              academicPerformance: 'Average',
-              location: 'India',
-            });
-          }
-          setResults(resultData);
-
-          // After getting results, fetch the career spotlight
-          let topRecommendation: string | undefined;
-          if ('recommendedStreams' in resultData) {
-            topRecommendation = resultData.recommendedStreams?.[0];
-          } else if ('careerRecommendations' in resultData) {
-            topRecommendation = resultData.careerRecommendations?.[0];
-          }
-
-          if (topRecommendation) {
-            const spotlightResult = await careerSpotlight({ career: topRecommendation });
-            setSpotlight(spotlightResult);
-          }
-        } catch (err) {
-          console.error('Failed to get recommendations:', err);
-          setError('Our AI is a bit busy right now. Please try again in a moment.');
-        } finally {
-          setLoading(false);
+    if (user) {
+        const fetchRecommendations = async () => {
+        // Try fetching saved results first
+        const userDocRef = doc(db, 'users', user.uid);
+        const userDoc = await getDoc(userDocRef);
+        if (userDoc.exists() && userDoc.data().recommendations) {
+            const savedData = userDoc.data();
+            setResults(savedData.recommendations);
+            setSpotlight(savedData.spotlight);
+            setAssessmentType(savedData.assessmentType);
+            setLoading(false);
+            return;
         }
-      } else {
-        setLoading(false);
-        setError('No assessment found. Please take an assessment to view your dashboard.');
-      }
-    };
 
-    fetchRecommendations();
-  }, []);
 
-  if (loading) {
+        const storedAnswers = localStorage.getItem('assessmentAnswers');
+        const type = localStorage.getItem('assessmentType');
+
+        if (storedAnswers && type) {
+            setAssessmentType(type);
+            const parsedAnswers = JSON.parse(storedAnswers);
+
+            try {
+            let resultData: ResultsData;
+            if (type === '10th') {
+                resultData = await personalizedCourseRecommendations({
+                interests: parsedAnswers.join(', '),
+                strengths: 'Varies based on answers',
+                academicPerformance: 'Average',
+                careerAspirations: 'Not specified',
+                });
+            } else {
+                resultData = await personalizedCareerRecommendations({
+                interests: parsedAnswers.join(', '),
+                aptitude: 'Varies based on answers',
+                academicPerformance: 'Average',
+                location: 'India',
+                });
+            }
+            setResults(resultData);
+
+            let topRecommendation: string | undefined;
+            if ('recommendedStreams' in resultData) {
+                topRecommendation = resultData.recommendedStreams?.[0];
+            } else if ('careerRecommendations' in resultData) {
+                topRecommendation = resultData.careerRecommendations?.[0];
+            }
+
+            if (topRecommendation) {
+                const spotlightResult = await careerSpotlight({ career: topRecommendation });
+                setSpotlight(spotlightResult);
+            }
+            } catch (err) {
+            console.error('Failed to get recommendations:', err);
+            setError('Our AI is a bit busy right now. Please try again in a moment.');
+            } finally {
+            setLoading(false);
+            }
+        } else {
+            setLoading(false);
+            setError('No assessment found. Please take an assessment to view your dashboard.');
+        }
+        };
+
+        fetchRecommendations();
+    }
+  }, [user, authLoading, router]);
+
+  const handleSaveResults = async () => {
+    if (!user || !results) return;
+    setIsSaving(true);
+    try {
+      const userDocRef = doc(db, 'users', user.uid);
+      await setDoc(userDocRef, {
+        email: user.email,
+        recommendations: results,
+        spotlight: spotlight,
+        assessmentType: assessmentType,
+      }, { merge: true });
+      localStorage.removeItem('assessmentAnswers');
+      localStorage.removeItem('assessmentType');
+      toast({
+        title: 'Results Saved!',
+        description: 'Your personalized recommendations have been saved to your profile.',
+      });
+    } catch (error) {
+      console.error("Error saving results: ", error);
+      toast({
+        variant: 'destructive',
+        title: 'Save Failed',
+        description: 'Could not save your results. Please try again.',
+      });
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+
+  if (loading || authLoading) {
     return (
       <div className="flex justify-center items-center min-h-[80vh]">
         <div className="text-center">
@@ -113,7 +172,7 @@ export default function DashboardPage() {
             Building Your Personalized Dashboard...
           </p>
           <p className="text-sm text-muted-foreground">
-            Our AI is crafting your future paths. This may take a moment.
+            This may take a moment.
           </p>
         </div>
       </div>
@@ -174,17 +233,24 @@ export default function DashboardPage() {
 
   return (
     <div className="container mx-auto px-4 py-12 lg:py-16 bg-background">
-      <div className="mb-12">
-        <h1 className="font-headline text-4xl md:text-5xl font-bold text-primary">
-          Your Personalized Dashboard
-        </h1>
-        <p className="mt-2 text-lg text-muted-foreground">
-          Welcome! Here are the AI-powered insights based on your Class {assessmentType} assessment.
-        </p>
+      <div className="flex justify-between items-start mb-12">
+        <div>
+          <h1 className="font-headline text-4xl md:text-5xl font-bold text-primary">
+            Your Personalized Dashboard
+          </h1>
+          <p className="mt-2 text-lg text-muted-foreground">
+            Welcome! Here are the AI-powered insights based on your assessment.
+          </p>
+        </div>
+         {results && (
+            <Button onClick={handleSaveResults} disabled={isSaving}>
+              {isSaving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
+              Save to Profile
+            </Button>
+          )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {/* Main Content: Rationale & Spotlight */}
         <div className="md:col-span-2 space-y-8">
             {results && 'rationale' in results && (
                 <Card className="shadow-lg animate-float-up">
@@ -228,7 +294,6 @@ export default function DashboardPage() {
             )}
         </div>
 
-        {/* Sidebar Content: Top Recs & Timeline */}
         <div className="space-y-8 animate-float-up" style={{animationDelay: '0.4s'}}>
             {renderTopRecs()}
             
