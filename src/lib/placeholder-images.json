@@ -1,3 +1,34 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-1",
+      "description": "A student contemplating their future career paths with illustrative icons around them.",
+      "imageUrl": "https://picsum.photos/seed/futurepath/1920/1080",
+      "imageHint": "student future"
+    },
+    {
+      "id": "hero-2",
+      "description": "A graduate tossing their cap in the air in front of a university building.",
+      "imageUrl": "https://picsum.photos/seed/graduation/1920/1080",
+      "imageHint": "graduation cap"
+    },
+    {
+      "id": "hero-3",
+      "description": "A diverse group of students collaborating and studying together on a college campus.",
+      "imageUrl": "https://picsum.photos/seed/studying/1920/1080",
+      "imageHint": "group study"
+    },
+    {
+      "id": "hero-4",
+      "description": "A map with pins showing locations of nearby colleges and universities.",
+      "imageUrl": "https://picsum.photos/seed/collegemap/1920/1080",
+      "imageHint": "college map"
+    },
+    {
+      "id": "hero-5",
+      "description": "A person using a laptop to take an online aptitude test for career guidance.",
+      "imageUrl": "https://picsum.photos/seed/onlinetest/1920/1080",
+      "imageHint": "online assessment"
+    }
+  ]
 }
