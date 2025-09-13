@@ -73,7 +73,7 @@ export default function LoginPage() {
           <CardFooter className="flex flex-col">
             <Button className="w-full" type="submit" disabled={loading}>
               {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Sign in
+              Log In
             </Button>
             <p className="mt-4 text-center text-sm text-muted-foreground">
               Don&apos;t have an account?{' '}
