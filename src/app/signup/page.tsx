@@ -2,12 +2,22 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
 export default function SignupPage() {
+  const router = useRouter();
+
+  const handleSignup = (event: React.FormEvent) => {
+    event.preventDefault();
+    // In a real application, you would handle user registration here.
+    // For now, we'll just redirect to the home page.
+    router.push('/');
+  };
+
   return (
     <div className="container mx-auto px-4 py-16 lg:py-24 flex items-center justify-center">
       <Card className="w-full max-w-md">
@@ -16,7 +26,7 @@ export default function SignupPage() {
           <CardDescription>Join to get personalized career guidance.</CardDescription>
         </CardHeader>
         <CardContent>
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSignup}>
             <div className="space-y-2">
               <Label htmlFor="name">Full Name</Label>
               <Input id="name" type="text" placeholder="Your Name" required />
