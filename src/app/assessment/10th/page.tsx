@@ -47,8 +47,7 @@ export default function Assessment10thPage() {
       if (currentQuestion < questions.length - 1) {
         setCurrentQuestion(currentQuestion + 1);
       } else {
-        // Navigate to results page (to be created)
-        console.log('Quiz finished:', newAnswers);
+        localStorage.setItem('assessmentAnswers', JSON.stringify(newAnswers));
         router.push('/assessment/results');
       }
     }

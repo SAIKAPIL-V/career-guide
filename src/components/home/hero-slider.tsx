@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
@@ -14,26 +15,31 @@ const slidesContent = [
     headline: 'Discover Your Perfect Career Path',
     description: 'Our AI-powered assessment helps you find the stream and career that best fits your personality and interests.',
     buttonText: 'Take the Test',
+    href: '/assessment',
   },
   {
     headline: 'Unlock Your Future with the Right Degree',
     description: 'Explore thousands of courses and find the one that opens doors to your dream job.',
     buttonText: 'Explore Courses',
+    href: '/courses',
   },
   {
     headline: 'Connect with Top Government Colleges',
     description: 'Find detailed information about government colleges near you and simplify your admission process.',
     buttonText: 'Find Colleges',
+    href: '/colleges',
   },
   {
     headline: 'Map Your Journey from Course to Career',
     description: 'Visualize your entire career trajectory, from your first class to your professional life.',
     buttonText: 'View Career Maps',
+    href: '/careers',
   },
   {
     headline: 'Stay Ahead with Important Updates',
     description: 'Never miss an application deadline, scholarship, or entrance exam with our timely notifications.',
     buttonText: 'Get Notified',
+    href: '/notifications',
   },
 ];
 
@@ -93,9 +99,11 @@ export default function HeroSlider() {
                 <p className="mt-4 text-lg md:text-xl max-w-2xl mx-auto opacity-90">
                   {slidesContent[index].description}
                 </p>
-                <Button size="lg" className="mt-8 text-lg font-bold group bg-primary hover:bg-primary/90">
-                  {slidesContent[index].buttonText}{' '}
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                <Button asChild size="lg" className="mt-8 text-lg font-bold group bg-primary hover:bg-primary/90">
+                  <Link href={slidesContent[index].href}>
+                    {slidesContent[index].buttonText}{' '}
+                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
                 </Button>
               </div>
             </div>
