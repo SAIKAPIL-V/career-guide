@@ -1,27 +1,43 @@
+'use client';
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Briefcase, DraftingCompass, Cpu, Factory } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Loader2, Sparkles, University, Briefcase, Rocket, Lightbulb, CheckCircle } from 'lucide-react';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import { careerRoadmap, CareerRoadmapOutput } from '@/ai/flows/career-roadmap';
+import { useToast } from '@/hooks/use-toast';
+
+type Stage = '10th Completed' | '12th Completed' | 'Degree Completed';
 
 export default function EngineeringCareersPage() {
-  const careerPaths = [
-    {
-      icon: <Cpu className="h-8 w-8 text-primary" />,
-      title: 'Software Engineering',
-      description: 'Design, develop, and maintain software systems. High demand in tech hubs.',
-      skills: ['Java, Python, C++', 'Data Structures', 'Algorithms'],
-    },
-    {
-      icon: <DraftingCompass className="h-8 w-8 text-primary" />,
-      title: 'Civil Engineering',
-      description: 'Plan, design, and oversee construction of infrastructure projects like roads, bridges, and buildings.',
-      skills: ['AutoCAD', 'Structural Analysis', 'Project Management'],
-    },
-    {
-      icon: <Factory className="h-8 w-8 text-primary" />,
-      title: 'Mechanical Engineering',
-      description: 'Involves the design, production, and operation of machinery.',
-      skills: ['Thermodynamics', 'CAD/CAM', 'Fluid Mechanics'],
-    },
-  ];
+  const [selectedStage, setSelectedStage] = useState<Stage | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [results, setResults] = useState<CareerRoadmapOutput | null>(null);
+  const { toast } = useToast();
+
+  const handleStageSelect = async (stage: Stage) => {
+    setSelectedStage(stage);
+    setLoading(true);
+    setResults(null);
+    try {
+      const resultData = await careerRoadmap({ careerField: 'Engineering', stage });
+      setResults(resultData);
+    } catch (error) {
+      console.error('AI call failed:', error);
+      toast({
+        variant: 'destructive',
+        title: 'AI Error',
+        description: 'Failed to get the roadmap. The AI might be busy. Please try again.',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="container mx-auto px-4 py-16 lg:py-24">
@@ -30,28 +46,83 @@ export default function EngineeringCareersPage() {
           Engineering & Technology Careers
         </h1>
         <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
-          Explore the vast world of engineering and find your place in building the future.
+          Explore your personalized roadmap for a future in engineering. Select your current educational stage to begin.
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {careerPaths.map((path) => (
-          <Card key={path.title} className="flex flex-col">
-            <CardHeader className="flex-row items-center gap-4">
-              {path.icon}
-              <CardTitle>{path.title}</CardTitle>
-            </CardHeader>
-            <CardContent className="flex-grow">
-              <p className="text-muted-foreground mb-4">{path.description}</p>
-              <h4 className="font-semibold mb-2">Key Skills:</h4>
-              <ul className="list-disc list-inside text-muted-foreground space-y-1">
-                {path.skills.map((skill) => (
-                  <li key={skill}>{skill}</li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+
+      <Card className="max-w-4xl mx-auto mb-12 shadow-lg">
+        <CardHeader>
+          <CardTitle className="text-center">What is your current educational stage?</CardTitle>
+        </CardHeader>
+        <CardContent className="flex justify-center gap-4">
+          {(['10th Completed', '12th Completed', 'Degree Completed'] as Stage[]).map((stage) => (
+            <Button
+              key={stage}
+              variant={selectedStage === stage ? 'default' : 'outline'}
+              onClick={() => handleStageSelect(stage)}
+              disabled={loading}
+            >
+              {stage}
+            </Button>
+          ))}
+        </CardContent>
+      </Card>
+
+      {loading && (
+        <div className="text-center">
+          <Loader2 className="h-12 w-12 animate-spin text-primary mx-auto" />
+          <p className="mt-4 text-lg text-muted-foreground">
+            Our AI is building your custom career roadmap...
+          </p>
+        </div>
+      )}
+
+      {results && (
+        <div className="max-w-4xl mx-auto animate-float-up">
+          <div className="text-center mb-8">
+            <h2 className="font-headline text-3xl font-bold">
+              Your AI-Generated Roadmap
+            </h2>
+             <p className="mt-2 text-muted-foreground">{results.introduction}</p>
+          </div>
+         
+          <Accordion type="single" collapsible className="w-full">
+            {results.recommendedPaths.map((path, index) => (
+              <AccordionItem value={`item-${index}`} key={index}>
+                <AccordionTrigger className="text-xl font-semibold hover:no-underline">
+                  <div className="flex items-center gap-3">
+                     <Sparkles className="h-6 w-6 text-primary" />
+                    {path.pathName}
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="pl-6 space-y-6">
+                  <RoadmapDetail title="Further Studies" icon={<GraduationCap />} items={path.furtherStudies} />
+                  <RoadmapDetail title="Job Opportunities" icon={<Briefcase />} items={path.jobOpportunities} />
+                  <RoadmapDetail title="Entrepreneurship Ideas" icon={<Rocket />} items={path.entrepreneurshipIdeas} />
+                  <RoadmapDetail title="Key Advantages" icon={<CheckCircle />} items={path.advantages} />
+                  <RoadmapDetail title="Recommended Govt. Colleges" icon={<University />} items={path.recommendedColleges} />
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
+      )}
     </div>
   );
+}
+
+function RoadmapDetail({ title, icon, items }: { title: string; icon: React.ReactNode; items: string[] }) {
+  if (!items || items.length === 0) return null;
+  return (
+    <div>
+        <h4 className="font-semibold text-lg mb-3 flex items-center gap-2 text-primary/90">
+            {icon} {title}
+        </h4>
+        <ul className="list-disc list-inside text-muted-foreground space-y-2 pl-4">
+            {items.map((item, idx) => (
+                <li key={idx}>{item}</li>
+            ))}
+        </ul>
+    </div>
+  )
 }
