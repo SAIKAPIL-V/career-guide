@@ -7,7 +7,7 @@ import Autoplay from 'embla-carousel-autoplay';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 const slidesContent = [
   {
@@ -42,6 +42,14 @@ export default function HeroSlider() {
     Autoplay({ delay: 4000, stopOnInteraction: false }),
   ]);
   const [activeIndex, setActiveIndex] = useState(0);
+
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
@@ -94,6 +102,26 @@ export default function HeroSlider() {
           </div>
         ))}
       </div>
+
+      <Button
+        onClick={scrollPrev}
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-10 h-12 w-12 rounded-full bg-white/20 border-white/30 text-white hover:bg-white/30"
+        variant="outline"
+        size="icon"
+        aria-label="Previous slide"
+      >
+        <ArrowLeft className="h-6 w-6" />
+      </Button>
+      <Button
+        onClick={scrollNext}
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-10 h-12 w-12 rounded-full bg-white/20 border-white/30 text-white hover:bg-white/30"
+        variant="outline"
+        size="icon"
+        aria-label="Next slide"
+      >
+        <ArrowRight className="h-6 w-6" />
+      </Button>
+
       <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex space-x-2">
         {slides.map((_, index) => (
           <button
