@@ -6,6 +6,7 @@ import { BookOpenCheck, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
+import { useRouter } from 'next/navigation';
 
 const navItems = [
   { label: 'Home', href: '/' },
@@ -16,16 +17,17 @@ const navItems = [
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const router = useRouter();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-20 items-center">
-        <div className="mr-6 flex items-center space-x-2">
+        <Link href="/" className="mr-6 flex items-center space-x-2">
           <BookOpenCheck className="h-8 w-8 text-primary" />
           <span className="font-bold text-xl sm:inline-block">
             EduCareer Compass
           </span>
-        </div>
+        </Link>
         <nav className="hidden md:flex flex-1 items-center space-x-6 text-sm font-medium">
           {navItems.map((item) => (
             <Link
@@ -38,6 +40,8 @@ export default function Header() {
           ))}
         </nav>
         <div className="flex flex-1 items-center justify-end space-x-2">
+          <Button variant="outline" onClick={() => router.push('/login')}>Log In</Button>
+          <Button onClick={() => router.push('/signup')}>Sign Up</Button>
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild>
               <Button variant="outline" className="md:hidden" size="icon">
@@ -69,6 +73,10 @@ export default function Header() {
                     </Link>
                   ))}
                 </nav>
+                <div className="p-4 border-t space-y-2">
+                  <Button variant="outline" className="w-full" onClick={() => { router.push('/login'); setIsMobileMenuOpen(false); }}>Log In</Button>
+                  <Button className="w-full" onClick={() => { router.push('/signup'); setIsMobileMenuOpen(false); }}>Sign Up</Button>
+                </div>
               </div>
             </SheetContent>
           </Sheet>
