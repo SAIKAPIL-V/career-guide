@@ -23,6 +23,7 @@ export default function Header() {
   const { user, loading, logout } = useAuth();
 
   const isAuthPage = pathname === '/login' || pathname === '/signup';
+  const isDashboard = pathname === '/dashboard';
 
   const handleLogout = async () => {
     await logout();
@@ -57,7 +58,7 @@ export default function Header() {
               {!loading && (
                 user ? (
                   <>
-                    <span className="hidden sm:inline text-sm text-muted-foreground">Welcome, {user.email}</span>
+                    {isDashboard && <span className="hidden sm:inline text-sm text-muted-foreground">Welcome, {user.email}</span>}
                     <Button variant="outline" onClick={handleLogout}>Log Out</Button>
                   </>
                 ) : (
@@ -120,3 +121,5 @@ export default function Header() {
     </header>
   );
 }
+
+    

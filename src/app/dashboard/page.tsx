@@ -60,14 +60,56 @@ export default function DashboardPage() {
   const { toast } = useToast();
 
   useEffect(() => {
-    if (!authLoading && !user) {
-      router.push('/login');
-      return;
-    }
+    const fetchRecommendations = async () => {
+      // First, check for locally stored assessment answers
+      const storedAnswers = localStorage.getItem('assessmentAnswers');
+      const type = localStorage.getItem('assessmentType');
 
-    if (user) {
-        const fetchRecommendations = async () => {
-        // Try fetching saved results first
+      if (storedAnswers && type) {
+        setAssessmentType(type);
+        const parsedAnswers = JSON.parse(storedAnswers);
+        try {
+          let resultData: ResultsData;
+          if (type === '10th') {
+            resultData = await personalizedCourseRecommendations({
+              interests: parsedAnswers.join(', '),
+              strengths: 'Varies based on answers',
+              academicPerformance: 'Average',
+              careerAspirations: 'Not specified',
+            });
+          } else {
+            resultData = await personalizedCareerRecommendations({
+              interests: parsedAnswers.join(', '),
+              aptitude: 'Varies based on answers',
+              academicPerformance: 'Average',
+              location: 'India',
+            });
+          }
+          setResults(resultData);
+
+          let topRecommendation: string | undefined;
+          if ('recommendedStreams' in resultData) {
+              topRecommendation = resultData.recommendedStreams?.[0];
+          } else if ('careerRecommendations' in resultData) {
+              topRecommendation = resultData.careerRecommendations?.[0];
+          }
+
+
+          if (topRecommendation) {
+            const spotlightResult = await careerSpotlight({ career: topRecommendation });
+            setSpotlight(spotlightResult);
+          }
+        } catch (err) {
+          console.error('Failed to get recommendations:', err);
+          setError('Our AI is a bit busy right now. Please try again in a moment.');
+        } finally {
+          setLoading(false);
+        }
+        return;
+      }
+      
+      // If no local answers, try fetching saved results for a logged-in user
+      if (user) {
         const userDocRef = doc(db, 'users', user.uid);
         const userDoc = await getDoc(userDocRef);
         if (userDoc.exists() && userDoc.data().recommendations) {
@@ -78,60 +120,17 @@ export default function DashboardPage() {
             setLoading(false);
             return;
         }
+      }
 
+      // If no local answers and no saved data, show an error
+      setLoading(false);
+      setError('No assessment found. Please take an assessment to view your dashboard.');
+    };
 
-        const storedAnswers = localStorage.getItem('assessmentAnswers');
-        const type = localStorage.getItem('assessmentType');
-
-        if (storedAnswers && type) {
-            setAssessmentType(type);
-            const parsedAnswers = JSON.parse(storedAnswers);
-
-            try {
-            let resultData: ResultsData;
-            if (type === '10th') {
-                resultData = await personalizedCourseRecommendations({
-                interests: parsedAnswers.join(', '),
-                strengths: 'Varies based on answers',
-                academicPerformance: 'Average',
-                careerAspirations: 'Not specified',
-                });
-            } else {
-                resultData = await personalizedCareerRecommendations({
-                interests: parsedAnswers.join(', '),
-                aptitude: 'Varies based on answers',
-                academicPerformance: 'Average',
-                location: 'India',
-                });
-            }
-            setResults(resultData);
-
-            let topRecommendation: string | undefined;
-            if ('recommendedStreams' in resultData) {
-                topRecommendation = resultData.recommendedStreams?.[0];
-            } else if ('careerRecommendations' in resultData) {
-                topRecommendation = resultData.careerRecommendations?.[0];
-            }
-
-            if (topRecommendation) {
-                const spotlightResult = await careerSpotlight({ career: topRecommendation });
-                setSpotlight(spotlightResult);
-            }
-            } catch (err) {
-            console.error('Failed to get recommendations:', err);
-            setError('Our AI is a bit busy right now. Please try again in a moment.');
-            } finally {
-            setLoading(false);
-            }
-        } else {
-            setLoading(false);
-            setError('No assessment found. Please take an assessment to view your dashboard.');
-        }
-        };
-
+    if (!authLoading) {
         fetchRecommendations();
     }
-  }, [user, authLoading, router]);
+  }, [user, authLoading]);
 
   const handleSaveResults = async () => {
     if (!user || !results) return;
@@ -242,7 +241,7 @@ export default function DashboardPage() {
             Welcome! Here are the AI-powered insights based on your assessment.
           </p>
         </div>
-         {results && (
+         {user && results && (
             <Button onClick={handleSaveResults} disabled={isSaving}>
               {isSaving ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Save className="mr-2 h-4 w-4" />}
               Save to Profile
@@ -333,3 +332,5 @@ export default function DashboardPage() {
     </div>
   );
 }
+
+    
