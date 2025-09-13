@@ -20,8 +20,9 @@ export default function Footer() {
               <h3 className="font-headline font-semibold mb-4">Navigate</h3>
               <ul className="space-y-2">
                 <li><Link href="/careers" className="text-sm hover:text-primary transition-colors">Career Paths</Link></li>
-                <li><Link href="/colleges" className="text-sm hover:text-primary transition-colors">Find Colleges</Link></li>
+                <li><Link href="/find-colleges" className="text-sm hover:text-primary transition-colors">AI College Finder</Link></li>
                 <li><Link href="/assessment" className="text-sm hover:text-primary transition-colors">Take Assessment</Link></li>
+                 <li><Link href="/colleges" className="text-sm hover:text-primary transition-colors">College Directory</Link></li>
               </ul>
             </div>
             <div>

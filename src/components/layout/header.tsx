@@ -12,7 +12,7 @@ import { useAuth } from '@/context/auth-context';
 const navItems = [
   { label: 'Home', href: '/' },
   { label: 'Career Paths', href: '/careers' },
-  { label: 'Find Colleges', href: '/colleges' },
+  { label: 'AI College Finder', href: '/find-colleges' },
   { label: 'About', href: '/about' },
 ];
 
