@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -20,10 +19,12 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center">
+      <div className="container flex h-20 items-center">
         <Link href="/" className="mr-6 flex items-center space-x-2">
-          <BookOpenCheck className="h-6 w-6 text-primary" />
-          <span className="font-bold font-headline text-lg sm:inline-block">EduCareer Compass</span>
+          <BookOpenCheck className="h-8 w-8 text-primary" />
+          <span className="font-bold text-xl sm:inline-block">
+            EduCareer Compass
+          </span>
         </Link>
         <nav className="hidden md:flex flex-1 items-center space-x-6 text-sm font-medium">
           {navItems.map((item) => (
@@ -36,7 +37,7 @@ export default function Header() {
             </Link>
           ))}
         </nav>
-        <div className="flex flex-1 items-center justify-end space-x-4">
+        <div className="flex flex-1 items-center justify-end space-x-2">
           <Button variant="ghost" asChild className="hidden md:inline-flex">
             <Link href="/login">Log In</Link>
           </Button>
@@ -45,7 +46,7 @@ export default function Header() {
           </Button>
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" className="md:hidden" size="icon">
+              <Button variant="outline" className="md:hidden" size="icon">
                 <Menu className="h-6 w-6" />
                 <span className="sr-only">Open menu</span>
               </Button>
@@ -55,7 +56,7 @@ export default function Header() {
                 <div className="flex items-center justify-between p-4 border-b">
                    <Link href="/" className="flex items-center space-x-2" onClick={() => setIsMobileMenuOpen(false)}>
                     <BookOpenCheck className="h-6 w-6 text-primary" />
-                    <span className="font-bold font-headline text-lg">EduCareer Compass</span>
+                    <span className="font-bold text-lg">EduCareer Compass</span>
                   </Link>
                   <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)}>
                     <X className="h-6 w-6" />
@@ -74,7 +75,7 @@ export default function Header() {
                     </Link>
                   ))}
                 </nav>
-                <div className="p-4 border-t space-y-2">
+                <div className="p-4 border-t grid grid-cols-2 gap-4">
                    <Button asChild variant="outline" className="w-full" onClick={() => setIsMobileMenuOpen(false)}>
                     <Link href="/login">Log In</Link>
                    </Button>

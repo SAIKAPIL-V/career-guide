@@ -45,7 +45,7 @@ const slidesContent = [
 
 export default function HeroSlider() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
-    Autoplay({ delay: 4000, stopOnInteraction: false }),
+    Autoplay({ delay: 5000, stopOnInteraction: false }),
   ]);
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -72,7 +72,7 @@ export default function HeroSlider() {
   const slides = PlaceHolderImages.slice(0, 5);
 
   return (
-    <div className="relative w-full h-[60vh] md:h-[80vh] overflow-hidden" ref={emblaRef}>
+    <div className="relative w-full h-[70vh] md:h-[90vh] overflow-hidden" ref={emblaRef}>
       <div className="flex h-full">
         {slides.map((slide, index) => (
           <div
@@ -90,10 +90,10 @@ export default function HeroSlider() {
               className="object-cover"
               priority={index === 0}
             />
-            <div className="absolute inset-0 bg-black/50" />
-            <div className="relative h-full flex flex-col justify-center items-center text-center text-white p-4">
-              <div className="hero-slide-content">
-                <h1 className="font-headline text-4xl md:text-6xl font-bold max-w-4xl">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent" />
+            <div className="relative h-full flex flex-col justify-end items-center text-center text-white pb-20 md:pb-32 p-4">
+              <div className="hero-slide-content opacity-0">
+                <h1 className="text-4xl md:text-6xl font-bold max-w-4xl leading-tight">
                   {slidesContent[index].headline}
                 </h1>
                 <p className="mt-4 text-lg md:text-xl max-w-2xl mx-auto opacity-90">
@@ -130,7 +130,7 @@ export default function HeroSlider() {
         <ArrowRight className="h-6 w-6" />
       </Button>
 
-      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex space-x-2">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-3">
         {slides.map((_, index) => (
           <button
             key={index}
