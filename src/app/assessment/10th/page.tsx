@@ -47,6 +47,7 @@ export default function Assessment10thPage() {
       if (currentQuestion < questions.length - 1) {
         setCurrentQuestion(currentQuestion + 1);
       } else {
+        localStorage.setItem('assessmentType', '10th');
         localStorage.setItem('assessmentAnswers', JSON.stringify(newAnswers));
         router.push('/assessment/results');
       }
