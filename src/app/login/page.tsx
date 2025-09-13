@@ -2,12 +2,22 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
 export default function LoginPage() {
+  const router = useRouter();
+
+  const handleLogin = (event: React.FormEvent) => {
+    event.preventDefault();
+    // In a real application, you would handle user authentication here.
+    // For now, we'll just redirect to the home page.
+    router.push('/');
+  };
+
   return (
     <div className="container mx-auto px-4 py-16 lg:py-24 flex items-center justify-center">
       <Card className="w-full max-w-md">
@@ -16,7 +26,7 @@ export default function LoginPage() {
           <CardDescription>Log in to access your personalized dashboard.</CardDescription>
         </CardHeader>
         <CardContent>
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleLogin}>
             <div className="space-y-2">
               <Label htmlFor="email">Email Address</Label>
               <Input id="email" type="email" placeholder="you@example.com" required />
