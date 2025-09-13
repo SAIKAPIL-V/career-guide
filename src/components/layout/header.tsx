@@ -20,12 +20,12 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-20 items-center">
-        <Link href="/" className="mr-6 flex items-center space-x-2">
+        <div className="mr-6 flex items-center space-x-2">
           <BookOpenCheck className="h-8 w-8 text-primary" />
           <span className="font-bold text-xl sm:inline-block">
             EduCareer Compass
           </span>
-        </Link>
+        </div>
         <nav className="hidden md:flex flex-1 items-center space-x-6 text-sm font-medium">
           {navItems.map((item) => (
             <Link
@@ -38,12 +38,6 @@ export default function Header() {
           ))}
         </nav>
         <div className="flex flex-1 items-center justify-end space-x-2">
-          <Button variant="ghost" asChild className="hidden md:inline-flex">
-            <Link href="/login">Log In</Link>
-          </Button>
-          <Button asChild className="hidden md:inline-flex">
-            <Link href="/signup">Sign Up</Link>
-          </Button>
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild>
               <Button variant="outline" className="md:hidden" size="icon">
@@ -54,10 +48,10 @@ export default function Header() {
             <SheetContent side="left" className="w-full max-w-sm p-0">
               <div className="flex flex-col h-full">
                 <div className="flex items-center justify-between p-4 border-b">
-                   <Link href="/" className="flex items-center space-x-2" onClick={() => setIsMobileMenuOpen(false)}>
+                   <div className="flex items-center space-x-2">
                     <BookOpenCheck className="h-6 w-6 text-primary" />
                     <span className="font-bold text-lg">EduCareer Compass</span>
-                  </Link>
+                  </div>
                   <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)}>
                     <X className="h-6 w-6" />
                     <span className="sr-only">Close menu</span>
@@ -75,14 +69,6 @@ export default function Header() {
                     </Link>
                   ))}
                 </nav>
-                <div className="p-4 border-t grid grid-cols-2 gap-4">
-                   <Button asChild variant="outline" className="w-full" onClick={() => setIsMobileMenuOpen(false)}>
-                    <Link href="/login">Log In</Link>
-                   </Button>
-                   <Button asChild className="w-full" onClick={() => setIsMobileMenuOpen(false)}>
-                    <Link href="/signup">Sign Up</Link>
-                   </Button>
-                </div>
               </div>
             </SheetContent>
           </Sheet>
