@@ -13,6 +13,14 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import Link from 'next/link';
 
+const collegeNameToSlug = (name: string) => {
+  return name
+    .toLowerCase()
+    .replace(/, hyderabad/g, '')
+    .replace(/ /g, '-')
+    .replace(/[^a-z0-9-]/g, '');
+};
+
 export default function FindCollegesPage() {
   const [course, setCourse] = useState('');
   const [location, setLocation] = useState('');
@@ -122,7 +130,8 @@ export default function FindCollegesPage() {
           <div className="space-y-6">
             {results.colleges.length > 0 ? (
                 results.colleges.map((college) => (
-                    <Card key={college.collegeName} className="shadow-md animate-float-up">
+                  <Link href={`/colleges/${collegeNameToSlug(college.collegeName)}`} key={college.collegeName} className="block group">
+                    <Card className="shadow-md animate-float-up transition-all group-hover:shadow-xl group-hover:border-primary/50">
                         <CardHeader className="flex flex-row items-start gap-4">
                             <div className="bg-primary/10 p-3 rounded-lg mt-1">
                                 <University className="h-6 w-6 text-primary" />
@@ -139,6 +148,7 @@ export default function FindCollegesPage() {
                             )}
                         </CardHeader>
                     </Card>
+                  </Link>
                 ))
             ) : (
                 <p className="text-center text-muted-foreground">
