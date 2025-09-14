@@ -27,8 +27,7 @@ export default function BusinessCareersPage() {
     try {
       const resultData = await careerRoadmap({ careerField: 'Business', stage });
       setResults(resultData);
-    } catch (error) {
-      console.error('AI call failed:', error);
+    } catch (error).error('AI call failed:', error);
       toast({
         variant: 'destructive',
         title: 'AI Error',

@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Loader2, Sparkles, University, Briefcase, Rocket, Lightbulb, CheckCircle } from 'lucide-react';
+import { Loader2, Sparkles, University, Briefcase, Rocket, Lightbulb, CheckCircle, GraduationCap } from 'lucide-react';
 import {
   Accordion,
   AccordionContent,
@@ -46,7 +46,7 @@ export default function EngineeringCareersPage() {
           Engineering & Technology Careers
         </h1>
         <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
-          Explore your personalized roadmap for a future in engineering. Select your current educational stage to begin.
+          Build, innovate, and solve. Select your current educational stage to get your personalized engineering career roadmap.
         </p>
       </div>
 

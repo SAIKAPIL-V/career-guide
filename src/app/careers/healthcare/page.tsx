@@ -46,7 +46,7 @@ export default function HealthcareCareersPage() {
           Healthcare & Medicine Careers
         </h1>
         <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
-          Make a difference in people's lives. Select your current educational stage to get your personalized healthcare career roadmap.
+          Heal, care, and discover. Select your current educational stage to get your personalized healthcare career roadmap.
         </p>
       </div>
 
