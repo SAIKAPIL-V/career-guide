@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Loader2, Search, University, Sparkles } from 'lucide-react';
+import { Loader2, Search, University, Sparkles, Award } from 'lucide-react';
 import {
   findCollegesForCourse,
   FindCollegesForCourseOutput,
@@ -64,6 +64,7 @@ export default function FindCollegesPage() {
             <Search className="h-6 w-6" />
             Find the Best College for You
           </CardTitle>
+          <CardDescription>Include NIRF ranking for government colleges.</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
@@ -126,10 +127,16 @@ export default function FindCollegesPage() {
                             <div className="bg-primary/10 p-3 rounded-lg mt-1">
                                 <University className="h-6 w-6 text-primary" />
                             </div>
-                            <div>
+                            <div className="flex-1">
                                 <CardTitle>{college.collegeName}</CardTitle>
                                 <CardDescription>{college.reason}</CardDescription>
                             </div>
+                             {college.nirfRanking && college.nirfRanking !== 'Not Ranked' && (
+                                <div className="flex items-center gap-2 text-sm font-semibold bg-amber-100 text-amber-800 px-3 py-1 rounded-full">
+                                    <Award className="h-4 w-4" />
+                                    <span>{college.nirfRanking}</span>
+                                </div>
+                            )}
                         </CardHeader>
                     </Card>
                 ))
