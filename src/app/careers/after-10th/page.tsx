@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Loader2, Sparkles, University, Briefcase, Rocket, CheckCircle, GraduationCap, Compass, Paintbrush } from 'lucide-react';
+import { Loader2, Sparkles, University, Briefcase, Rocket, CheckCircle, GraduationCap } from 'lucide-react';
 import {
   Accordion,
   AccordionContent,
@@ -12,26 +12,26 @@ import {
 import { careerRoadmap, CareerRoadmapOutput } from '@/ai/flows/career-roadmap';
 import { useToast } from '@/hooks/use-toast';
 
-type CareerField = 'Engineering' | 'Business' | 'Arts & Humanities';
+type CourseOption = 'Polytechnic' | 'Intermediate (MPC)' | 'Intermediate (BiPC)';
 
-const careerFields: { name: CareerField; icon: React.ReactNode; description: string }[] = [
-    { name: 'Engineering', icon: <Compass />, description: 'For future innovators and builders.' },
-    { name: 'Business', icon: <Briefcase />, description: 'For aspiring leaders and entrepreneurs.' },
-    { name: 'Arts & Humanities', icon: <Paintbrush />, description: 'For creative thinkers and communicators.' },
+const courseOptions: { name: CourseOption; description: string }[] = [
+    { name: 'Polytechnic', description: 'Diploma in Engineering fields.' },
+    { name: 'Intermediate (MPC)', description: 'Maths, Physics, Chemistry stream.' },
+    { name: 'Intermediate (BiPC)', description: 'Biology, Physics, Chemistry stream.' },
 ];
 
 export default function After10thPage() {
-  const [selectedField, setSelectedField] = useState<CareerField | null>(null);
+  const [selectedCourse, setSelectedCourse] = useState<CourseOption | null>(null);
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<CareerRoadmapOutput | null>(null);
   const { toast } = useToast();
 
-  const handleFieldSelect = async (field: CareerField) => {
-    setSelectedField(field);
+  const handleCourseSelect = async (course: CourseOption) => {
+    setSelectedCourse(course);
     setLoading(true);
     setResults(null);
     try {
-      const resultData = await careerRoadmap({ careerField: field, stage: '10th Completed' });
+      const resultData = await careerRoadmap({ course: course, stage: '10th Completed' });
       setResults(resultData);
     } catch (error) {
       console.error('AI call failed:', error);
@@ -52,26 +52,25 @@ export default function After10thPage() {
           Roadmap After 10th
         </h1>
         <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
-          You've completed your 10th grade! This is a crucial time to choose a stream. Select a broad career field below to see what your journey could look like.
+          You've completed 10th grade! This is a crucial time to choose your path. Select a stream below to see what your journey could look like.
         </p>
       </div>
 
       <Card className="max-w-4xl mx-auto mb-12 shadow-lg">
         <CardHeader>
-          <CardTitle className="text-center">Which field interests you most?</CardTitle>
+          <CardTitle className="text-center">Which path will you choose?</CardTitle>
         </CardHeader>
         <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {careerFields.map((field) => (
+          {courseOptions.map((course) => (
             <Button
-              key={field.name}
-              variant={selectedField === field.name ? 'default' : 'outline'}
-              onClick={() => handleFieldSelect(field.name)}
+              key={course.name}
+              variant={selectedCourse === course.name ? 'default' : 'outline'}
+              onClick={() => handleCourseSelect(course.name)}
               disabled={loading}
               className="flex flex-col h-auto py-4"
             >
-              <div className="h-8 w-8 mb-2">{field.icon}</div>
-              <span className="font-semibold">{field.name}</span>
-              <span className="text-xs font-normal text-muted-foreground">{field.description}</span>
+              <span className="font-semibold text-lg">{course.name}</span>
+              <span className="text-sm font-normal text-muted-foreground">{course.description}</span>
             </Button>
           ))}
         </CardContent>
@@ -90,7 +89,7 @@ export default function After10thPage() {
         <div className="max-w-4xl mx-auto animate-float-up">
            <div className="text-center mb-8">
             <h2 className="font-headline text-3xl font-bold">
-              Your AI-Generated Roadmap for {selectedField}
+              Your AI-Generated Roadmap for {selectedCourse}
             </h2>
              <p className="mt-2 text-muted-foreground">{results.introduction}</p>
           </div>
