@@ -3,21 +3,18 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { ArrowRight, GraduationCap } from 'lucide-react';
 
-export default function AssessmentPage() {
+export default function CareersPage() {
   const stages = [
     {
-      title: 'After 10th',
-      description: 'Explore streams like Science, Commerce, and Arts and see what they lead to.',
+      title: '10th Completed',
       href: '/careers/after-10th',
     },
     {
-      title: 'After 12th',
-      description: 'Discover degree courses and career opportunities based on your 12th grade stream.',
+      title: '12th Completed',
       href: '/careers/after-12th',
     },
     {
-      title: 'After Degree',
-      description: 'Find paths for further studies, specialized jobs, or entrepreneurship after your graduation.',
+      title: 'Degree Completed',
       href: '/careers/after-degree',
     },
   ];
@@ -32,29 +29,21 @@ export default function AssessmentPage() {
           Start by selecting your current educational stage to get a personalized, AI-generated plan for your future.
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-        {stages.map((stage) => (
-           <Link href={stage.href} key={stage.title} className="group block">
-            <Card className="h-full shadow-lg hover:shadow-xl hover:border-primary/50 transition-all duration-300">
-                <CardHeader>
-                    <div className="flex items-center gap-4">
-                        <div className="bg-primary/10 p-4 rounded-lg">
-                            <GraduationCap className="h-8 w-8 text-primary" />
-                        </div>
-                        <CardTitle className="text-2xl font-headline">{stage.title}</CardTitle>
-                    </div>
-                </CardHeader>
-                <CardContent>
-                    <p className="text-muted-foreground mb-4">{stage.description}</p>
-                    <Button variant="link" className="p-0 font-bold text-primary">
-                        Explore Paths
-                        <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                    </Button>
-                </CardContent>
-            </Card>
-           </Link>
-        ))}
-      </div>
+
+      <Card className="max-w-2xl mx-auto mb-12 shadow-lg">
+        <CardHeader>
+          <CardTitle className="text-center">What is your current educational stage?</CardTitle>
+        </CardHeader>
+        <CardContent className="flex flex-col sm:flex-row justify-center gap-4">
+          {stages.map((stage) => (
+            <Button asChild key={stage.title} size="lg" className="flex-1">
+              <Link href={stage.href}>
+                {stage.title}
+              </Link>
+            </Button>
+          ))}
+        </CardContent>
+      </Card>
     </div>
   );
 }
