@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Compass, Briefcase, Building } from 'lucide-react';
+import { Compass, Briefcase, Building, Paintbrush } from 'lucide-react';
 import Link from 'next/link';
 
 export default function CareersPage() {
@@ -22,6 +22,12 @@ export default function CareersPage() {
       description: 'Learn about roles for doctors, nurses, pharmacists, and researchers.',
       href: '/careers/healthcare',
     },
+     {
+      icon: <Paintbrush className="h-10 w-10 text-primary" />,
+      title: 'Arts & Humanities',
+      description: 'Discover careers in design, writing, journalism, and social sciences.',
+      href: '/careers/arts',
+    },
   ];
 
   return (
@@ -34,7 +40,7 @@ export default function CareersPage() {
           Find the right career that aligns with your passion and skills.
         </p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {careerCategories.map((category, index) => (
           <Link href={category.href} key={index}>
             <Card className="text-center shadow-lg hover:shadow-xl transition-shadow duration-300 h-full">
