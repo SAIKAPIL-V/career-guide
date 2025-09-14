@@ -1,0 +1,36 @@
+{
+  "node": {
+    "17f8b70c222c472c7ffc418101570d29f9390c99": {
+      "workers": {
+        "app/careers/healthcare/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2Fstudio%2Fsrc%2Fai%2Fflows%2Fcareer-roadmap.ts%22%2C%5B%22careerRoadmap%22%5D%5D%5D&__client_imported__=true!",
+        "app/careers/engineering/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2Fstudio%2Fsrc%2Fai%2Fflows%2Fcareer-roadmap.ts%22%2C%5B%22careerRoadmap%22%5D%5D%5D&__client_imported__=true!",
+        "app/careers/after-10th/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2Fstudio%2Fsrc%2Fai%2Fflows%2Fcareer-roadmap.ts%22%2C%5B%22careerRoadmap%22%5D%5D%5D&__client_imported__=true!",
+        "app/careers/after-12th/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2Fstudio%2Fsrc%2Fai%2Fflows%2Fcareer-roadmap.ts%22%2C%5B%22careerRoadmap%22%5D%5D%5D&__client_imported__=true!"
+      },
+      "layer": {
+        "app/careers/healthcare/page": "action-browser",
+        "app/careers/engineering/page": "action-browser",
+        "app/careers/after-10th/page": "action-browser",
+        "app/careers/after-12th/page": "action-browser"
+      }
+    },
+    "e77de110e9018e4afd15e55535cfab149d964ef0": {
+      "workers": {
+        "app/find-colleges/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2Fstudio%2Fsrc%2Fai%2Fflows%2Ffind-colleges-for-course.ts%22%2C%5B%22findCollegesForCourse%22%5D%5D%5D&__client_imported__=true!"
+      },
+      "layer": {
+        "app/find-colleges/page": "action-browser"
+      }
+    },
+    "d5e9e819ca796f9ec69abeac6d92108ed3f59feb": {
+      "workers": {
+        "app/colleges/iit-hyderabad/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fuser%2Fstudio%2Fsrc%2Fai%2Fflows%2Fcollege-details.ts%22%2C%5B%22collegeDetails%22%5D%5D%5D&__client_imported__=!"
+      },
+      "layer": {
+        "app/colleges/iit-hyderabad/page": "rsc"
+      }
+    }
+  },
+  "edge": {},
+  "encryptionKey": "2kbUf/p5UVU6w/2cj45jW+FnDlnnLo3fxbkIQCU88BM="
+}

@@ -20,6 +20,42 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
+## Running the Project Locally
+
+After downloading the project ZIP file, follow these steps to run it on your local machine:
+
+### 1. Unzip the File
+Extract the contents of the ZIP file into a new folder on your computer.
+
+### 2. Install Dependencies
+Open a terminal or command prompt, navigate into the project directory you just created, and run the following command to install all the required packages:
+
+```bash
+npm install
+```
+
+### 3. Set Up Environment Variables
+This project uses the Google Gemini API to power its AI features. You will need an API key to run it.
+
+1.  Create a new file in the root of the project directory named `.env.local`.
+2.  Copy the contents from the `.env` file into your new `.env.local` file.
+3.  Get your Gemini API key from [Google AI Studio](https://aistudio.google.com/app/apikey).
+4.  Replace the placeholder value in `.env.local` with your actual API key.
+
+Your `.env.local` file should look like this:
+```
+GEMINI_API_KEY="YOUR_API_KEY_HERE"
+```
+
+### 4. Run the Development Server
+Once the dependencies are installed and your API key is set, run the following command in your terminal:
+
+```bash
+npm run dev
+```
+
+This will start the local development server. You can then open [http://localhost:3000](http://localhost:3000) in your web browser to see the application running.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

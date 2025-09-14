@@ -1,0 +1,8 @@
+{
+  "/careers/engineering/page": "app/careers/engineering/page.js",
+  "/find-colleges/page": "app/find-colleges/page.js",
+  "/page": "app/page.js",
+  "/careers/after-10th/page": "app/careers/after-10th/page.js",
+  "/assessment/page": "app/assessment/page.js",
+  "/assessment/12th/page": "app/assessment/12th/page.js"
+}
