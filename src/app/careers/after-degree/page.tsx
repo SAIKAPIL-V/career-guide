@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Loader2, Sparkles, University, Briefcase, Rocket, CheckCircle, GraduationCap } from 'lucide-react';
+import { Loader2, Sparkles, University, Briefcase, Rocket, CheckCircle, GraduationCap, Building, Palette, BarChart } from 'lucide-react';
 import {
   Accordion,
   AccordionContent,
@@ -12,26 +12,26 @@ import {
 import { careerRoadmap, CareerRoadmapOutput } from '@/ai/flows/career-roadmap';
 import { useToast } from '@/hooks/use-toast';
 
-type CourseOption = 'M.Tech' | 'MBA' | 'M.Sc';
+type CareerField = 'Engineering' | 'Business' | 'Arts & Humanities';
 
-const courseOptions: { name: CourseOption; description: string }[] = [
-    { name: 'M.Tech', description: 'Master of Technology.' },
-    { name: 'MBA', description: 'Master of Business Administration.' },
-    { name: 'M.Sc', description: 'Master of Science.' },
+const careerFields: { name: CareerField; description: string, icon: React.ReactNode }[] = [
+    { name: 'Engineering', description: 'Specialize further or pivot.', icon: <Building /> },
+    { name: 'Business', description: 'Climb the ladder or build your own.', icon: <BarChart /> },
+    { name: 'Arts & Humanities', description: 'Deepen your expertise or apply your skills.', icon: <Palette /> },
 ];
 
 export default function AfterDegreePage() {
-  const [selectedCourse, setSelectedCourse] = useState<CourseOption | null>(null);
+  const [selectedField, setSelectedField] = useState<CareerField | null>(null);
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<CareerRoadmapOutput | null>(null);
   const { toast } = useToast();
 
-  const handleCourseSelect = async (course: CourseOption) => {
-    setSelectedCourse(course);
+  const handleFieldSelect = async (field: CareerField) => {
+    setSelectedField(field);
     setLoading(true);
     setResults(null);
     try {
-      const resultData = await careerRoadmap({ course: course, stage: 'Degree Completed' });
+      const resultData = await careerRoadmap({ careerField: field, stage: 'Degree Completed' });
       setResults(resultData);
     } catch (error) {
       console.error('AI call failed:', error);
@@ -58,19 +58,20 @@ export default function AfterDegreePage() {
 
       <Card className="max-w-4xl mx-auto mb-12 shadow-lg">
         <CardHeader>
-          <CardTitle className="text-center">What is your next step?</CardTitle>
+          <CardTitle className="text-center">Which field did you graduate in?</CardTitle>
         </CardHeader>
         <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {courseOptions.map((course) => (
+          {careerFields.map((field) => (
             <Button
-              key={course.name}
-              variant={selectedCourse === course.name ? 'default' : 'outline'}
-              onClick={() => handleCourseSelect(course.name)}
+              key={field.name}
+              variant={selectedField === field.name ? 'default' : 'outline'}
+              onClick={() => handleFieldSelect(field.name)}
               disabled={loading}
-              className="flex flex-col h-auto py-4"
+              className="flex flex-col h-auto py-4 items-center gap-2"
             >
-              <span className="font-semibold text-lg">{course.name}</span>
-              <span className="text-sm font-normal text-muted-foreground">{course.description}</span>
+              {field.icon}
+              <span className="font-semibold text-lg">{field.name}</span>
+              <span className="text-sm font-normal text-muted-foreground">{field.description}</span>
             </Button>
           ))}
         </CardContent>
@@ -89,7 +90,7 @@ export default function AfterDegreePage() {
         <div className="max-w-4xl mx-auto animate-float-up">
            <div className="text-center mb-8">
             <h2 className="font-headline text-3xl font-bold">
-              Your AI-Generated Roadmap for {selectedCourse}
+              Your AI-Generated Roadmap for {selectedField}
             </h2>
              <p className="mt-2 text-muted-foreground">{results.introduction}</p>
           </div>
