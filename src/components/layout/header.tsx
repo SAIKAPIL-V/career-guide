@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
@@ -19,28 +19,34 @@ const navItems = [
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isNavigating, setIsNavigating] = useState<string | false>(false);
   const router = useRouter();
   const pathname = usePathname();
   const { user, loading, logout } = useAuth();
 
-  const isAuthPage = pathname === '/login' || pathname === '/signup';
-  const isDashboard = pathname === '/dashboard';
+  useEffect(() => {
+    setIsNavigating(false);
+  }, [pathname]);
+
+  const handleLinkClick = (href: string) => (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    if (pathname !== href) {
+        setIsNavigating(href);
+        router.push(href);
+    }
+    setIsMobileMenuOpen(false);
+  }
 
   const handleLogout = async () => {
     await logout();
     router.push('/login');
   }
 
-  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    router.push(user ? '/' : '/login');
-  }
-
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-header/95 backdrop-blur supports-[backdrop-filter]:bg-header/60">
       <div className="container flex h-20 items-center">
         <div className="flex items-center space-x-2">
-            <Link href="/" className="flex items-center space-x-2" onClick={handleLogoClick}>
+            <Link href="/" className="flex items-center space-x-2">
               <EmblemLogo className="h-10 w-10 text-primary" />
               <div className='flex flex-col'>
                 <span className="font-bold text-xl leading-tight sm:inline-block">
@@ -52,21 +58,23 @@ export default function Header() {
         </div>
         
         <nav className="hidden md:flex flex-1 items-center space-x-6 text-sm font-medium ml-6">
-        {!isAuthPage && user && navItems.map((item) => (
+        {user && navItems.map((item) => (
             <Link
             key={item.href}
             href={item.href}
-            className={cn("transition-colors hover:text-primary", pathname === item.href && "text-primary")}
+            onClick={handleLinkClick(item.href)}
+            className={cn("transition-colors hover:text-primary flex items-center gap-2", pathname === item.href && "text-primary")}
             >
-            {item.label}
+              {isNavigating === item.href && <Loader2 className="h-4 w-4 animate-spin" />}
+              {item.label}
             </Link>
         ))}
         </nav>
         <div className="flex flex-1 items-center justify-end space-x-2">
-            {!loading && !isAuthPage && (
+            {!loading && (
             user ? (
                 <>
-                {isDashboard && <span className="hidden sm:inline text-sm text-muted-foreground">Welcome!</span>}
+                {pathname === '/dashboard' && <span className="hidden sm:inline text-sm text-muted-foreground">Welcome!</span>}
                 <Button variant="outline" onClick={handleLogout}>Log Out</Button>
                 </>
             ) : (
@@ -76,7 +84,7 @@ export default function Header() {
                 </>
             )
             )}
-            {!isAuthPage && user && (
+            {user && (
               <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
                   <SheetTrigger asChild>
                   <Button variant="outline" className="md:hidden" size="icon">
@@ -87,7 +95,7 @@ export default function Header() {
                   <SheetContent side="left" className="w-full max-w-sm p-0">
                   <div className="flex flex-col h-full">
                       <div className="flex items-center justify-between p-4 border-b">
-                        <Link href="/" className="flex items-center space-x-2" onClick={(e) => {handleLogoClick(e); setIsMobileMenuOpen(false);}}>
+                        <Link href="/" className="flex items-center space-x-2" onClick={handleLinkClick('/')}>
                             <EmblemLogo className="h-8 w-8 text-primary" />
                             <div className='flex flex-col'>
                                 <span className="font-bold text-lg leading-tight sm:inline-block">
@@ -107,7 +115,7 @@ export default function Header() {
                           key={item.href}
                           href={item.href}
                           className="block text-lg font-medium py-2 hover:text-primary transition-colors"
-                          onClick={() => setIsMobileMenuOpen(false)}
+                          onClick={handleLinkClick(item.href)}
                           >
                           {item.label}
                           </Link>
