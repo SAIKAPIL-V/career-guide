@@ -7,9 +7,8 @@ import {
   signInWithEmailAndPassword,
   signOut,
   User,
-  getAuth,
 } from 'firebase/auth';
-import { app, db } from '@/lib/firebase';
+import { auth, db } from '@/lib/firebase';
 import { doc, setDoc } from 'firebase/firestore';
 
 interface AuthContextType {
@@ -35,8 +34,6 @@ const setCookie = (name: string, value: string, days: number) => {
 const eraseCookie = (name: string) => {
   document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 };
-
-const auth = getAuth(app);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
