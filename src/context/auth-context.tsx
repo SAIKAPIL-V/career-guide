@@ -14,15 +14,17 @@ import {
   signOut,
   type User,
   getAuth,
-  type Auth,
 } from 'firebase/auth';
-import { doc, setDoc, getFirestore, type Firestore } from 'firebase/firestore';
+import { doc, setDoc, getFirestore } from 'firebase/firestore';
 import { firebaseConfig } from '@/lib/firebase';
 import { initializeApp, getApps, getApp, type FirebaseApp } from 'firebase/app';
+
+type FirebaseStatus = 'initializing' | 'connected' | 'error';
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
+  firebaseStatus: FirebaseStatus;
   login: (email: string, pass: string) => Promise<any>;
   signup: (
     email: string,
@@ -30,7 +32,6 @@ interface AuthContextType {
     details: { firstName: string; lastName: string }
   ) => Promise<any>;
   logout: () => Promise<any>;
-  db: Firestore;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -58,16 +59,27 @@ const eraseCookie = (name: string) => {
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [firebaseStatus, setFirebaseStatus] = useState<FirebaseStatus>('initializing');
 
-  // Initialize Firebase services in a robust way for client-side components
   const [firebaseServices] = useState(() => {
-    const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-    return { app, auth, db };
+    try {
+      const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
+      const auth = getAuth(app);
+      const db = getFirestore(app);
+      setFirebaseStatus('connected');
+      return { app, auth, db };
+    } catch (e) {
+      console.error("Firebase initialization error", e);
+      setFirebaseStatus('error');
+      return { app: null, auth: null, db: null };
+    }
   });
 
   useEffect(() => {
+    if (!firebaseServices.auth) {
+      setLoading(false);
+      return;
+    }
     const unsubscribe = onAuthStateChanged(firebaseServices.auth, (user) => {
       setUser(user);
       if (user) {
@@ -86,13 +98,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     password: string,
     details: { firstName: string; lastName: string }
   ) => {
+    if (!firebaseServices.auth || !firebaseServices.db) throw new Error("Firebase not initialized");
     const userCredential = await createUserWithEmailAndPassword(
       firebaseServices.auth,
       email,
       password
     );
     const user = userCredential.user;
-    // Create a document in Firestore for the new user
     await setDoc(doc(firebaseServices.db, 'users', user.uid), {
       uid: user.uid,
       email: user.email,
@@ -104,20 +116,22 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const login = (email: string, pass: string) => {
+    if (!firebaseServices.auth) throw new Error("Firebase not initialized");
     return signInWithEmailAndPassword(firebaseServices.auth, email, pass);
   };
 
   const logout = () => {
+    if (!firebaseServices.auth) throw new Error("Firebase not initialized");
     return signOut(firebaseServices.auth);
   };
 
   const value: AuthContextType = {
     user,
     loading,
+    firebaseStatus,
     login,
     signup,
     logout,
-    db: firebaseServices.db,
   };
 
   return (

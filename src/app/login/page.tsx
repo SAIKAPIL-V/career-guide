@@ -13,14 +13,15 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2 } from 'lucide-react';
+import { Loader2, CheckCircle, XCircle } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/auth-context';
+import { Badge } from '@/components/ui/badge';
 
 export default function LoginPage() {
   const router = useRouter();
-  const { user, login } = useAuth();
+  const { user, login, firebaseStatus } = useAuth();
   const { toast } = useToast();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -55,10 +56,28 @@ export default function LoginPage() {
       <Card className="w-full max-w-sm">
         <form onSubmit={handleSubmit}>
           <CardHeader>
-            <CardTitle className="text-2xl">Login</CardTitle>
-            <CardDescription>
-              Enter your email below to login to your account.
-            </CardDescription>
+            <div className="flex justify-between items-start">
+              <div>
+                <CardTitle className="text-2xl">Login</CardTitle>
+                <CardDescription>
+                  Enter your email below to login to your account.
+                </CardDescription>
+              </div>
+              <div>
+                <Label className="text-xs text-muted-foreground">Firebase Status</Label>
+                {firebaseStatus === 'connected' ? (
+                  <Badge variant="secondary" className="bg-green-100 text-green-800">
+                    <CheckCircle className="mr-1 h-3 w-3" />
+                    Connected
+                  </Badge>
+                ) : (
+                   <Badge variant="destructive">
+                    <XCircle className="mr-1 h-3 w-3" />
+                    Error
+                  </Badge>
+                )}
+              </div>
+            </div>
           </CardHeader>
           <CardContent className="grid gap-4">
             <div className="grid gap-2">
@@ -78,7 +97,7 @@ export default function LoginPage() {
             </div>
           </CardContent>
           <CardFooter className="flex flex-col">
-            <Button className="w-full" type="submit" disabled={loading}>
+            <Button className="w-full" type="submit" disabled={loading || firebaseStatus !== 'connected'}>
               {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               Log In
             </Button>
