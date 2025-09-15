@@ -52,6 +52,11 @@ const nextConfig = {
     serverComponentsExternalPackages: [
       '@genkit-ai/googleai',
       '@google/generative-ai',
+      '@opentelemetry/api',
+      '@opentelemetry/sdk-trace-base',
+      '@opentelemetry/sdk-trace-node',
+      '@opentelemetry/exporter-trace-otlp-http',
+      'handlebars'
     ],
   },
 };
