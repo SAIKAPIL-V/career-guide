@@ -14,16 +14,13 @@ import {
   signOut,
   type User,
 } from 'firebase/auth';
-import { doc, setDoc, getDoc, onSnapshot, type Firestore } from 'firebase/firestore';
+import { doc, setDoc, getDoc, type Firestore } from 'firebase/firestore';
 import { auth, db } from '@/lib/firebase';
 import { sendWelcomeEmail } from '@/ai/flows/send-welcome-email';
-
-type FirebaseStatus = 'initializing' | 'connected' | 'error';
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  firebaseStatus: FirebaseStatus;
   login: (email: string, pass: string) => Promise<any>;
   signup: (
     email: string,
@@ -57,34 +54,9 @@ const eraseCookie = (name: string) => {
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [authLoading, setAuthLoading] = useState(true);
-  const [firebaseStatus, setFirebaseStatus] =
-    useState<FirebaseStatus>('initializing');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!db) {
-        setFirebaseStatus('error');
-        setAuthLoading(false);
-        return;
-    }
-
-    // Use onSnapshot on a non-existent doc as a robust way to check for online status.
-    const unsubscribeFirestore = onSnapshot(
-      doc(db, 'health-check', 'status'),
-      () => {
-        setFirebaseStatus('connected');
-      },
-      (error) => {
-        if (error.code === 'unavailable') {
-            console.warn("Firestore is offline, but persistence should be active.");
-            setFirebaseStatus('connected'); // Still connected to local cache
-        } else {
-            console.error("Firestore connection error:", error);
-            setFirebaseStatus('error');
-        }
-      }
-    );
-    
     const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
       setUser(user);
       if (user) {
@@ -92,11 +64,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       } else {
         eraseCookie('userLoggedIn');
       }
-      setAuthLoading(false);
+      setLoading(false);
     });
 
     return () => {
-        unsubscribeFirestore();
         unsubscribeAuth();
     };
   }, []);
@@ -134,12 +105,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return signOut(auth);
   };
 
-  const loading = authLoading || firebaseStatus === 'initializing';
-
   const value: AuthContextType = {
     user,
     loading,
-    firebaseStatus,
     login,
     signup,
     logout,
