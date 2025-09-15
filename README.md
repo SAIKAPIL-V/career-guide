@@ -1,4 +1,6 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# EduCareer Compass - Next.js Starter
+
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app), enhanced with AI features using Genkit and Firebase.
 
 ## Getting Started
 
@@ -35,20 +37,34 @@ npm install
 ```
 
 ### 3. Set Up Environment Variables
-This project uses the Google Gemini API to power its AI features. You will need an API key to run it.
+This project uses both **Firebase** for authentication and data storage, and the **Google Gemini API** for its AI features. You will need API keys and configuration for both.
 
 1.  Create a new file in the root of the project directory named `.env.local`.
 2.  Copy the contents from the `.env` file into your new `.env.local` file.
-3.  Get your Gemini API key from [Google AI Studio](https://aistudio.google.com/app/apikey).
-4.  Replace the placeholder value in `.env.local` with your actual API key.
+3.  **Set up Firebase:**
+    *   Go to the [Firebase Console](https://console.firebase.google.com/).
+    *   Create a new project or select an existing one.
+    *   In your Project Settings, under the "General" tab, scroll down to "Your apps".
+    *   Click the web icon (`</>`) to add a new web app.
+    *   After registering the app, you will see a `firebaseConfig` object. Copy the values from this object into your `.env.local` file, matching the keys (e.g., `NEXT_PUBLIC_FIREBASE_API_KEY` corresponds to `apiKey`).
+    *   Go to the **Authentication** section in the Firebase console, select the **Sign-in method** tab, and enable the **Email/Password** provider.
+4.  **Set up Gemini API Key:**
+    *   Get your Gemini API key from [Google AI Studio](https://aistudio.google.com/app/apikey).
+    *   Paste this key into the `GEMINI_API_KEY` variable in your `.env.local` file.
 
-Your `.env.local` file should look like this:
+Your `.env.local` file should look something like this:
 ```
-GEMINI_API_KEY="YOUR_API_KEY_HERE"
+NEXT_PUBLIC_FIREBASE_API_KEY="your-firebase-api-key"
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN="your-firebase-auth-domain"
+NEXT_PUBLIC_FIREBASE_PROJECT_ID="your-firebase-project-id"
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET="your-firebase-storage-bucket"
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID="your-firebase-messaging-id"
+NEXT_PUBLIC_FIREBASE_APP_ID="your-firebase-app-id"
+GEMINI_API_KEY="your-gemini-api-key"
 ```
 
 ### 4. Run the Development Server
-Once the dependencies are installed and your API key is set, run the following command in your terminal:
+Once the dependencies are installed and your environment variables are set, run the following command in your terminal:
 
 ```bash
 npm run dev

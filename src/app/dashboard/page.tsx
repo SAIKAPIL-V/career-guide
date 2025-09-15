@@ -31,19 +31,23 @@ type ResultsData =
   | PersonalizedCourseRecommendationsOutput;
 
 const notifications = [
-  {
+    {
     id: 1,
-    title: 'JEE Main 2024: Application Deadline',
-    date: 'March 2, 2024',
-    description:
-      'Last day to submit your application for the Joint Entrance Examination (Main).',
+    title: 'JEE Main 2025: Application Deadline',
+    date: 'March 2, 2025',
+    description: 'Last day to submit your application for the Joint Entrance Examination (Main).',
   },
   {
     id: 2,
-    title: 'NEET 2024: Exam Date',
-    date: 'May 5, 2024',
-    description:
-      'The National Eligibility cum Entrance Test for medical courses will be held on this day.',
+    title: 'NEET 2025: Exam Date',
+    date: 'May 5, 2025',
+    description: 'The National Eligibility cum Entrance Test for medical courses will be held on this day.',
+  },
+  {
+    id: 3,
+    title: 'State Scholarship Program 2025: Application Opens',
+    date: 'June 1, 2025',
+    description: 'Applications for state-level merit scholarships for undergraduate students will open.',
   },
 ];
 
@@ -61,7 +65,17 @@ export default function DashboardPage() {
 
   useEffect(() => {
     const fetchRecommendations = async () => {
-      // First, check for locally stored assessment answers
+      // If not authenticated and done loading, redirect to login
+      if (!authLoading && !user) {
+        router.push('/login');
+        return;
+      }
+      
+      // Do nothing more if auth is loading or user is null
+      if (authLoading || !user) return;
+
+
+      // First, check for locally stored assessment answers from a recent quiz
       const storedAnswers = localStorage.getItem('assessmentAnswers');
       const type = localStorage.getItem('assessmentType');
 
@@ -108,39 +122,23 @@ export default function DashboardPage() {
         return;
       }
       
-      // If no local answers, try fetching saved results for a logged-in user
-      if (user) {
-        const userDocRef = doc(db, 'users', user.uid);
-        const userDoc = await getDoc(userDocRef);
-        if (userDoc.exists() && userDoc.data().recommendations) {
-            const savedData = userDoc.data();
-            setResults(savedData.recommendations);
-            setSpotlight(savedData.spotlight);
-            setAssessmentType(savedData.assessmentType);
-            setLoading(false);
-            return;
-        }
-      }
-
-      // If no local answers and no saved data, redirect to assessment
-      if(!loading && !user) {
-        router.push('/assessment');
-        return;
-      }
-      
-      // If user is logged in but has no saved data, show an error
-      if (user) {
+      // If no local answers, try fetching saved results for the logged-in user
+      const userDocRef = doc(db, 'users', user.uid);
+      const userDoc = await getDoc(userDocRef);
+      if (userDoc.exists() && userDoc.data().recommendations) {
+          const savedData = userDoc.data();
+          setResults(savedData.recommendations);
+          setSpotlight(savedData.spotlight);
+          setAssessmentType(savedData.assessmentType);
+      } else {
+        // If user is logged in but has no saved data, show an error
         setError('No saved recommendations found. Please take an assessment to view your dashboard.');
       }
-
       setLoading(false);
-
     };
 
-    if (!authLoading) {
-        fetchRecommendations();
-    }
-  }, [user, authLoading, router, loading]);
+    fetchRecommendations();
+  }, [user, authLoading, router]);
 
   const handleSaveResults = async () => {
     if (!user || !results) return;
@@ -148,7 +146,6 @@ export default function DashboardPage() {
     try {
       const userDocRef = doc(db, 'users', user.uid);
       await setDoc(userDocRef, {
-        email: user.email,
         recommendations: results,
         spotlight: spotlight,
         assessmentType: assessmentType,
@@ -214,6 +211,8 @@ export default function DashboardPage() {
         items = results.careerRecommendations.slice(0, 3);
         title = "Top Recommended Careers";
         icon = <Briefcase className="h-6 w-6 text-primary" />;
+    } else {
+      return null;
     }
 
     return (
@@ -248,7 +247,7 @@ export default function DashboardPage() {
             Your Personalized Dashboard
           </h1>
           <p className="mt-2 text-lg text-muted-foreground">
-            {user ? `Welcome back, ${user.email}! ` : 'Welcome! '} Here are the AI-powered insights based on your assessment.
+            {user ? `Welcome back! ` : 'Welcome! '} Here are the AI-powered insights based on your assessment.
           </p>
         </div>
          {user && results && localStorage.getItem('assessmentAnswers') && (
@@ -283,15 +282,11 @@ export default function DashboardPage() {
                     <CardContent className="space-y-6">
                         <div>
                             <h4 className="font-semibold text-lg mb-2">Overview</h4>
-                             <ul className="list-disc list-inside text-muted-foreground space-y-1">
-                                {spotlight.description.split('. ').filter(s => s).map((sentence, index) => <li key={index}>{sentence}</li>)}
-                            </ul>
+                             <p className="text-muted-foreground">{spotlight.description}</p>
                         </div>
                         <div>
                             <h4 className="font-semibold text-lg mb-2">A Day in the Life</h4>
-                             <ul className="list-disc list-inside text-muted-foreground space-y-1">
-                                {spotlight.dayInTheLife.split('. ').filter(s => s).map((sentence, index) => <li key={index}>{sentence}</li>)}
-                            </ul>
+                             <p className="text-muted-foreground">{spotlight.dayInTheLife}</p>
                         </div>
                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>

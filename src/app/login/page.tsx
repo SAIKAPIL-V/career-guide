@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -20,11 +20,18 @@ import { useAuth } from '@/context/auth-context';
 
 export default function LoginPage() {
   const router = useRouter();
-  const { login } = useAuth();
+  const { user, login } = useAuth();
   const { toast } = useToast();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      router.push('/dashboard');
+    }
+  }, [user, router]);
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,7 +43,7 @@ export default function LoginPage() {
       toast({
         variant: 'destructive',
         title: 'Login Failed',
-        description: error.message || 'Please check your credentials and try again.',
+        description: 'Please check your credentials and try again.',
       });
     } finally {
       setLoading(false);
@@ -44,7 +51,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="container mx-auto flex h-[80vh] items-center justify-center px-4">
+    <div className="container mx-auto flex min-h-[calc(100vh-10rem)] items-center justify-center px-4">
       <Card className="w-full max-w-sm">
         <form onSubmit={handleSubmit}>
           <CardHeader>

@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Loader2, Sparkles, University, Briefcase, Rocket, CheckCircle, GraduationCap, Building, Palette, BarChart } from 'lucide-react';
+import { Loader2, Sparkles, University, Briefcase, Rocket, CheckCircle, GraduationCap, Building, Palette, BarChart, TestTube2, Landmark } from 'lucide-react';
 import {
   Accordion,
   AccordionContent,
@@ -12,12 +12,12 @@ import {
 import { careerRoadmap, CareerRoadmapOutput } from '@/ai/flows/career-roadmap';
 import { useToast } from '@/hooks/use-toast';
 
-type CareerField = 'Engineering' | 'Business' | 'Arts & Humanities';
+type CareerField = 'Intermediate (MPC)' | 'Intermediate (BiPC)' | 'Polytechnic Diploma';
 
 const careerFields: { name: CareerField; description: string, icon: React.ReactNode }[] = [
-    { name: 'Engineering', description: 'Build, innovate, and solve.', icon: <Building /> },
-    { name: 'Business', description: 'Lead, manage, and strategize.', icon: <BarChart /> },
-    { name: 'Arts & Humanities', description: 'Create, express, and inspire.', icon: <Palette /> },
+    { name: 'Intermediate (MPC)', description: 'Maths, Physics, Chemistry path.', icon: <Building /> },
+    { name: 'Intermediate (BiPC)', description: 'Biology, Physics, Chemistry path.', icon: <TestTube2 /> },
+    { name: 'Polytechnic Diploma', description: 'Technical diploma courses.', icon: <Landmark /> },
 ];
 
 export default function After10thPage() {
@@ -31,7 +31,7 @@ export default function After10thPage() {
     setLoading(true);
     setResults(null);
     try {
-      const resultData = await careerRoadmap({ careerField: field, stage: '10th Completed' });
+      const resultData = await careerRoadmap({ course: field, stage: '10th Completed' });
       setResults(resultData);
     } catch (error) {
       console.error('AI call failed:', error);
@@ -52,13 +52,13 @@ export default function After10thPage() {
           Roadmap After 10th
         </h1>
         <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
-          You've completed 10th grade! This is a crucial time to choose your path. Select a career field below to see what your journey could look like.
+          You've completed 10th grade! This is a crucial time to choose your path. Select a stream below to see what your journey could look like.
         </p>
       </div>
 
       <Card className="max-w-4xl mx-auto mb-12 shadow-lg">
         <CardHeader>
-          <CardTitle className="text-center">Which career field interests you?</CardTitle>
+          <CardTitle className="text-center">Which educational path interests you?</CardTitle>
         </CardHeader>
         <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {careerFields.map((field) => (

@@ -18,8 +18,8 @@ const questions = [
     options: ['A corporate office', 'A research lab or hospital', 'A creative studio', 'On-field or outdoors'],
   },
   {
-    question: 'Which of these fields interests you the most for your undergraduate degree?',
-    options: ['Engineering (B.Tech)', 'Medical (MBBS, BDS)', 'Business Administration (BBA)', 'Architecture (B.Arch)'],
+    question: 'Which of these career fields interests you the most for your undergraduate degree?',
+    options: ['Engineering (B.Tech)', 'Medical (MBBS, BDS)', 'Business Administration (BBA)', 'Humanities & Social Sciences (B.A.)'],
   },
   {
     question: 'How important is a high starting salary to you?',
@@ -34,20 +34,20 @@ const questions = [
     options: ['Analyze data and create reports', 'Design a new product', 'Manage a team of people', 'Conduct scientific experiments'],
   },
   {
-    question: 'How comfortable are you with public speaking?',
+    question: 'How comfortable are you with public speaking and presentations?',
     options: ['Very comfortable', 'Somewhat comfortable', 'Not comfortable at all'],
   },
   {
-    question: 'Which of these work styles suits you best?',
-    options: ['Structured and organized', 'Flexible and adaptable', 'Creative and innovative', 'Analytical and detail-oriented'],
+    question: 'Which work style suits you best?',
+    options: ['Structured and organized with clear tasks', 'Flexible and adaptable to changing priorities', 'Creative and innovative with freedom to explore', 'Analytical and detail-oriented with complex data'],
   },
   {
     question: 'What is your long-term career goal?',
-    options: ['To become an expert in a specific field', 'To start my own business', 'To work for a large multinational company', 'To work for a non-profit organization'],
+    options: ['To become an expert or specialist in a specific field', 'To start my own business or venture', 'To work for a large multinational company', 'To contribute to a social cause or non-profit'],
   },
   {
-    question: 'How much do you enjoy learning about new technologies?',
-    options: ['A lot', 'A little', 'Not at all'],
+    question: 'How much do you enjoy learning about new technologies and their applications?',
+    options: ['A lot, I follow the latest trends', 'A fair amount, if it\'s relevant to my interests', 'Not much, I prefer other subjects'],
   }
 ];
 

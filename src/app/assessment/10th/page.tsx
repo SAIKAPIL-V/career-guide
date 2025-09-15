@@ -14,40 +14,40 @@ const questions = [
     options: ['Mathematics', 'Science', 'Social Studies', 'Languages'],
   },
   {
-    question: 'What kind of TV shows or movies do you like?',
-    options: ['Science Fiction', 'Historical Dramas', 'Documentaries', 'Comedies'],
+    question: 'What kind of activities do you enjoy outside of school?',
+    options: ['Building things with blocks or tools', 'Solving puzzles or playing strategy games', 'Helping others or volunteering', 'Drawing, painting, or making music'],
   },
   {
-    question: 'How do you prefer to spend your free time?',
-    options: ['Playing video games or coding', 'Reading books or writing', 'Playing sports or outdoor activities', 'Drawing or painting'],
+    question: 'If you could invent anything, what would it be?',
+    options: ['A robot that does chores', 'A new type of video game', 'A way to solve world hunger', 'A beautiful piece of art'],
   },
   {
-    question: 'If you had a superpower, what would it be?',
-    options: ['Ability to build anything', 'Ability to heal people', 'Ability to persuade anyone', 'Ability to create art from thin air'],
+    question: 'How do you prefer to learn new things?',
+    options: ['By reading books and articles', 'By watching videos and documentaries', 'By doing hands-on experiments', 'By discussing with others'],
   },
   {
     question: 'What kind of problems do you enjoy solving?',
-    options: ['Logical puzzles', 'Problems related to people and society', 'Scientific mysteries', 'Creative challenges'],
+    options: ['Logical puzzles with clear answers', 'Complex problems with no single right answer', 'Helping people resolve their issues', 'Creating something new and original'],
   },
   {
-    question: 'Are you more interested in theoretical concepts or practical applications?',
-    options: ['Theoretical concepts', 'Practical applications', 'A balance of both'],
+    question: 'Which of these sounds like a fun weekend project?',
+    options: ['Building a model airplane', 'Writing a short story or poem', 'Organizing a charity event', 'Conducting a science experiment'],
   },
   {
-    question: 'What kind of activities do you prefer?',
-    options: ['Building things', 'Solving puzzles', 'Understanding living things', 'Creative writing'],
+    question: 'What is more important to you in a future job?',
+    options: ['A high salary', 'Helping society', 'Being creative', 'Solving challenging problems'],
   },
   {
-    question: 'Which of these career fields sounds most appealing?',
-    options: ['Engineering / Technology', 'Medicine / Healthcare', 'Business / Commerce', 'Arts / Design'],
+    question: 'Which work environment sounds most appealing?',
+    options: ['A busy office', 'A quiet library or research lab', 'An art studio or workshop', 'Outdoors, working with nature'],
   },
   {
-    question: 'How do you feel about subjects that require a lot of calculation?',
-    options: ['I love them', 'I can manage them', 'I prefer to avoid them'],
+    question: 'How do you feel about working with numbers and data?',
+    options: ['I love it', 'I can do it if needed', 'I prefer to avoid it'],
   },
   {
-    question: 'When working on a project, do you prefer to work alone or in a team?',
-    options: ['Alone', 'In a team', 'It depends on the project'],
+    question: 'When faced with a difficult task, what do you do first?',
+    options: ['Break it down into smaller steps', 'Ask for help from a friend or teacher', 'Try different approaches until one works', 'Think about the big picture and overall goal'],
   }
 ];
 

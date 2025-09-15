@@ -27,22 +27,23 @@ export default function Header() {
 
   const handleLogout = async () => {
     await logout();
-    router.push('/');
+    router.push('/login');
   }
 
   const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (isAuthPage) {
+    // Prevent navigation from auth pages if not logged in
+    if (isAuthPage && !user) {
       e.preventDefault();
-    } else {
-      router.push('/');
+      return;
     }
+    router.push(user ? '/dashboard' : '/');
   }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-20 items-center">
         <div className="flex items-center space-x-2">
-            <Link href="/" className="flex items-center space-x-2" onClick={isAuthPage ? handleLogoClick : undefined}>
+            <Link href="/" className="flex items-center space-x-2" onClick={handleLogoClick}>
               <BookOpenCheck className="h-8 w-8 text-primary" />
               <span className="font-bold text-xl sm:inline-block">
                   EduCareer Compass
@@ -55,7 +56,7 @@ export default function Header() {
             <Link
             key={item.href}
             href={item.href}
-            className="transition-colors hover:text-primary"
+            className={cn("transition-colors hover:text-primary", pathname === item.href && "text-primary")}
             >
             {item.label}
             </Link>
@@ -65,7 +66,7 @@ export default function Header() {
             {!loading && !isAuthPage && (
             user ? (
                 <>
-                {isDashboard && <span className="hidden sm:inline text-sm text-muted-foreground">Welcome, {user.email}</span>}
+                {isDashboard && <span className="hidden sm:inline text-sm text-muted-foreground">Welcome!</span>}
                 <Button variant="outline" onClick={handleLogout}>Log Out</Button>
                 </>
             ) : (
