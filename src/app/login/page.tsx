@@ -64,6 +64,7 @@ export default function LoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                autoFocus
               />
             </div>
             <div className="grid gap-2">
