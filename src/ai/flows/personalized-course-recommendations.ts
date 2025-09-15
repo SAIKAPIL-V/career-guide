@@ -72,7 +72,7 @@ Explain your recommendations in the rationale field.
     safetySettings: [
         {
             category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
-            threshold: 'BLOCK_ONLY_HIGH',
+            threshold: 'BLOCK_NONE',
         },
     ]
   }
