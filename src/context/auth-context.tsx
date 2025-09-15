@@ -14,7 +14,7 @@ import {
   signOut,
   type User,
 } from 'firebase/auth';
-import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc, type Firestore } from 'firebase/firestore';
 import { auth, db } from '@/lib/firebase'; // Use the centralized Firebase instances
 
 type FirebaseStatus = 'initializing' | 'connected' | 'error';
@@ -30,7 +30,7 @@ interface AuthContextType {
     details: { firstName: string; lastName: string }
   ) => Promise<any>;
   logout: () => Promise<any>;
-  db: Firestore | null;
+  db: Firestore;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -61,33 +61,32 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     useState<FirebaseStatus>('initializing');
 
   useEffect(() => {
-    // The 'auth' object is imported, so we just need to check if it's there
-    if (auth) {
-        setFirebaseStatus('connected');
+    // Because auth is imported from firebase.ts, we know it's initialized
+    if (auth && db) {
+      setFirebaseStatus('connected');
     } else {
-        setFirebaseStatus('error');
+      setFirebaseStatus('error');
     }
 
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-        setUser(user);
-        if (user) {
+      setUser(user);
+      if (user) {
         setCookie('userLoggedIn', 'true', 7);
-        } else {
+      } else {
         eraseCookie('userLoggedIn');
-        }
-        setLoading(false);
+      }
+      setLoading(false);
     });
 
     // Cleanup subscription on unmount
     return () => unsubscribe();
   }, []);
-  
+
   const signup = async (
     email: string,
     password: string,
     details: { firstName: string; lastName: string }
   ) => {
-    if (!auth || !db) throw new Error('Firebase not initialized');
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
@@ -105,12 +104,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const login = (email: string, pass: string) => {
-    if (!auth) throw new Error('Firebase not initialized');
     return signInWithEmailAndPassword(auth, email, pass);
   };
 
   const logout = () => {
-    if (!auth) throw new Error('Firebase not initialized');
     return signOut(auth);
   };
 
@@ -126,11 +123,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AuthContext.Provider value={value}>
-      {!loading ? children : (
-        <div className="flex h-screen items-center justify-center">
-            Initializing app...
-        </div>
-      )}
+      {!loading && children}
     </AuthContext.Provider>
   );
 };
