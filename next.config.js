@@ -48,6 +48,12 @@ const nextConfig = {
       },
     ]
   },
+  experimental: {
+    serverComponentsExternalPackages: [
+      '@genkit-ai/googleai',
+      '@google/generative-ai',
+    ],
+  },
 };
 
 module.exports = nextConfig;
