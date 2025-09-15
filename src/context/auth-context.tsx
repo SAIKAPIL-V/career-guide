@@ -11,7 +11,7 @@ import {
   Auth,
 } from 'firebase/auth';
 import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase/app';
-import { getFirestore, doc, setDoc, Firestore } from 'firebase/firestore';
+import { getFirestore, doc, setDoc, Firestore, getDoc } from 'firebase/firestore';
 import { firebaseConfig } from '@/lib/firebase';
 
 interface AuthContextType {
