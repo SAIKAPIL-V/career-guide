@@ -57,6 +57,7 @@ export default function DashboardPage() {
   const [assessmentType, setAssessmentType] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [userName, setUserName] = useState('');
 
   const { user, loading: authLoading, db } = useAuth();
   const router = useRouter();
@@ -70,6 +71,21 @@ export default function DashboardPage() {
         return;
       }
       
+      const userDocRef = doc(db, 'users', user.uid);
+      const userDoc = await getDoc(userDocRef);
+
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        setUserName(userData.firstName || '');
+        if (userData.recommendations) {
+          setResults(userData.recommendations);
+          setSpotlight(userData.spotlight);
+          setAssessmentType(userData.assessmentType);
+          setLoading(false);
+          return;
+        }
+      }
+
       const storedAnswers = localStorage.getItem('assessmentAnswers');
       const type = localStorage.getItem('assessmentType');
 
@@ -77,45 +93,37 @@ export default function DashboardPage() {
         setAssessmentType(type);
         const parsedAnswers = JSON.parse(storedAnswers);
         try {
-          // Get main recommendations first to show something to the user quickly
-          const recommendationPromise = type === '10th'
-            ? personalizedCourseRecommendations({
-                interests: parsedAnswers.join(', '),
-                strengths: 'Varies based on answers',
-                academicPerformance: 'Average',
-                careerAspirations: 'Not specified',
-              })
-            : personalizedCareerRecommendations({
-                interests: parsedAnswers.join(', '),
-                aptitude: 'Varies based on answers',
-                academicPerformance: 'Average',
-                location: 'Jammu and Kashmir',
-              });
-          
-          let topRecommendation: string | undefined;
+          let recommendationPromise;
+          if (type === '10th') {
+            recommendationPromise = personalizedCourseRecommendations({
+              interests: parsedAnswers.join(', '),
+              strengths: 'Varies based on answers',
+              academicPerformance: 'Average',
+              careerAspirations: 'Not specified',
+            });
+          } else {
+            recommendationPromise = personalizedCareerRecommendations({
+              interests: parsedAnswers.join(', '),
+              aptitude: 'Varies based on answers',
+              academicPerformance: 'Average',
+              location: 'Jammu and Kashmir',
+            });
+          }
 
-          // Run both promises in parallel
-          const [resultData, _] = await Promise.all([
-            recommendationPromise,
-            (async () => {
-              // This is a bit of a trick to get the top recommendation without waiting
-              // for the first promise to resolve fully if we were to do it sequentially.
-              // This relies on the fact that the object structure is predictable.
-              const tempResults = await recommendationPromise;
-              if ('recommendedStreams' in tempResults) {
-                  topRecommendation = tempResults.recommendedStreams?.[0];
-              } else if ('careerRecommendations' in tempResults) {
-                  topRecommendation = tempResults.careerRecommendations?.[0];
-              }
-            })(),
-          ]);
-
+          const resultData = await recommendationPromise;
           setResults(resultData);
-          setLoading(false); // Stop loading as soon as we have the main results
-          
+          setLoading(false);
+
+          let topRecommendation: string | undefined;
+          if ('recommendedStreams' in resultData) {
+            topRecommendation = resultData.recommendedStreams?.[0];
+          } else if ('careerRecommendations' in resultData) {
+            topRecommendation = resultData.careerRecommendations?.[0];
+          }
+
           if (topRecommendation) {
-              const spotlightResult = await careerSpotlight({ career: topRecommendation });
-              setSpotlight(spotlightResult);
+            const spotlightResult = await careerSpotlight({ career: topRecommendation });
+            setSpotlight(spotlightResult);
           }
 
         } catch (err) {
@@ -123,21 +131,9 @@ export default function DashboardPage() {
           setError('Our AI is a bit busy right now. Please try again in a moment.');
           setLoading(false);
         }
-        return;
-      }
-      
-      const userDocRef = doc(db, 'users', user.uid);
-      const userDoc = await getDoc(userDocRef);
-      if (userDoc.exists() && userDoc.data().recommendations) {
-          const savedData = userDoc.data();
-          setResults(savedData.recommendations);
-          setSpotlight(savedData.spotlight);
-          setAssessmentType(savedData.assessmentType);
       } else {
         router.push('/');
-        return;
       }
-      setLoading(false);
     };
 
     fetchRecommendations();
@@ -249,7 +245,7 @@ export default function DashboardPage() {
             Your Personalized Dashboard
           </h1>
           <p className="mt-2 text-lg text-muted-foreground">
-            {user ? `Welcome back, ${user.email}! ` : 'Welcome! '} Here are the AI-powered insights based on your assessment.
+            {userName ? `Welcome back, ${userName}! ` : 'Welcome! '} Here are the AI-powered insights based on your assessment.
           </p>
         </div>
          {user && results && localStorage.getItem('assessmentAnswers') && (

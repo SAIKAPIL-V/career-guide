@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import EmblemLogo from '@/components/layout/emblem-logo';
 import { MapPin } from 'lucide-react';
 import Link from 'next/link';
@@ -35,6 +35,36 @@ export default function CollegesPage() {
       location: 'Hyderabad, Telangana',
       href: '/colleges/iit-hyderabad',
     },
+    {
+      name: 'AIIMS Delhi',
+      location: 'New Delhi, Delhi',
+      href: '#', // Placeholder, ideally would have a page
+    },
+    {
+        name: 'JIPMER Puducherry',
+        location: 'Puducherry',
+        href: '#',
+    },
+    {
+        name: 'Maulana Azad Medical College',
+        location: 'New Delhi, Delhi',
+        href: '#',
+    },
+    {
+        name: 'Lady Hardinge Medical College',
+        location: 'New Delhi, Delhi',
+        href: '#',
+    },
+    {
+        name: 'Christian Medical College',
+        location: 'Vellore, Tamil Nadu',
+        href: '#',
+    },
+    {
+        name: 'IIT Bombay',
+        location: 'Mumbai, Maharashtra',
+        href: '#',
+    }
   ];
 
   return (

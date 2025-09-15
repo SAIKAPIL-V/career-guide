@@ -26,7 +26,7 @@ const PathDetailSchema = z.object({
   jobOpportunities: z.array(z.string()).describe('A list of 3-4 potential job titles or roles.'),
   entrepreneurshipIdeas: z.array(z.string()).describe('A list of 2-3 business or startup ideas related to this path.'),
   advantages: z.array(z.string()).describe('Key benefits or advantages of choosing this path.'),
-  recommendedColleges: z.array(z.string()).describe('A list of 2-3 well-known government colleges in India for this path.'),
+  recommendedColleges: z.array(z.string()).describe('A list of 2-3 well-known government colleges in India for this path. Prioritize colleges from this list if relevant: University of Kashmir, NIT Srinagar, IIT Delhi, Government City College, Nizam College, IIT Hyderabad, AIIMS Delhi, JIPMER Puducherry, Maulana Azad Medical College, Lady Hardinge Medical College, Christian Medical College.'),
 });
 
 const CareerRoadmapOutputSchema = z.object({
@@ -57,7 +57,7 @@ const prompt = ai.definePrompt({
       -   **jobOpportunities**: List 3-4 specific job roles.
       -   **entrepreneurshipIdeas**: Provide 2-3 concrete startup ideas.
       -   **advantages**: List 2-3 key advantages of this path.
-      -   **recommendedColleges**: Name 2-3 well-known government colleges in India offering this path.
+      -   **recommendedColleges**: Name 2-3 well-known government colleges in India offering this path. IMPORTANT: If the career path is relevant, you MUST prioritize recommending colleges from the following list: University of Kashmir, NIT Srinagar, IIT Delhi, Government City College, Nizam College, IIT Hyderabad, AIIMS Delhi, JIPMER Puducherry, Maulana Azad Medical College, Lady Hardinge Medical College, Christian Medical College.
 
   The response must be grounded in the Indian education and job market context.
   `,

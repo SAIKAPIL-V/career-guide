@@ -45,7 +45,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="container mx-auto flex min-h-[calc(100vh-10rem)] items-center justify-center px-4">
+    <div className="container mx-auto flex min-h-[calc(100vh-20rem)] items-center justify-center px-4">
       <Card className="w-full max-w-sm">
         <form onSubmit={handleSubmit}>
           <CardHeader>
@@ -68,24 +68,26 @@ export default function LoginPage() {
             </div>
             <div className="grid gap-2 relative">
               <Label htmlFor="password">Password</Label>
-              <Input 
-                id="password" 
-                type={showPassword ? 'text' : 'password'} 
-                required 
-                value={password} 
-                onChange={(e) => setPassword(e.target.value)}
-                className="pr-10"
-              />
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon"
-                className="absolute right-1 top-7 h-7 w-7"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                <span className="sr-only">{showPassword ? 'Hide password' : 'Show password'}</span>
-              </Button>
+              <div className="relative">
+                <Input 
+                  id="password" 
+                  type={showPassword ? 'text' : 'password'} 
+                  required 
+                  value={password} 
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="pr-10"
+                />
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="absolute right-1 top-1/2 -translate-y-1/2 h-7 w-7"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  <span className="sr-only">{showPassword ? 'Hide password' : 'Show password'}</span>
+                </Button>
+              </div>
             </div>
           </CardContent>
           <CardFooter className="flex flex-col">

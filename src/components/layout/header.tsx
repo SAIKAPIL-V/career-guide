@@ -38,8 +38,10 @@ export default function Header() {
   }
 
   const handleLogout = async () => {
+    setIsNavigating('/login');
     await logout();
     router.push('/login');
+    setIsNavigating(false);
   }
 
   return (
@@ -52,7 +54,7 @@ export default function Header() {
                 <span className="font-bold text-xl leading-tight sm:inline-block">
                     CareerCompass
                 </span>
-                <span className="text-xs text-muted-foreground font-semibold leading-tight">Govt. of Jammu and Kashmir</span>
+                <span className="text-xs text-muted-foreground font-semibold leading-tight">Government of Jammu and Kashmir</span>
               </div>
             </Link>
         </div>
@@ -75,7 +77,10 @@ export default function Header() {
             user ? (
                 <>
                 {pathname === '/dashboard' && <span className="hidden sm:inline text-sm text-muted-foreground">Welcome!</span>}
-                <Button variant="outline" onClick={handleLogout}>Log Out</Button>
+                <Button variant="outline" onClick={handleLogout} disabled={!!isNavigating}>
+                  {isNavigating === '/login' ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+                  Log Out
+                </Button>
                 </>
             ) : (
                 <>
