@@ -6,9 +6,15 @@ export function middleware(request: NextRequest) {
   const userLoggedIn = request.cookies.get('userLoggedIn')?.value === 'true';
   const { pathname } = request.nextUrl;
 
+  const publicPaths = ['/login', '/signup', '/about', '/contact'];
+
   // If user is not logged in and is trying to access a protected route, redirect to login
-  if (!userLoggedIn && pathname !== '/login' && pathname !== '/signup') {
-    return NextResponse.redirect(new URL('/login', request.url));
+  if (!userLoggedIn && !publicPaths.includes(pathname)) {
+    // Allow access to public pages without login
+    const isPublic = publicPaths.some(publicPath => pathname.startsWith(publicPath));
+    if (!isPublic) {
+        return NextResponse.redirect(new URL('/login', request.url));
+    }
   }
 
   // If user is logged in and tries to access login or signup, redirect to home
