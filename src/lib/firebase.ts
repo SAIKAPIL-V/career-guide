@@ -17,11 +17,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app: FirebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
 const auth: Auth = getAuth(app);
-const db: Firestore = initializeFirestore(app, {
-  localCache: {
-    kind: 'persistent'
-  }
-});
+const db: Firestore = getFirestore(app);
 
 if (typeof window !== 'undefined') {
   enableIndexedDbPersistence(db)
