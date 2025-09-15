@@ -11,7 +11,7 @@ export default function Footer() {
             <Link href="/" className="flex items-center space-x-2 mb-4">
               <EmblemLogo className="h-10 w-10 text-primary" />
               <div className="flex flex-col">
-                 <span className="font-bold font-headline text-xl leading-tight">Career Portal</span>
+                 <span className="font-bold font-headline text-xl leading-tight">CareerCompass</span>
                  <span className="text-xs text-muted-foreground font-semibold leading-tight">Govt. of Jammu and Kashmir</span>
               </div>
             </Link>

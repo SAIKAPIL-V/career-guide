@@ -44,7 +44,7 @@ export default function Header() {
               <EmblemLogo className="h-10 w-10 text-primary" />
               <div className='flex flex-col'>
                 <span className="font-bold text-xl leading-tight sm:inline-block">
-                    Career Portal
+                    CareerCompass
                 </span>
                 <span className="text-xs text-muted-foreground font-semibold leading-tight">Govt. of Jammu and Kashmir</span>
               </div>
@@ -91,7 +91,7 @@ export default function Header() {
                             <EmblemLogo className="h-8 w-8 text-primary" />
                             <div className='flex flex-col'>
                                 <span className="font-bold text-lg leading-tight sm:inline-block">
-                                    Career Portal
+                                    CareerCompass
                                 </span>
                                 <span className="text-xs text-muted-foreground font-semibold leading-tight">Govt. of Jammu and Kashmir</span>
                             </div>

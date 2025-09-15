@@ -8,7 +8,7 @@ export default function AboutPage() {
     <div className="container mx-auto px-4 py-16 lg:py-24">
       <section className="text-center mb-16">
         <h1 className="font-headline text-4xl md:text-5xl font-bold text-primary">
-          About The Career Portal
+          About CareerCompass
         </h1>
         <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
           An initiative by the Government of Jammu and Kashmir to empower students for a bright future.
@@ -28,7 +28,7 @@ export default function AboutPage() {
         <div>
           <h2 className="font-headline text-3xl font-bold mb-4">Our Story</h2>
           <p className="text-muted-foreground leading-relaxed">
-            The Jammu and Kashmir Career Portal was established by the Government of Jammu and Kashmir to address the critical need for career guidance among our students. We aim to bridge the information gap, making students and parents aware of the diverse educational and career opportunities available within the Union Territory and across India.
+            CareerCompass was established by the Government of Jammu and Kashmir to address the critical need for career guidance among our students. We aim to bridge the information gap, making students and parents aware of the diverse educational and career opportunities available within the Union Territory and across India.
             <br /><br />
             Our mission is to provide a one-stop, personalized digital advisor for every student, ensuring they can make informed decisions that align with their passions and the future of our region.
           </p>
