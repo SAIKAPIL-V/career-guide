@@ -11,18 +11,6 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: '/',
-        destination: '/login',
-        permanent: false,
-        missing: [
-          {
-            type: 'cookie',
-            key: 'userLoggedIn',
-            value: 'true',
-          },
-        ],
-      },
-       {
         source: '/login',
         destination: '/',
         permanent: false,
@@ -50,12 +38,17 @@ const nextConfig = {
   },
   experimental: {
     serverComponentsExternalPackages: [
+      '@genkit-ai/ai',
+      '@genkit-ai/core',
       '@genkit-ai/googleai',
       '@google/generative-ai',
       '@opentelemetry/api',
       '@opentelemetry/sdk-trace-base',
       '@opentelemetry/sdk-trace-node',
       '@opentelemetry/exporter-trace-otlp-http',
+      'firebase-admin',
+      'long',
+      'protobufjs',
       'handlebars'
     ],
   },
