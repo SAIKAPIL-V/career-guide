@@ -1,8 +1,11 @@
+'use client';
 import { Github, Twitter, Linkedin } from 'lucide-react';
 import Link from 'next/link';
 import EmblemLogo from './emblem-logo';
+import { useAuth } from '@/context/auth-context';
 
 export default function Footer() {
+  const { user } = useAuth();
   return (
     <footer className="bg-card border-t">
       <div className="container mx-auto py-12 px-4">
@@ -20,15 +23,17 @@ export default function Footer() {
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 md:col-span-3 gap-8">
-            <div>
-              <h3 className="font-headline font-semibold mb-4">Navigate</h3>
-              <ul className="space-y-2">
-                <li><Link href="/careers" className="text-sm hover:text-primary transition-colors">Career Paths</Link></li>
-                <li><Link href="/find-colleges" className="text-sm hover:text-primary transition-colors">AI College Finder</Link></li>
-                <li><Link href="/assessment" className="text-sm hover:text-primary transition-colors">Take Assessment</Link></li>
-                 <li><Link href="/colleges" className="text-sm hover:text-primary transition-colors">College Directory</Link></li>
-              </ul>
-            </div>
+            {user && (
+              <div>
+                <h3 className="font-headline font-semibold mb-4">Navigate</h3>
+                <ul className="space-y-2">
+                  <li><Link href="/careers" className="text-sm hover:text-primary transition-colors">Career Paths</Link></li>
+                  <li><Link href="/find-colleges" className="text-sm hover:text-primary transition-colors">AI College Finder</Link></li>
+                  <li><Link href="/assessment" className="text-sm hover:text-primary transition-colors">Take Assessment</Link></li>
+                  <li><Link href="/colleges" className="text-sm hover:text-primary transition-colors">College Directory</Link></li>
+                </ul>
+              </div>
+            )}
             <div>
               <h3 className="font-headline font-semibold mb-4">Company</h3>
               <ul className="space-y-2">
