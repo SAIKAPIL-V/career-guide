@@ -28,12 +28,12 @@ import { initializeApp, getApps, getApp, type FirebaseApp } from 'firebase/app';
 // This is a public configuration and is safe to expose.
 // Security is enforced by Firebase Security Rules.
 const firebaseConfig = {
-  apiKey: "AIzaSyANKQfL37GKDMkyhGU4COg_oQpRQibiiao",
-  authDomain: "studio-2525731056-d1386.firebaseapp.com",
-  projectId: "studio-2525731056-d1386",
-  storageBucket: "studio-2525731056-d1386.appspot.com",
-  messagingSenderId: "84236984952",
-  appId: "1:84236984952:web:114dd3feb377fca338038d",
+  apiKey: 'AIzaSyANKQfL37GKDMkyhGU4COg_oQpRQibiiao',
+  authDomain: 'studio-2525731056-d1386.firebaseapp.com',
+  projectId: 'studio-2525731056-d1386',
+  storageBucket: 'studio-2525731056-d1386.appspot.com',
+  messagingSenderId: '84236984952',
+  appId: '1:84236984952:web:114dd3feb377fca338038d',
 };
 
 type FirebaseStatus = 'initializing' | 'connected' | 'error';
@@ -55,7 +55,7 @@ interface AuthContextType {
     details: { firstName: string; lastName: string }
   ) => Promise<any>;
   logout: () => Promise<any>;
-  db: Firestore;
+  db: Firestore | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -94,29 +94,25 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const db = getFirestore(app);
       setFirebaseServices({ app, auth, db });
       setFirebaseStatus('connected');
+
+      const unsubscribe = onAuthStateChanged(auth, (user) => {
+        setUser(user);
+        if (user) {
+          setCookie('userLoggedIn', 'true', 7);
+        } else {
+          eraseCookie('userLoggedIn');
+        }
+        setLoading(false);
+      });
+
+      return () => unsubscribe();
     } catch (e) {
       console.error('Firebase initialization error', e);
       setFirebaseStatus('error');
       setLoading(false);
     }
   }, []);
-
-  useEffect(() => {
-    if (!firebaseServices) return;
-
-    const unsubscribe = onAuthStateChanged(firebaseServices.auth, (user) => {
-      setUser(user);
-      if (user) {
-        setCookie('userLoggedIn', 'true', 7);
-      } else {
-        eraseCookie('userLoggedIn');
-      }
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
-  }, [firebaseServices]);
-
+  
   const signup = async (
     email: string,
     password: string,
@@ -149,14 +145,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return signOut(firebaseServices.auth);
   };
 
-  if (!firebaseServices) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        {firebaseStatus === 'error' ? 'Error connecting to services.' : 'Initializing services...'}
-      </div>
-    );
-  }
-
   const value: AuthContextType = {
     user,
     loading,
@@ -164,12 +152,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     login,
     signup,
     logout,
-    db: firebaseServices.db,
+    db: firebaseServices?.db || null,
   };
 
   return (
     <AuthContext.Provider value={value}>
-      {!loading && children}
+      {!loading ? children : (
+        <div className="flex h-screen items-center justify-center">
+            Initializing services...
+        </div>
+      )}
     </AuthContext.Provider>
   );
 };
