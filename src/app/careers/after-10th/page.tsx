@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Loader2, Sparkles, University, Briefcase, Rocket, CheckCircle, GraduationCap, Building, Palette, BarChart, TestTube2, Landmark } from 'lucide-react';
+import { Loader2, Sparkles, University, Briefcase, Rocket, CheckCircle, GraduationCap, Building, TestTube2, Landmark } from 'lucide-react';
 import {
   Accordion,
   AccordionContent,
@@ -31,7 +31,7 @@ export default function After10thPage() {
     setLoading(true);
     setResults(null);
     try {
-      const resultData = await careerRoadmap({ course: field, stage: '10th Completed' });
+      const resultData = await careerRoadmap({ careerField: field, stage: '10th Completed' });
       setResults(resultData);
     } catch (error) {
       console.error('AI call failed:', error);

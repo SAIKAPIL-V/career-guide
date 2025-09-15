@@ -31,7 +31,7 @@ export default function After12thPage() {
     setLoading(true);
     setResults(null);
     try {
-      const resultData = await careerRoadmap({ course: field, stage: '12th Completed' });
+      const resultData = await careerRoadmap({ careerField: field, stage: '12th Completed' });
       setResults(resultData);
     } catch (error) {
       console.error('AI call failed:', error);

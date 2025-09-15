@@ -31,7 +31,7 @@ export default function AfterDegreePage() {
     setLoading(true);
     setResults(null);
     try {
-      const resultData = await careerRoadmap({ course: field, stage: 'Degree Completed' });
+      const resultData = await careerRoadmap({ careerField: field, stage: 'Degree Completed' });
       setResults(resultData);
     } catch (error) {
       console.error('AI call failed:', error);
