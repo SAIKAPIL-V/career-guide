@@ -8,34 +8,6 @@ const nextConfig = {
       },
     ],
   },
-  async redirects() {
-    return [
-      {
-        source: '/login',
-        destination: '/',
-        permanent: false,
-        has: [
-          {
-            type: 'cookie',
-            key: 'userLoggedIn',
-            value: 'true',
-          },
-        ],
-      },
-       {
-        source: '/signup',
-        destination: '/',
-        permanent: false,
-        has: [
-          {
-            type: 'cookie',
-            key: 'userLoggedIn',
-            value: 'true',
-          },
-        ],
-      },
-    ]
-  },
   experimental: {
     serverComponentsExternalPackages: [
       '@genkit-ai/ai',
