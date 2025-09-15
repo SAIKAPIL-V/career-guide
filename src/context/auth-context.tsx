@@ -1,3 +1,4 @@
+
 'use client';
 
 import {
@@ -28,13 +29,14 @@ import { initializeApp, getApps, getApp, type FirebaseApp } from 'firebase/app';
 // This is a public configuration and is safe to expose.
 // Security is enforced by Firebase Security Rules.
 const firebaseConfig = {
-  apiKey: 'AIzaSyANKQfL37GKDMkyhGU4COg_oQpRQibiiao',
-  authDomain: 'studio-2525731056-d1386.firebaseapp.com',
-  projectId: 'studio-2525731056-d1386',
-  storageBucket: 'studio-2525731056-d1386.appspot.com',
-  messagingSenderId: '84236984952',
-  appId: '1:84236984952:web:114dd3feb377fca338038d',
+  apiKey: "AIzaSyANKQfL37GKDMkyhGU4COg_oQpRQibiiao",
+  authDomain: "studio-2525731056-d1386.firebaseapp.com",
+  projectId: "studio-2525731056-d1386",
+  storageBucket: "studio-2525731056-d1386.appspot.com",
+  messagingSenderId: "84236984952",
+  appId: "1:84236984952:web:114dd3feb377fca338038d"
 };
+
 
 type FirebaseStatus = 'initializing' | 'connected' | 'error';
 
