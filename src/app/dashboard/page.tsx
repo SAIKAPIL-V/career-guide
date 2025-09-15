@@ -23,7 +23,6 @@ import { careerSpotlight, CareerSpotlightOutput } from '@/ai/flows/career-spotli
 import { useAuth } from '@/context/auth-context';
 import { useRouter } from 'next/navigation';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
 import { useToast } from '@/hooks/use-toast';
 
 type ResultsData =
@@ -59,23 +58,18 @@ export default function DashboardPage() {
   const [error, setError] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
 
-  const { user, loading: authLoading } = useAuth();
+  const { user, loading: authLoading, db } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
 
   useEffect(() => {
     const fetchRecommendations = async () => {
-      // If not authenticated and done loading, redirect to login
-      if (!authLoading && !user) {
+      if (authLoading) return;
+      if (!user || !db) {
         router.push('/login');
         return;
       }
       
-      // Do nothing more if auth is loading or user is null
-      if (authLoading || !user) return;
-
-
-      // First, check for locally stored assessment answers from a recent quiz
       const storedAnswers = localStorage.getItem('assessmentAnswers');
       const type = localStorage.getItem('assessmentType');
 
@@ -108,7 +102,6 @@ export default function DashboardPage() {
               topRecommendation = resultData.careerRecommendations?.[0];
           }
 
-
           if (topRecommendation) {
             const spotlightResult = await careerSpotlight({ career: topRecommendation });
             setSpotlight(spotlightResult);
@@ -122,7 +115,6 @@ export default function DashboardPage() {
         return;
       }
       
-      // If no local answers, try fetching saved results for the logged-in user
       const userDocRef = doc(db, 'users', user.uid);
       const userDoc = await getDoc(userDocRef);
       if (userDoc.exists() && userDoc.data().recommendations) {
@@ -131,17 +123,16 @@ export default function DashboardPage() {
           setSpotlight(savedData.spotlight);
           setAssessmentType(savedData.assessmentType);
       } else {
-        // If user is logged in but has no saved data, show an error
         setError('No saved recommendations found. Please take an assessment to view your dashboard.');
       }
       setLoading(false);
     };
 
     fetchRecommendations();
-  }, [user, authLoading, router]);
+  }, [user, authLoading, router, db]);
 
   const handleSaveResults = async () => {
-    if (!user || !results) return;
+    if (!user || !results || !db) return;
     setIsSaving(true);
     try {
       const userDocRef = doc(db, 'users', user.uid);
@@ -167,7 +158,6 @@ export default function DashboardPage() {
       setIsSaving(false);
     }
   };
-
 
   if (loading || authLoading) {
     return (

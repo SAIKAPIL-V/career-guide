@@ -14,12 +14,35 @@ import {
   signOut,
   type User,
   getAuth,
+  type Auth,
 } from 'firebase/auth';
-import { doc, setDoc, getFirestore } from 'firebase/firestore';
-import { firebaseConfig } from '@/lib/firebase';
+import {
+  doc,
+  setDoc,
+  getFirestore,
+  type Firestore,
+  getDoc,
+} from 'firebase/firestore';
 import { initializeApp, getApps, getApp, type FirebaseApp } from 'firebase/app';
 
+// This is a public configuration and is safe to expose.
+// Security is enforced by Firebase Security Rules.
+const firebaseConfig = {
+  apiKey: 'AIzaSyANKQfL37GKDMkyhGU4COg_oQpRQibiiao',
+  authDomain: 'studio-2525731056-d1386.firebaseapp.com',
+  projectId: 'studio-2525731056-d1386',
+  storageBucket: 'studio-2525731056-d1386.appspot.com',
+  messagingSenderId: '84236984952',
+  appId: '1:84236984952:web:114dd3feb377fca338038d',
+};
+
 type FirebaseStatus = 'initializing' | 'connected' | 'error';
+
+interface FirebaseServices {
+  app: FirebaseApp;
+  auth: Auth;
+  db: Firestore;
+}
 
 interface AuthContextType {
   user: User | null;
@@ -32,6 +55,7 @@ interface AuthContextType {
     details: { firstName: string; lastName: string }
   ) => Promise<any>;
   logout: () => Promise<any>;
+  db: Firestore | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -55,31 +79,31 @@ const eraseCookie = (name: string) => {
   }
 };
 
-
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const [firebaseStatus, setFirebaseStatus] = useState<FirebaseStatus>('initializing');
+  const [firebaseStatus, setFirebaseStatus] =
+    useState<FirebaseStatus>('initializing');
+  const [firebaseServices, setFirebaseServices] =
+    useState<FirebaseServices | null>(null);
 
-  const [firebaseServices] = useState(() => {
+  useEffect(() => {
     try {
       const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
       const auth = getAuth(app);
       const db = getFirestore(app);
+      setFirebaseServices({ app, auth, db });
       setFirebaseStatus('connected');
-      return { app, auth, db };
     } catch (e) {
-      console.error("Firebase initialization error", e);
+      console.error('Firebase initialization error', e);
       setFirebaseStatus('error');
-      return { app: null, auth: null, db: null };
+      setLoading(false);
     }
-  });
+  }, []);
 
   useEffect(() => {
-    if (!firebaseServices.auth) {
-      setLoading(false);
-      return;
-    }
+    if (!firebaseServices) return;
+
     const unsubscribe = onAuthStateChanged(firebaseServices.auth, (user) => {
       setUser(user);
       if (user) {
@@ -91,14 +115,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     });
 
     return () => unsubscribe();
-  }, [firebaseServices.auth]);
+  }, [firebaseServices]);
 
   const signup = async (
     email: string,
     password: string,
     details: { firstName: string; lastName: string }
   ) => {
-    if (!firebaseServices.auth || !firebaseServices.db) throw new Error("Firebase not initialized");
+    if (!firebaseServices) throw new Error('Firebase not initialized');
     const userCredential = await createUserWithEmailAndPassword(
       firebaseServices.auth,
       email,
@@ -116,12 +140,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const login = (email: string, pass: string) => {
-    if (!firebaseServices.auth) throw new Error("Firebase not initialized");
+    if (!firebaseServices) throw new Error('Firebase not initialized');
     return signInWithEmailAndPassword(firebaseServices.auth, email, pass);
   };
 
   const logout = () => {
-    if (!firebaseServices.auth) throw new Error("Firebase not initialized");
+    if (!firebaseServices) throw new Error('Firebase not initialized');
     return signOut(firebaseServices.auth);
   };
 
@@ -132,6 +156,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     login,
     signup,
     logout,
+    db: firebaseServices?.db || null,
   };
 
   return (
