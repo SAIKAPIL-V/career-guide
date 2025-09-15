@@ -61,6 +61,14 @@ const prompt = ai.definePrompt({
 
   The response must be grounded in the Indian education and job market context.
   `,
+  config: {
+    safetySettings: [
+        {
+            category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
+            threshold: 'BLOCK_NONE',
+        },
+    ]
+  }
 });
 
 const careerRoadmapFlow = ai.defineFlow(

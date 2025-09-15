@@ -54,6 +54,14 @@ const prompt = ai.definePrompt({
 
   Present the information clearly in the requested JSON format.
   `,
+  config: {
+    safetySettings: [
+        {
+            category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
+            threshold: 'BLOCK_NONE',
+        },
+    ]
+  }
 });
 
 const careerSpotlightFlow = ai.defineFlow(
