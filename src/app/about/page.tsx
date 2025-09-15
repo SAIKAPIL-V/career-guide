@@ -12,7 +12,7 @@ export default function AboutPage() {
           About CareerCompass
         </h1>
         <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
-          An initiative by the Government of Jammu and Kashmir to empower students for a bright future.
+          An initiative by the Government of Jammu and Kashmir, made for every student in India.
         </p>
       </section>
 
@@ -29,9 +29,9 @@ export default function AboutPage() {
         <div>
           <h2 className="font-headline text-3xl font-bold mb-4">Our Story</h2>
           <p className="text-muted-foreground leading-relaxed">
-            CareerCompass was established by the Government of Jammu and Kashmir to address the critical need for career guidance among our students. We aim to bridge the information gap, making students and parents aware of the diverse educational and career opportunities available within Jammu and Kashmir and across India.
+            CareerCompass was established by the Government of Jammu and Kashmir to address the critical need for career guidance. We aim to bridge the information gap, making students and parents aware of the diverse educational and career opportunities available.
             <br /><br />
-            Our mission is to provide a one-stop, personalized digital advisor for every student, ensuring they can make informed decisions that align with their passions and the future of our region.
+            Our mission is to provide a one-stop, personalized digital advisor for every student, ensuring they can make informed decisions that align with their passions, no matter where they are from.
           </p>
         </div>
       </section>
@@ -48,7 +48,7 @@ export default function AboutPage() {
                 </CardHeader>
                 <CardContent>
                     <p className="text-muted-foreground">
-                        To empower every student in Jammu and Kashmir with personalized, accessible, and reliable information, helping them to discover their potential, make informed academic choices, and successfully transition into a fulfilling career.
+                        To empower every student with personalized, accessible, and reliable information, helping them to discover their potential, make informed academic choices, and successfully transition into a fulfilling career.
                     </p>
                 </CardContent>
             </Card>
@@ -59,7 +59,7 @@ export default function AboutPage() {
                 </CardHeader>
                 <CardContent>
                     <p className="text-muted-foreground">
-                        To build a future where every student in Jammu and Kashmir has the clarity and confidence to pursue their dreams, contributing to the growth and prosperity of our region and the nation.
+                        To build a future where every student has the clarity and confidence to pursue their dreams, contributing to the growth and prosperity of the nation.
                     </p>
                 </CardContent>
             </Card>

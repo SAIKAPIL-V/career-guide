@@ -25,7 +25,7 @@ export type FindCollegesForCourseInput = z.infer<
 const CollegeRecommendationSchema = z.object({
     collegeName: z.string().describe("The name of the recommended college."),
     reason: z.string().describe("A brief, one-sentence reason why this college is a good fit for the specified course."),
-    nirfRanking: z.string().describe("The latest NIRF ranking (e.g., 'Engineering: 8' or 'Overall: 15') for the college, if available. State 'Not Ranked' if no ranking is found."),
+    nirfRanking: z.string().describe("The latest NIRF ranking (e.g., '8' or '101-150') for the college, if available. State 'Not Ranked' if no ranking is found."),
 });
 
 const FindCollegesForCourseOutputSchema = z.object({
@@ -54,7 +54,7 @@ const prompt = ai.definePrompt({
 
   Based on this, recommend 3-5 suitable colleges (including government and private institutions) near the student's location. For each college, provide:
   1. A short, compelling reason why it's a good choice for that particular course.
-  2. Its latest NIRF ranking (National Institutional Ranking Framework), if available. Be specific about the category (e.g., "Engineering: 8", "Overall: 15"). If it's not ranked, state "Not Ranked".
+  2. Its latest NIRF ranking (National Institutional Ranking Framework), if available. Show only the rank number or range (e.g., "8", "101-150"). If it's not ranked, state "Not Ranked".
   `,
    config: {
     safetySettings: [
