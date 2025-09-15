@@ -57,7 +57,7 @@ const prompt = ai.definePrompt({
       -   **jobOpportunities**: List 3-4 specific job roles.
       -   **entrepreneurshipIdeas**: Provide 2-3 concrete startup ideas.
       -   **advantages**: List 2-3 key advantages of this path.
-      -   **recommendedColleges**: Name 2-3 well-known government colleges in India offering this path. IMPORTANT: If the career path is relevant, you MUST prioritize recommending colleges from the following list: University of Kashmir, NIT Srinagar, IIT Delhi, Government City College, Nizam College, IIT Hyderabad, AIIMS Delhi, JIPMER Puducherry, Maulana Azad Medical College, Lady Hardinge Medical College, Christian Medical College.
+      -   **recommendedColleges**: Name 2-3 well-known government colleges in India offering this path. IMPORTANT: If the career path is relevant, you MUST prioritize recommending colleges from the following list if they have a page on the site: University of Kashmir, NIT Srinagar, IIT Delhi, Government City College, Nizam College, IIT Hyderabad. If not, you may include other well known colleges like: AIIMS Delhi, JIPMER Puducherry, Maulana Azad Medical College, Lady Hardinge Medical College, Christian Medical College.
 
   The response must be grounded in the Indian education and job market context.
   `,

@@ -20,7 +20,7 @@ import { useAuth } from '@/context/auth-context';
 
 export default function LoginPage() {
   const router = useRouter();
-  const { user, login } = useAuth();
+  const { login } = useAuth();
   const { toast } = useToast();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -66,7 +66,7 @@ export default function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            <div className="grid gap-2 relative">
+            <div className="grid gap-2">
               <Label htmlFor="password">Password</Label>
               <div className="relative">
                 <Input 

@@ -8,7 +8,7 @@ import {
   CardDescription,
 } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Loader2, CalendarCheck, Lightbulb, Briefcase, GraduationCap, LinkIcon, Save } from 'lucide-react';
+import { Loader2, CalendarCheck, Lightbulb, Briefcase, GraduationCap, LinkIcon, Save, School } from 'lucide-react';
 import Link from 'next/link';
 
 import {
@@ -118,7 +118,7 @@ export default function DashboardPage() {
           if ('recommendedStreams' in resultData) {
             topRecommendation = resultData.recommendedStreams?.[0];
           } else if ('careerRecommendations' in resultData) {
-            topRecommendation = resultData.careerRecommendations?.[0];
+            topRecommendation = resultData.careerRecommendations?.[0]?.career;
           }
 
           if (topRecommendation) {
@@ -129,6 +129,11 @@ export default function DashboardPage() {
         } catch (err) {
           console.error('Failed to get recommendations:', err);
           setError('Our AI is a bit busy right now. Please try again in a moment.');
+          toast({
+            variant: 'destructive',
+            title: 'AI Error',
+            description: 'Failed to get recommendations. Please try refreshing.',
+          });
           setLoading(false);
         }
       } else {
@@ -137,7 +142,7 @@ export default function DashboardPage() {
     };
 
     fetchRecommendations();
-  }, [user, authLoading, router, db]);
+  }, [user, authLoading, router, db, toast]);
 
   const handleSaveResults = async () => {
     if (!user || !results || !db) return;
@@ -148,6 +153,7 @@ export default function DashboardPage() {
         recommendations: results,
         spotlight: spotlight,
         assessmentType: assessmentType,
+        firstName: userName,
       }, { merge: true });
       localStorage.removeItem('assessmentAnswers');
       localStorage.removeItem('assessmentType');
@@ -197,44 +203,70 @@ export default function DashboardPage() {
   const renderTopRecs = () => {
     if (!results) return null;
 
-    let items: string[] = [];
-    let title: string = '';
-    let icon: React.ReactNode = null;
-
     if (assessmentType === '10th' && 'recommendedStreams' in results) {
-        items = results.recommendedStreams.slice(0, 3);
-        title = "Top Recommended Streams";
-        icon = <GraduationCap className="h-6 w-6 text-primary" />;
+        const items = results.recommendedStreams.slice(0, 3);
+        const title = "Top Recommended Streams";
+        const icon = <GraduationCap className="h-6 w-6 text-primary" />;
+        return (
+            <Card className="md:col-span-1">
+                <CardHeader>
+                    <div className="flex items-center gap-3">
+                        {icon}
+                        <CardTitle>{title}</CardTitle>
+                    </div>
+                </CardHeader>
+                <CardContent>
+                    <ul className="space-y-3">
+                        {items.map(item => (
+                            <li key={item} className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
+                                <div className="bg-primary/10 p-2 rounded-full">
+                                    <LinkIcon className="h-4 w-4 text-primary" />
+                                </div>
+                                <span className="font-medium">{item}</span>
+                            </li>
+                        ))}
+                    </ul>
+                </CardContent>
+            </Card>
+        );
     } else if (assessmentType === '12th' && 'careerRecommendations' in results) {
-        items = results.careerRecommendations.slice(0, 3);
-        title = "Top Recommended Careers";
-        icon = <Briefcase className="h-6 w-6 text-primary" />;
-    } else {
-      return null;
+        const items = results.careerRecommendations;
+        const title = "Top Recommended Careers";
+        const icon = <Briefcase className="h-6 w-6 text-primary" />;
+        return (
+             <Card className="md:col-span-1">
+                <CardHeader>
+                    <div className="flex items-center gap-3">
+                        {icon}
+                        <CardTitle>{title}</CardTitle>
+                    </div>
+                </CardHeader>
+                <CardContent>
+                    <ul className="space-y-3">
+                        {items.map(item => (
+                            <li key={item.career} className="p-3 bg-muted/50 rounded-lg">
+                                <div className="flex items-center gap-3">
+                                    <div className="bg-primary/10 p-2 rounded-full">
+                                        <Briefcase className="h-4 w-4 text-primary" />
+                                    </div>
+                                    <span className="font-medium">{item.career}</span>
+                                </div>
+                                <div className="mt-2 text-right">
+                                    <Button variant="link" asChild className="p-0 h-auto text-sm">
+                                        <Link href={`/find-colleges?course=${encodeURIComponent(item.career)}`}>
+                                            {item.collegeCount}+ colleges available
+                                        </Link>
+                                    </Button>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </CardContent>
+            </Card>
+        )
     }
 
-    return (
-        <Card className="md:col-span-1">
-            <CardHeader>
-                <div className="flex items-center gap-3">
-                    {icon}
-                    <CardTitle>{title}</CardTitle>
-                </div>
-            </CardHeader>
-            <CardContent>
-                <ul className="space-y-3">
-                    {items.map(item => (
-                        <li key={item} className="flex items-center gap-3 p-3 bg-muted/50 rounded-lg">
-                            <div className="bg-primary/10 p-2 rounded-full">
-                                <LinkIcon className="h-4 w-4 text-primary" />
-                            </div>
-                            <span className="font-medium">{item}</span>
-                        </li>
-                    ))}
-                </ul>
-            </CardContent>
-        </Card>
-    );
+    return null;
   }
 
   return (

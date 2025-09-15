@@ -40,14 +40,18 @@ export default function Header() {
   const handleLogout = async () => {
     setIsNavigating('/login');
     await logout();
-    router.push('/login');
-    setIsNavigating(false);
   }
+
+  useEffect(() => {
+    if (!user && isNavigating === '/login') {
+      router.push('/login');
+    }
+  }, [user, isNavigating, router])
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-header/95 backdrop-blur supports-[backdrop-filter]:bg-header/60">
       <div className="container flex h-20 items-center">
-        <div className="flex items-center space-x-2">
+        <div className="mr-4 flex items-center">
             <Link href="/" className="flex items-center space-x-2">
               <EmblemLogo className="h-10 w-10 text-primary" />
               <div className='flex flex-col'>
@@ -76,7 +80,7 @@ export default function Header() {
             {!loading && (
             user ? (
                 <>
-                {pathname === '/dashboard' && <span className="hidden sm:inline text-sm text-muted-foreground">Welcome!</span>}
+                {user.displayName && <span className="hidden sm:inline text-sm text-muted-foreground">Welcome, {user.displayName}!</span>}
                 <Button variant="outline" onClick={handleLogout} disabled={!!isNavigating}>
                   {isNavigating === '/login' ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
                   Log Out
@@ -84,8 +88,12 @@ export default function Header() {
                 </>
             ) : (
                 <>
-                <Button variant="outline" onClick={() => router.push('/login')}>Log In</Button>
-                <Button onClick={() => router.push('/signup')}>Sign Up</Button>
+                <Button variant="outline" asChild>
+                  <Link href="/login">Log In</Link>
+                </Button>
+                <Button asChild>
+                  <Link href="/signup">Sign Up</Link>
+                </Button>
                 </>
             )
             )}

@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -25,15 +26,15 @@ const collegeNameToSlug = (name: string) => {
 };
 
 export default function FindCollegesPage() {
+  const searchParams = useSearchParams();
   const [course, setCourse] = useState('');
   const [location, setLocation] = useState('');
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState<FindCollegesForCourseOutput | null>(null);
   const { toast } = useToast();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!course || !location) {
+  const runSearch = async (searchCourse: string, searchLocation: string) => {
+    if (!searchCourse || !searchLocation) {
       toast({
         variant: 'destructive',
         title: 'Missing Information',
@@ -44,7 +45,7 @@ export default function FindCollegesPage() {
     setLoading(true);
     setResults(null);
     try {
-      const resultData = await findCollegesForCourse({ course, location });
+      const resultData = await findCollegesForCourse({ course: searchCourse, location: searchLocation });
       setResults(resultData);
     } catch (error) {
       console.error('AI call failed:', error);
@@ -56,6 +57,22 @@ export default function FindCollegesPage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  useEffect(() => {
+    const courseParam = searchParams.get('course');
+    if (courseParam) {
+      setCourse(courseParam);
+      // For simplicity, we'll default a location when a course is passed in the URL.
+      const defaultLocation = 'India';
+      setLocation(defaultLocation);
+      runSearch(courseParam, defaultLocation);
+    }
+  }, [searchParams]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    runSearch(course, location);
   };
 
   return (
@@ -128,7 +145,7 @@ export default function FindCollegesPage() {
       {results && (
         <div className="max-w-4xl mx-auto">
             <h2 className="font-headline text-3xl font-bold text-center mb-8">
-                AI Recommendations
+                AI Recommendations for {`"${course}"`}
             </h2>
           <div className="space-y-6">
             {results.colleges.length > 0 ? (

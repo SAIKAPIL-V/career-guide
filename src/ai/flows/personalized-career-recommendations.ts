@@ -27,11 +27,17 @@ export type PersonalizedCareerRecommendationsInput = z.infer<
   typeof PersonalizedCareerRecommendationsInputSchema
 >;
 
+const CareerRecommendationSchema = z.object({
+  career: z.string().describe('The name of the career path.'),
+  collegeCount: z.number().describe('An estimated count of colleges offering courses related to this career path.'),
+});
+
+
 const PersonalizedCareerRecommendationsOutputSchema = z.object({
   careerRecommendations: z
-    .array(z.string())
+    .array(CareerRecommendationSchema)
     .describe(
-      'A list of career paths recommended for the student, based on their interests, aptitude, academic performance and location.'
+      'A list of 3-5 career paths recommended for the student, based on their interests, aptitude, academic performance and location.'
     ),
   courseRecommendations: z
     .array(z.string())
@@ -66,6 +72,8 @@ const prompt = ai.definePrompt({
   Aptitude: {{{aptitude}}}
   Academic Performance: {{{academicPerformance}}}
   Location: {{{location}}}
+
+  For each career recommendation, also provide an estimated count of how many colleges in India offer relevant courses.
 
   Please provide your recommendations in JSON format.
   Ensure that the career, course and college recommendations are tailored to the student's location.

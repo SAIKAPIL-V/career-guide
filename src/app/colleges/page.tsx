@@ -38,7 +38,7 @@ export default function CollegesPage() {
     {
       name: 'AIIMS Delhi',
       location: 'New Delhi, Delhi',
-      href: '#', // Placeholder, ideally would have a page
+      href: '#', 
     },
     {
         name: 'JIPMER Puducherry',
@@ -64,6 +64,26 @@ export default function CollegesPage() {
         name: 'IIT Bombay',
         location: 'Mumbai, Maharashtra',
         href: '#',
+    },
+    {
+      name: 'Jammu University',
+      location: 'Jammu, Jammu and Kashmir',
+      href: '#',
+    },
+    {
+      name: 'Sher-e-Kashmir University of Agricultural Sciences and Technology',
+      location: 'Srinagar, Jammu and Kashmir',
+      href: '#',
+    },
+    {
+      name: 'Government Medical College, Srinagar',
+      location: 'Srinagar, Jammu and Kashmir',
+      href: '#',
+    },
+    {
+      name: 'IIT Madras',
+      location: 'Chennai, Tamil Nadu',
+      href: '#',
     }
   ];
 

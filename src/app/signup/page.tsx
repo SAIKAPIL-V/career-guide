@@ -82,7 +82,7 @@ export default function SignupPage() {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            <div className="grid gap-2 relative">
+            <div className="grid gap-2">
               <Label htmlFor="password">Password</Label>
                <div className="relative">
                 <Input 
