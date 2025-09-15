@@ -1,23 +1,24 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Building, MapPin } from 'lucide-react';
+import EmblemLogo from '@/components/layout/emblem-logo';
+import { MapPin } from 'lucide-react';
 import Link from 'next/link';
 
 export default function CollegesPage() {
   const colleges = [
     {
-      name: 'Government City College',
-      location: 'Hyderabad, Telangana',
-      href: '/colleges/government-city-college',
+      name: 'University of Kashmir',
+      location: 'Srinagar, Jammu and Kashmir',
+      href: '/colleges/university-of-kashmir',
     },
     {
-      name: 'Nizam College',
-      location: 'Hyderabad, Telangana',
-      href: '/colleges/nizam-college',
+      name: 'NIT Srinagar',
+      location: 'Srinagar, Jammu and Kashmir',
+      href: '/colleges/nit-srinagar',
     },
     {
-      name: 'Indian Institute of Technology, Hyderabad',
-      location: 'Hyderabad, Telangana',
-      href: '/colleges/iit-hyderabad',
+      name: 'Indian Institute of Technology, Delhi',
+      location: 'New Delhi, Delhi',
+      href: '/colleges/iit-delhi',
     }
   ];
 
@@ -28,7 +29,7 @@ export default function CollegesPage() {
           Explore Colleges
         </h1>
         <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
-          Find the best government colleges near you.
+          Find detailed information about top institutions in Jammu and Kashmir and across India.
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -38,7 +39,7 @@ export default function CollegesPage() {
               <CardHeader>
                 <div className="flex items-center space-x-4">
                   <div className="bg-primary/10 p-3 rounded-lg">
-                    <Building className="h-6 w-6 text-primary" />
+                    <EmblemLogo className="h-6 w-6 text-primary" />
                   </div>
                   <div>
                     <CardTitle className="text-xl font-headline">{college.name}</CardTitle>

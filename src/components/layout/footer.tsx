@@ -1,5 +1,6 @@
-import { Landmark, Github, Twitter, Linkedin } from 'lucide-react';
+import { Github, Twitter, Linkedin } from 'lucide-react';
 import Link from 'next/link';
+import EmblemLogo from './emblem-logo';
 
 export default function Footer() {
   return (
@@ -8,8 +9,11 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-1">
             <Link href="/" className="flex items-center space-x-2 mb-4">
-              <Landmark className="h-8 w-8 text-primary" />
-              <span className="font-bold font-headline text-xl">J&K Career Portal</span>
+              <EmblemLogo className="h-10 w-10 text-primary" />
+              <div className="flex flex-col">
+                 <span className="font-bold font-headline text-xl leading-tight">Career Portal</span>
+                 <span className="text-xs text-muted-foreground font-semibold leading-tight">Govt. of Jammu and Kashmir</span>
+              </div>
             </Link>
             <p className="text-sm text-muted-foreground">
               Empowering the youth of Jammu and Kashmir.

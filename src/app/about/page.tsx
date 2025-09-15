@@ -1,16 +1,17 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { BookOpenCheck, Target, Users } from 'lucide-react';
 import Image from 'next/image';
+import EmblemLogo from '@/components/layout/emblem-logo';
 
 export default function AboutPage() {
   return (
     <div className="container mx-auto px-4 py-16 lg:py-24">
       <section className="text-center mb-16">
         <h1 className="font-headline text-4xl md:text-5xl font-bold text-primary">
-          About J&K Career Portal
+          About The Career Portal
         </h1>
         <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
-          Empowering the students of Jammu and Kashmir to build a bright future.
+          An initiative by the Government of Jammu and Kashmir to empower students for a bright future.
         </p>
       </section>
 
@@ -27,7 +28,7 @@ export default function AboutPage() {
         <div>
           <h2 className="font-headline text-3xl font-bold mb-4">Our Story</h2>
           <p className="text-muted-foreground leading-relaxed">
-            The J&K Career Portal was established by the Government of Jammu and Kashmir to address the critical need for career guidance among our students. We aim to bridge the information gap, making students and parents aware of the diverse educational and career opportunities available within the Union Territory and across India.
+            The Jammu and Kashmir Career Portal was established by the Government of Jammu and Kashmir to address the critical need for career guidance among our students. We aim to bridge the information gap, making students and parents aware of the diverse educational and career opportunities available within the Union Territory and across India.
             <br /><br />
             Our mission is to provide a one-stop, personalized digital advisor for every student, ensuring they can make informed decisions that align with their passions and the future of our region.
           </p>

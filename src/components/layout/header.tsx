@@ -2,12 +2,13 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { BookOpenCheck, Menu, X, Landmark } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/context/auth-context';
+import EmblemLogo from './emblem-logo';
 
 const navItems = [
   { label: 'Home', href: '/' },
@@ -31,11 +32,8 @@ export default function Header() {
   }
 
   const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (isAuthPage && !user) {
-      e.preventDefault();
-      return;
-    }
-    router.push(user ? '/dashboard' : '/');
+    e.preventDefault();
+    router.push(user ? '/' : '/login');
   }
 
   return (
@@ -43,15 +41,18 @@ export default function Header() {
       <div className="container flex h-20 items-center">
         <div className="flex items-center space-x-2">
             <Link href="/" className="flex items-center space-x-2" onClick={handleLogoClick}>
-              <Landmark className="h-8 w-8 text-primary" />
-              <span className="font-bold text-xl sm:inline-block">
-                  J&K Career Portal
-              </span>
+              <EmblemLogo className="h-10 w-10 text-primary" />
+              <div className='flex flex-col'>
+                <span className="font-bold text-xl leading-tight sm:inline-block">
+                    Career Portal
+                </span>
+                <span className="text-xs text-muted-foreground font-semibold leading-tight">Govt. of Jammu and Kashmir</span>
+              </div>
             </Link>
         </div>
         
         <nav className="hidden md:flex flex-1 items-center space-x-6 text-sm font-medium ml-6">
-        {!isAuthPage && navItems.map((item) => (
+        {!isAuthPage && user && navItems.map((item) => (
             <Link
             key={item.href}
             href={item.href}
@@ -75,7 +76,7 @@ export default function Header() {
                 </>
             )
             )}
-            {!isAuthPage && (
+            {!isAuthPage && user && (
               <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
                   <SheetTrigger asChild>
                   <Button variant="outline" className="md:hidden" size="icon">
@@ -86,10 +87,15 @@ export default function Header() {
                   <SheetContent side="left" className="w-full max-w-sm p-0">
                   <div className="flex flex-col h-full">
                       <div className="flex items-center justify-between p-4 border-b">
-                      <div className="flex items-center space-x-2">
-                          <Landmark className="h-6 w-6 text-primary" />
-                          <span className="font-bold text-lg">J&K Career Portal</span>
-                      </div>
+                        <Link href="/" className="flex items-center space-x-2" onClick={(e) => {handleLogoClick(e); setIsMobileMenuOpen(false);}}>
+                            <EmblemLogo className="h-8 w-8 text-primary" />
+                            <div className='flex flex-col'>
+                                <span className="font-bold text-lg leading-tight sm:inline-block">
+                                    Career Portal
+                                </span>
+                                <span className="text-xs text-muted-foreground font-semibold leading-tight">Govt. of Jammu and Kashmir</span>
+                            </div>
+                        </Link>
                       <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)}>
                           <X className="h-6 w-6" />
                           <span className="sr-only">Close menu</span>

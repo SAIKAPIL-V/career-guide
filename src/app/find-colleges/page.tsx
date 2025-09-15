@@ -5,7 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Loader2, Search, University, Sparkles, Award } from 'lucide-react';
+import { Loader2, Search, Sparkles, Award } from 'lucide-react';
+import EmblemLogo from '@/components/layout/emblem-logo';
 import {
   findCollegesForCourse,
   FindCollegesForCourseOutput,
@@ -16,7 +17,9 @@ import Link from 'next/link';
 const collegeNameToSlug = (name: string) => {
   return name
     .toLowerCase()
-    .replace(/, hyderabad/g, '')
+    .replace(/, srinagar/g, '')
+    .replace(/, delhi/g, '')
+    .replace(/, /g, ' ')
     .replace(/ /g, '-')
     .replace(/[^a-z0-9-]/g, '');
 };
@@ -72,7 +75,7 @@ export default function FindCollegesPage() {
             <Search className="h-6 w-6" />
             Find the Best College for You
           </CardTitle>
-          <CardDescription>Include NIRF ranking for government colleges.</CardDescription>
+          <CardDescription>Our AI will find top colleges and include their NIRF ranking.</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6 items-end">
@@ -89,7 +92,7 @@ export default function FindCollegesPage() {
               <Label htmlFor="location">Your City</Label>
               <Input
                 id="location"
-                placeholder="e.g., Hyderabad"
+                placeholder="e.g., Srinagar"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
               />
@@ -134,7 +137,7 @@ export default function FindCollegesPage() {
                     <Card className="shadow-md animate-float-up transition-all group-hover:shadow-xl group-hover:border-primary/50">
                         <CardHeader className="flex flex-row items-start gap-4">
                             <div className="bg-primary/10 p-3 rounded-lg mt-1">
-                                <University className="h-6 w-6 text-primary" />
+                                <EmblemLogo className="h-6 w-6 text-primary" />
                             </div>
                             <div className="flex-1">
                                 <CardTitle>{college.collegeName}</CardTitle>

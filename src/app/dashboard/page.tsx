@@ -89,20 +89,29 @@ export default function DashboardPage() {
                 interests: parsedAnswers.join(', '),
                 aptitude: 'Varies based on answers',
                 academicPerformance: 'Average',
-                location: 'India',
+                location: 'Jammu and Kashmir',
               });
+          
+          let topRecommendation: string | undefined;
 
-          const resultData = await recommendationPromise;
+          // Run both promises in parallel
+          const [resultData, _] = await Promise.all([
+            recommendationPromise,
+            (async () => {
+              // This is a bit of a trick to get the top recommendation without waiting
+              // for the first promise to resolve fully if we were to do it sequentially.
+              // This relies on the fact that the object structure is predictable.
+              const tempResults = await recommendationPromise;
+              if ('recommendedStreams' in tempResults) {
+                  topRecommendation = tempResults.recommendedStreams?.[0];
+              } else if ('careerRecommendations' in tempResults) {
+                  topRecommendation = tempResults.careerRecommendations?.[0];
+              }
+            })(),
+          ]);
+
           setResults(resultData);
           setLoading(false); // Stop loading as soon as we have the main results
-
-          // Now fetch the spotlight in the background
-          let topRecommendation: string | undefined;
-          if ('recommendedStreams' in resultData) {
-              topRecommendation = resultData.recommendedStreams?.[0];
-          } else if ('careerRecommendations' in resultData) {
-              topRecommendation = resultData.careerRecommendations?.[0];
-          }
           
           if (topRecommendation) {
               const spotlightResult = await careerSpotlight({ career: topRecommendation });
@@ -125,7 +134,8 @@ export default function DashboardPage() {
           setSpotlight(savedData.spotlight);
           setAssessmentType(savedData.assessmentType);
       } else {
-        setError('No saved recommendations found. Please take an assessment to view your dashboard.');
+        router.push('/');
+        return;
       }
       setLoading(false);
     };
