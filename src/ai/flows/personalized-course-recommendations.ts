@@ -68,6 +68,14 @@ Consider nearby government colleges and the long-term career outcomes of differe
 
 Explain your recommendations in the rationale field.
 `,
+  config: {
+    safetySettings: [
+        {
+            category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
+            threshold: 'BLOCK_ONLY_HIGH',
+        },
+    ]
+  }
 });
 
 const personalizedCourseRecommendationsFlow = ai.defineFlow(
