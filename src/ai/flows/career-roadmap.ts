@@ -1,6 +1,6 @@
 'use server';
 /**
- * @fileOverview Generates a detailed career roadmap for a specific course/stream and educational stage.
+ * @fileOverview Generates a detailed career roadmap for a specific career field and educational stage.
  *
  * - careerRoadmap - A function that provides a detailed roadmap.
  * - CareerRoadmapInput - The input type for the function.
@@ -11,9 +11,9 @@ import {ai} from '@/ai/genkit';
 import {z} from 'zod';
 
 const CareerRoadmapInputSchema = z.object({
-  course: z
+  careerField: z
     .string()
-    .describe('The course or stream, e.g., "Intermediate (MPC)", "Engineering", "Business".'),
+    .describe('The career field, e.g., "Engineering", "Business".'),
   stage: z
     .enum(['10th Completed', '12th Completed', 'Degree Completed'])
     .describe('The current educational stage of the student.'),
@@ -30,8 +30,8 @@ const PathDetailSchema = z.object({
 });
 
 const CareerRoadmapOutputSchema = z.object({
-  introduction: z.string().describe('A brief introduction to the opportunities that open up from the chosen course/stream.'),
-  recommendedPaths: z.array(PathDetailSchema).describe('A list of 2-3 recommended detailed paths one can follow for this course/stream.'),
+  introduction: z.string().describe('A brief introduction to the opportunities that open up from the chosen career field.'),
+  recommendedPaths: z.array(PathDetailSchema).describe('A list of 2-3 recommended detailed paths one can follow for this career field.'),
 });
 export type CareerRoadmapOutput = z.infer<typeof CareerRoadmapOutputSchema>;
 
@@ -45,12 +45,12 @@ const prompt = ai.definePrompt({
   name: 'careerRoadmapPrompt',
   input: {schema: CareerRoadmapInputSchema},
   output: {schema: CareerRoadmapOutputSchema},
-  prompt: `You are an expert career counselor in India. A student who has completed "{{stage}}" is asking for a roadmap for the course/stream: "{{course}}".
+  prompt: `You are an expert career counselor in India. A student who has completed "{{stage}}" is asking for a roadmap for the career field: "{{careerField}}".
 
   Generate a detailed, practical roadmap for them.
 
-  1.  Start with a brief, encouraging introduction about the opportunities available after pursuing "{{course}}".
-  2.  Recommend 2-3 specific, primary paths they can follow. For example, if the input is "Intermediate (MPC)" after 10th, the paths could be "Engineering (B.Tech)" or "Architecture (B.Arch)".
+  1.  Start with a brief, encouraging introduction about the opportunities available after pursuing "{{careerField}}".
+  2.  Recommend 2-3 specific, primary paths they can follow. For example, if the input is "Engineering" after 10th, the paths could be "Polytechnic" or "Intermediate (MPC)".
   3.  For EACH recommended path, provide the following details:
       -   **pathName**: The specific name of the sub-path (e.g., "B.Tech in Computer Science").
       -   **furtherStudies**: What's the next educational step after this path? (e.g., "M.Tech in AI").
