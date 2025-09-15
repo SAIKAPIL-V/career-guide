@@ -24,7 +24,7 @@ const nextConfig = {
       },
        {
         source: '/login',
-        destination: '/dashboard',
+        destination: '/',
         permanent: false,
         has: [
           {
@@ -36,7 +36,7 @@ const nextConfig = {
       },
        {
         source: '/signup',
-        destination: '/dashboard',
+        destination: '/',
         permanent: false,
         has: [
           {

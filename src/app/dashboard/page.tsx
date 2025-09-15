@@ -237,7 +237,7 @@ export default function DashboardPage() {
             Your Personalized Dashboard
           </h1>
           <p className="mt-2 text-lg text-muted-foreground">
-            {user ? `Welcome back! ` : 'Welcome! '} Here are the AI-powered insights based on your assessment.
+            {user ? `Welcome back, ${user.email}! ` : 'Welcome! '} Here are the AI-powered insights based on your assessment.
           </p>
         </div>
          {user && results && localStorage.getItem('assessmentAnswers') && (
