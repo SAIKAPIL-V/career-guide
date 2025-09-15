@@ -7,3 +7,4 @@ import '@/ai/flows/career-spotlight.ts';
 import '@/ai/flows/college-details.ts';
 import '@/ai/flows/find-colleges-for-course.ts';
 import '@/ai/flows/career-roadmap.ts';
+import '@/ai/flows/send-welcome-email.ts';

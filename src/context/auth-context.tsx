@@ -14,8 +14,9 @@ import {
   signOut,
   type User,
 } from 'firebase/auth';
-import { doc, onSnapshot, type Firestore } from 'firebase/firestore';
-import { auth, db } from '@/lib/firebase'; // Use the centralized Firebase instances
+import { doc, setDoc, getDoc, onSnapshot, type Firestore } from 'firebase/firestore';
+import { auth, db } from '@/lib/firebase';
+import { sendWelcomeEmail } from '@/ai/flows/send-welcome-email';
 
 type FirebaseStatus = 'initializing' | 'connected' | 'error';
 
@@ -71,15 +72,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const unsubscribeFirestore = onSnapshot(
       doc(db, 'health-check', 'status'),
       () => {
-        // Successfully connected to Firestore backend.
         setFirebaseStatus('connected');
       },
       (error) => {
-        // This will fire if the client is truly offline and persistence is enabled.
-        // We can still consider it "connected" to the local cache.
         if (error.code === 'unavailable') {
             console.warn("Firestore is offline, but persistence should be active.");
-            setFirebaseStatus('connected');
+            setFirebaseStatus('connected'); // Still connected to local cache
         } else {
             console.error("Firestore connection error:", error);
             setFirebaseStatus('error');
@@ -97,7 +95,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setAuthLoading(false);
     });
 
-    // Cleanup subscription on unmount
     return () => {
         unsubscribeFirestore();
         unsubscribeAuth();
@@ -122,6 +119,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       lastName: details.lastName,
       createdAt: new Date(),
     });
+    
+    // Send welcome email
+    await sendWelcomeEmail({ email, name: details.firstName });
+
     return userCredential;
   };
 
