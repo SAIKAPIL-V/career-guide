@@ -29,6 +29,26 @@ const questions = [
     question: 'Are you interested in pursuing higher studies (Masters, PhD) after your graduation?',
     options: ['Yes, definitely', 'Maybe, I am not sure yet', 'No, I want to start working right after graduation'],
   },
+  {
+    question: 'Which of these activities would you rather do?',
+    options: ['Analyze data and create reports', 'Design a new product', 'Manage a team of people', 'Conduct scientific experiments'],
+  },
+  {
+    question: 'How comfortable are you with public speaking?',
+    options: ['Very comfortable', 'Somewhat comfortable', 'Not comfortable at all'],
+  },
+  {
+    question: 'Which of these work styles suits you best?',
+    options: ['Structured and organized', 'Flexible and adaptable', 'Creative and innovative', 'Analytical and detail-oriented'],
+  },
+  {
+    question: 'What is your long-term career goal?',
+    options: ['To become an expert in a specific field', 'To start my own business', 'To work for a large multinational company', 'To work for a non-profit organization'],
+  },
+  {
+    question: 'How much do you enjoy learning about new technologies?',
+    options: ['A lot', 'A little', 'Not at all'],
+  }
 ];
 
 export default function Assessment12thPage() {
@@ -42,13 +62,13 @@ export default function Assessment12thPage() {
       const newAnswers = [...answers];
       newAnswers[currentQuestion] = selectedOption;
       setAnswers(newAnswers);
-      setSelectedOption(null);
+      
 
       if (currentQuestion < questions.length - 1) {
         setCurrentQuestion(currentQuestion + 1);
+        setSelectedOption(null);
       } else {
-        // Store answers and redirect to the new dashboard
-        const finalAnswers = [...newAnswers, selectedOption]; // Include the last selected option
+        const finalAnswers = [...newAnswers]; 
         localStorage.setItem('assessmentType', '12th');
         localStorage.setItem('assessmentAnswers', JSON.stringify(finalAnswers));
         router.push('/dashboard');

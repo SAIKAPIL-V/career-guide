@@ -14,6 +14,22 @@ const questions = [
     options: ['Mathematics', 'Science', 'Social Studies', 'Languages'],
   },
   {
+    question: 'What kind of TV shows or movies do you like?',
+    options: ['Science Fiction', 'Historical Dramas', 'Documentaries', 'Comedies'],
+  },
+  {
+    question: 'How do you prefer to spend your free time?',
+    options: ['Playing video games or coding', 'Reading books or writing', 'Playing sports or outdoor activities', 'Drawing or painting'],
+  },
+  {
+    question: 'If you had a superpower, what would it be?',
+    options: ['Ability to build anything', 'Ability to heal people', 'Ability to persuade anyone', 'Ability to create art from thin air'],
+  },
+  {
+    question: 'What kind of problems do you enjoy solving?',
+    options: ['Logical puzzles', 'Problems related to people and society', 'Scientific mysteries', 'Creative challenges'],
+  },
+  {
     question: 'Are you more interested in theoretical concepts or practical applications?',
     options: ['Theoretical concepts', 'Practical applications', 'A balance of both'],
   },
@@ -25,10 +41,14 @@ const questions = [
     question: 'Which of these career fields sounds most appealing?',
     options: ['Engineering / Technology', 'Medicine / Healthcare', 'Business / Commerce', 'Arts / Design'],
   },
-    {
+  {
     question: 'How do you feel about subjects that require a lot of calculation?',
     options: ['I love them', 'I can manage them', 'I prefer to avoid them'],
   },
+  {
+    question: 'When working on a project, do you prefer to work alone or in a team?',
+    options: ['Alone', 'In a team', 'It depends on the project'],
+  }
 ];
 
 export default function Assessment10thPage() {
@@ -42,13 +62,13 @@ export default function Assessment10thPage() {
       const newAnswers = [...answers];
       newAnswers[currentQuestion] = selectedOption;
       setAnswers(newAnswers);
-      setSelectedOption(null);
+      
 
       if (currentQuestion < questions.length - 1) {
         setCurrentQuestion(currentQuestion + 1);
+        setSelectedOption(null);
       } else {
-        // Store answers and redirect to the new dashboard
-        const finalAnswers = [...newAnswers, selectedOption]; // Include the last selected option
+        const finalAnswers = [...newAnswers]; 
         localStorage.setItem('assessmentType', '10th');
         localStorage.setItem('assessmentAnswers', JSON.stringify(finalAnswers));
         router.push('/dashboard');

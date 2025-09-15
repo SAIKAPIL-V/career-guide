@@ -2,33 +2,33 @@
   "placeholderImages": [
     {
       "id": "hero-1",
-      "description": "A student contemplating their future career paths with illustrative icons around them.",
-      "imageUrl": "https://picsum.photos/seed/futurepath/1920/1080",
-      "imageHint": "student future"
+      "description": "A focused student taking an online assessment on a laptop in a modern, well-lit room, with icons representing different career fields floating around them.",
+      "imageUrl": "https://picsum.photos/seed/assessment/1920/1080",
+      "imageHint": "online assessment"
     },
     {
       "id": "hero-2",
-      "description": "A graduate tossing their cap in the air in front of a university building.",
-      "imageUrl": "https://picsum.photos/seed/graduation/1920/1080",
-      "imageHint": "graduation cap"
+      "description": "A diverse group of smiling graduates in caps and gowns, celebrating their achievement on their university campus.",
+      "imageUrl": "https://picsum.photos/seed/graduates/1920/1080",
+      "imageHint": "diverse graduates"
     },
     {
       "id": "hero-3",
-      "description": "A diverse group of students collaborating and studying together on a college campus.",
-      "imageUrl": "https://picsum.photos/seed/studying/1920/1080",
-      "imageHint": "group study"
+      "description": "A young student looking thoughtfully at a large, interactive screen displaying a complex career roadmap with various branching paths.",
+      "imageUrl": "https://picsum.photos/seed/careerpath/1920/1080",
+      "imageHint": "career map"
     },
     {
       "id": "hero-4",
-      "description": "A map with pins showing locations of nearby colleges and universities.",
-      "imageUrl": "https://picsum.photos/seed/collegemap/1920/1080",
+      "description": "A close-up of a hand pointing to a specific government college on a digital map application on a tablet.",
+      "imageUrl": "https://picsum.photos/seed/digitalmap/1920/1080",
       "imageHint": "college map"
     },
     {
       "id": "hero-5",
-      "description": "A person using a laptop to take an online aptitude test for career guidance.",
-      "imageUrl": "https://picsum.photos/seed/onlinetest/1920/1080",
-      "imageHint": "online assessment"
+      "description": "A student using a calendar app on their phone, with reminders and notifications for exam dates and application deadlines.",
+      "imageUrl": "https://picsum.photos/seed/deadlines/1920/1080",
+      "imageHint": "exam calendar"
     }
   ]
 }

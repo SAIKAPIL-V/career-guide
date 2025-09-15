@@ -10,16 +10,19 @@ const features = [
     icon: <Briefcase className="h-10 w-10 text-primary" />,
     title: 'AI-Powered Assessments',
     description: 'Take short, insightful quizzes to discover your strengths and interests, and get personalized course and career recommendations.',
+    href: '/assessment'
   },
   {
     icon: <School className="h-10 w-10 text-primary" />,
     title: 'College & Course Directory',
     description: 'Explore a detailed directory of government colleges, the courses they offer, and what each course can lead to.',
+    href: '/colleges'
   },
   {
     icon: <CheckCircle className="h-10 w-10 text-primary" />,
     title: 'Career Path Mapping',
     description: 'Visualize your journey from your chosen course to potential jobs, further studies, and long-term career growth.',
+    href: '/careers'
   },
 ];
 
@@ -66,17 +69,19 @@ export default function Home() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, index) => (
-              <Card key={index} className="text-center shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
-                <CardHeader>
-                  <div className="mx-auto bg-primary/10 p-4 rounded-full w-fit">
-                    {feature.icon}
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                  <p className="text-muted-foreground">{feature.description}</p>
-                </CardContent>
-              </Card>
+              <Link href={feature.href} key={index} className="block group">
+                <Card className="text-center shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300 h-full">
+                  <CardHeader>
+                    <div className="mx-auto bg-primary/10 p-4 rounded-full w-fit">
+                      {feature.icon}
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+                    <p className="text-muted-foreground">{feature.description}</p>
+                  </CardContent>
+                </Card>
+              </Link>
             ))}
           </div>
         </div>

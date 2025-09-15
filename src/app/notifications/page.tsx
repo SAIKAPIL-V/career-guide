@@ -4,27 +4,39 @@ import { Bell, CalendarCheck } from 'lucide-react';
 const notifications = [
   {
     id: 1,
-    title: 'JEE Main 2024: Application Deadline',
-    date: 'March 2, 2024',
+    title: 'JEE Main 2025: Application Deadline',
+    date: 'March 2, 2025',
     description: 'Last day to submit your application for the Joint Entrance Examination (Main).',
   },
   {
     id: 2,
-    title: 'NEET 2024: Exam Date',
-    date: 'May 5, 2024',
+    title: 'NEET 2025: Exam Date',
+    date: 'May 5, 2025',
     description: 'The National Eligibility cum Entrance Test for medical courses will be held on this day.',
   },
   {
     id: 3,
-    title: 'State Scholarship Program: Application Opens',
-    date: 'June 1, 2024',
+    title: 'State Scholarship Program 2025: Application Opens',
+    date: 'June 1, 2025',
     description: 'Applications for state-level merit scholarships for undergraduate students will open.',
   },
   {
     id: 4,
-    title: 'Local Government College: Admission Counseling',
-    date: 'July 15, 2024',
+    title: 'Local Government College: Admission Counseling 2025',
+    date: 'July 15, 2025',
     description: 'Counseling sessions for admissions into various degree programs will begin.',
+  },
+  {
+    id: 5,
+    title: 'GATE 2026: Registration Starts',
+    date: 'August 30, 2025',
+    description: 'Registration for the Graduate Aptitude Test in Engineering (GATE) 2026 begins.',
+  },
+  {
+    id: 6,
+    title: 'UPSC Civil Services 2026: Prelims Exam',
+    date: 'June 5, 2026',
+    description: 'The preliminary examination for the UPSC Civil Services will be conducted.',
   },
 ];
 
