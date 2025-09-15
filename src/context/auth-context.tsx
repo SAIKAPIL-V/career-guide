@@ -14,7 +14,7 @@ import {
   signOut,
   type User,
 } from 'firebase/auth';
-import { doc, setDoc, getDoc, type Firestore } from 'firebase/firestore';
+import { doc, onSnapshot, type Firestore } from 'firebase/firestore';
 import { auth, db } from '@/lib/firebase'; // Use the centralized Firebase instances
 
 type FirebaseStatus = 'initializing' | 'connected' | 'error';
@@ -56,30 +56,52 @@ const eraseCookie = (name: string) => {
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [authLoading, setAuthLoading] = useState(true);
   const [firebaseStatus, setFirebaseStatus] =
     useState<FirebaseStatus>('initializing');
 
   useEffect(() => {
-    // Because auth is imported from firebase.ts, we know it's initialized
-    if (auth && db) {
-      setFirebaseStatus('connected');
-    } else {
-      setFirebaseStatus('error');
+    if (!db) {
+        setFirebaseStatus('error');
+        setAuthLoading(false);
+        return;
     }
 
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    // Use onSnapshot on a non-existent doc as a robust way to check for online status.
+    const unsubscribeFirestore = onSnapshot(
+      doc(db, 'health-check', 'status'),
+      () => {
+        // Successfully connected to Firestore backend.
+        setFirebaseStatus('connected');
+      },
+      (error) => {
+        // This will fire if the client is truly offline and persistence is enabled.
+        // We can still consider it "connected" to the local cache.
+        if (error.code === 'unavailable') {
+            console.warn("Firestore is offline, but persistence should be active.");
+            setFirebaseStatus('connected');
+        } else {
+            console.error("Firestore connection error:", error);
+            setFirebaseStatus('error');
+        }
+      }
+    );
+    
+    const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
       setUser(user);
       if (user) {
         setCookie('userLoggedIn', 'true', 7);
       } else {
         eraseCookie('userLoggedIn');
       }
-      setLoading(false);
+      setAuthLoading(false);
     });
 
     // Cleanup subscription on unmount
-    return () => unsubscribe();
+    return () => {
+        unsubscribeFirestore();
+        unsubscribeAuth();
+    };
   }, []);
 
   const signup = async (
@@ -111,6 +133,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return signOut(auth);
   };
 
+  const loading = authLoading || firebaseStatus === 'initializing';
+
   const value: AuthContextType = {
     user,
     loading,
@@ -123,7 +147,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <AuthContext.Provider value={value}>
-      {firebaseStatus === 'connected' && children}
+      {!loading && children}
     </AuthContext.Provider>
   );
 };
