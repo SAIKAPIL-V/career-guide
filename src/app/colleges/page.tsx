@@ -16,10 +16,25 @@ export default function CollegesPage() {
       href: '/colleges/nit-srinagar',
     },
     {
-      name: 'Indian Institute of Technology, Delhi',
+      name: 'IIT Delhi',
       location: 'New Delhi, Delhi',
       href: '/colleges/iit-delhi',
-    }
+    },
+    {
+      name: 'Government City College',
+      location: 'Hyderabad, Telangana',
+      href: '/colleges/government-city-college',
+    },
+    {
+      name: 'Nizam College',
+      location: 'Hyderabad, Telangana',
+      href: '/colleges/nizam-college',
+    },
+    {
+      name: 'IIT Hyderabad',
+      location: 'Hyderabad, Telangana',
+      href: '/colleges/iit-hyderabad',
+    },
   ];
 
   return (

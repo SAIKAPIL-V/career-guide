@@ -1,3 +1,4 @@
+'use client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { BookOpenCheck, Target, Users } from 'lucide-react';
 import Image from 'next/image';
@@ -28,7 +29,7 @@ export default function AboutPage() {
         <div>
           <h2 className="font-headline text-3xl font-bold mb-4">Our Story</h2>
           <p className="text-muted-foreground leading-relaxed">
-            CareerCompass was established by the Government of Jammu and Kashmir to address the critical need for career guidance among our students. We aim to bridge the information gap, making students and parents aware of the diverse educational and career opportunities available within the Union Territory and across India.
+            CareerCompass was established by the Government of Jammu and Kashmir to address the critical need for career guidance among our students. We aim to bridge the information gap, making students and parents aware of the diverse educational and career opportunities available within Jammu and Kashmir and across India.
             <br /><br />
             Our mission is to provide a one-stop, personalized digital advisor for every student, ensuring they can make informed decisions that align with their passions and the future of our region.
           </p>
@@ -37,7 +38,7 @@ export default function AboutPage() {
 
       <section className="mb-16">
         <div className="text-center mb-12">
-            <h2 className="font-headline text-3xl md:text-4xl font-bold">Our Mission & Vision</h2>
+            <h2 className="font-headline text-3xl md:text-4xl font-bold">Our Mission &amp; Vision</h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Card className="border-l-4 border-primary">

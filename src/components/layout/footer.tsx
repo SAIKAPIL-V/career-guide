@@ -12,7 +12,7 @@ export default function Footer() {
               <EmblemLogo className="h-10 w-10 text-primary" />
               <div className="flex flex-col">
                  <span className="font-bold font-headline text-xl leading-tight">CareerCompass</span>
-                 <span className="text-xs text-muted-foreground font-semibold leading-tight">Govt. of Jammu and Kashmir</span>
+                 <span className="text-xs text-muted-foreground font-semibold leading-tight">Government of Jammu and Kashmir</span>
               </div>
             </Link>
             <p className="text-sm text-muted-foreground">

@@ -56,6 +56,14 @@ const prompt = ai.definePrompt({
   1. A short, compelling reason why it's a good choice for that particular course.
   2. Its latest NIRF ranking (National Institutional Ranking Framework), if available. Be specific about the category (e.g., "Engineering: 8", "Overall: 15"). If it's not ranked, state "Not Ranked".
   `,
+   config: {
+    safetySettings: [
+        {
+            category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
+            threshold: 'BLOCK_NONE',
+        },
+    ]
+  }
 });
 
 const findCollegesForCourseFlow = ai.defineFlow(
