@@ -11,10 +11,10 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: '/dashboard',
-        destination: '/',
+        source: '/',
+        destination: '/login',
         permanent: false,
-        has: [
+        missing: [
           {
             type: 'cookie',
             key: 'userLoggedIn',
@@ -24,7 +24,7 @@ const nextConfig = {
       },
        {
         source: '/login',
-        destination: '/',
+        destination: '/dashboard',
         permanent: false,
         has: [
           {
@@ -36,7 +36,7 @@ const nextConfig = {
       },
        {
         source: '/signup',
-        destination: '/',
+        destination: '/dashboard',
         permanent: false,
         has: [
           {
