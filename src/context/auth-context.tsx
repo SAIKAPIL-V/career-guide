@@ -14,7 +14,7 @@ import {
   signOut,
   type User,
 } from 'firebase/auth';
-import { doc, setDoc, getDoc, type Firestore } from 'firebase/firestore';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { auth, db } from '@/lib/firebase'; // Use the centralized Firebase instances
 
 type FirebaseStatus = 'initializing' | 'connected' | 'error';
