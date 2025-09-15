@@ -7,9 +7,12 @@ import {
   signInWithEmailAndPassword,
   signOut,
   User,
+  getAuth,
+  Auth,
 } from 'firebase/auth';
-import { auth, db } from '@/lib/firebase';
-import { doc, setDoc } from 'firebase/firestore';
+import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase/app';
+import { getFirestore, doc, setDoc, Firestore } from 'firebase/firestore';
+import { firebaseConfig } from '@/lib/firebase';
 
 interface AuthContextType {
   user: User | null;
@@ -21,6 +24,14 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+// Helper to initialize Firebase App and services
+const getFirebaseServices = () => {
+  const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  return { app, auth, db };
+}
+
 const setCookie = (name: string, value: string, days: number) => {
   let expires = "";
   if (days) {
@@ -28,19 +39,30 @@ const setCookie = (name: string, value: string, days: number) => {
     date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
     expires = "; expires=" + date.toUTCString();
   }
-  document.cookie = name + "=" + (value || "") + expires + "; path=/";
+  if (typeof window !== 'undefined') {
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+  }
 };
 
 const eraseCookie = (name: string) => {
-  document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+  if (typeof window !== 'undefined') {
+    document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+  }
 };
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [auth, setAuth] = useState<Auth | null>(null);
+  const [db, setDb] = useState<Firestore | null>(null);
+
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const { auth: authInstance, db: dbInstance } = getFirebaseServices();
+    setAuth(authInstance);
+    setDb(dbInstance);
+
+    const unsubscribe = onAuthStateChanged(authInstance, (user) => {
       setUser(user);
       if (user) {
         setCookie('userLoggedIn', 'true', 7);
@@ -54,6 +76,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const signup = async (email: string, password: string, details: { firstName: string, lastName: string }) => {
+    if (!auth || !db) throw new Error("Firebase not initialized");
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
     // Create a document in Firestore for the new user
@@ -68,10 +91,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const login = (email: string, pass: string) => {
+    if (!auth) throw new Error("Firebase not initialized");
     return signInWithEmailAndPassword(auth, email, pass);
   };
 
   const logout = () => {
+    if (!auth) throw new Error("Firebase not initialized");
     return signOut(auth);
   };
 
