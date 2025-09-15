@@ -77,39 +77,41 @@ export default function DashboardPage() {
         setAssessmentType(type);
         const parsedAnswers = JSON.parse(storedAnswers);
         try {
-          let resultData: ResultsData;
-          if (type === '10th') {
-            resultData = await personalizedCourseRecommendations({
-              interests: parsedAnswers.join(', '),
-              strengths: 'Varies based on answers',
-              academicPerformance: 'Average',
-              careerAspirations: 'Not specified',
-            });
-          } else {
-            resultData = await personalizedCareerRecommendations({
-              interests: parsedAnswers.join(', '),
-              aptitude: 'Varies based on answers',
-              academicPerformance: 'Average',
-              location: 'India',
-            });
-          }
-          setResults(resultData);
+          // Get main recommendations first to show something to the user quickly
+          const recommendationPromise = type === '10th'
+            ? personalizedCourseRecommendations({
+                interests: parsedAnswers.join(', '),
+                strengths: 'Varies based on answers',
+                academicPerformance: 'Average',
+                careerAspirations: 'Not specified',
+              })
+            : personalizedCareerRecommendations({
+                interests: parsedAnswers.join(', '),
+                aptitude: 'Varies based on answers',
+                academicPerformance: 'Average',
+                location: 'India',
+              });
 
+          const resultData = await recommendationPromise;
+          setResults(resultData);
+          setLoading(false); // Stop loading as soon as we have the main results
+
+          // Now fetch the spotlight in the background
           let topRecommendation: string | undefined;
           if ('recommendedStreams' in resultData) {
               topRecommendation = resultData.recommendedStreams?.[0];
           } else if ('careerRecommendations' in resultData) {
               topRecommendation = resultData.careerRecommendations?.[0];
           }
-
+          
           if (topRecommendation) {
-            const spotlightResult = await careerSpotlight({ career: topRecommendation });
-            setSpotlight(spotlightResult);
+              const spotlightResult = await careerSpotlight({ career: topRecommendation });
+              setSpotlight(spotlightResult);
           }
+
         } catch (err) {
           console.error('Failed to get recommendations:', err);
           setError('Our AI is a bit busy right now. Please try again in a moment.');
-        } finally {
           setLoading(false);
         }
         return;
@@ -264,7 +266,7 @@ export default function DashboardPage() {
                 </Card>
             )}
 
-            {spotlight && (
+            {spotlight ? (
                 <Card className="shadow-lg animate-float-up" style={{animationDelay: '0.2s'}}>
                     <CardHeader>
                         <CardTitle className="text-primary text-2xl font-bold">Career Spotlight: {spotlight.title}</CardTitle>
@@ -290,6 +292,16 @@ export default function DashboardPage() {
                                 <p className="text-2xl font-bold text-primary">{spotlight.averageSalary}</p>
                             </div>
                         </div>
+                    </CardContent>
+                </Card>
+            ) : (
+                 <Card className="shadow-lg animate-float-up" style={{animationDelay: '0.2s'}}>
+                    <CardHeader>
+                        <CardTitle className="text-primary text-2xl font-bold">Career Spotlight</CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex items-center justify-center h-40">
+                       <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                       <p className="ml-4 text-muted-foreground">Loading spotlight...</p>
                     </CardContent>
                 </Card>
             )}
