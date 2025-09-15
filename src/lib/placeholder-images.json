@@ -2,32 +2,32 @@
   "placeholderImages": [
     {
       "id": "hero-1",
-      "description": "A focused student taking an online assessment on a laptop in a modern, well-lit room, with icons representing different career fields floating around them.",
-      "imageUrl": "https://picsum.photos/seed/assessment/1920/1080",
-      "imageHint": "student assessment"
+      "description": "Students taking an exam in a classroom in Jammu",
+      "imageUrl": "https://picsum.photos/seed/jkexam/1920/1080",
+      "imageHint": "students exam"
     },
     {
       "id": "hero-2",
-      "description": "A diverse group of smiling graduates in caps and gowns, celebrating their achievement on their university campus.",
-      "imageUrl": "https://picsum.photos/seed/graduates/1920/1080",
-      "imageHint": "happy graduates"
+      "description": "Graduates celebrating at the University of Kashmir",
+      "imageUrl": "https://picsum.photos/seed/jkgraduates/1920/1080",
+      "imageHint": "Kashmir graduates"
     },
     {
       "id": "hero-3",
-      "description": "A young student looking thoughtfully at a large, interactive screen displaying a complex career roadmap with various branching paths.",
-      "imageUrl": "https://picsum.photos/seed/careerpath/1920/1080",
+      "description": "A student looking at a digital map showing career paths across Jammu and Kashmir",
+      "imageUrl": "https://picsum.photos/seed/jkcareerpath/1920/1080",
       "imageHint": "digital roadmap"
     },
     {
       "id": "hero-4",
-      "description": "A close-up of a hand pointing to a specific government college on a digital map application on a tablet.",
-      "imageUrl": "https://picsum.photos/seed/digitalmap/1920/1080",
+      "description": "A student pointing to a college located in Srinagar on a tablet map.",
+      "imageUrl": "https://picsum.photos/seed/srinagarmap/1920/1080",
       "imageHint": "interactive map"
     },
     {
       "id": "hero-5",
-      "description": "A student using a calendar app on their phone, with reminders and notifications for exam dates and application deadlines.",
-      "imageUrl": "https://picsum.photos/seed/deadlines/1920/1080",
+      "description": "A phone screen showing notifications for university deadlines in Jammu.",
+      "imageUrl": "https://picsum.photos/seed/jkdeadlines/1920/1080",
       "imageHint": "student calendar"
     }
   ]

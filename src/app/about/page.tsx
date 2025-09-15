@@ -7,29 +7,29 @@ export default function AboutPage() {
     <div className="container mx-auto px-4 py-16 lg:py-24">
       <section className="text-center mb-16">
         <h1 className="font-headline text-4xl md:text-5xl font-bold text-primary">
-          About EduCareer Compass
+          About J&K Career Portal
         </h1>
         <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
-          Empowering students to navigate their future with clarity and confidence.
+          Empowering the students of Jammu and Kashmir to build a bright future.
         </p>
       </section>
 
       <section className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
         <div className="relative h-80 rounded-lg overflow-hidden shadow-lg">
           <Image
-            src="https://picsum.photos/seed/teamwork/800/600"
-            alt="A diverse team collaborating"
+            src="https://picsum.photos/seed/jkstudents/800/600"
+            alt="Students from Jammu and Kashmir"
             fill
             className="object-cover"
-            data-ai-hint="diverse team collaboration"
+            data-ai-hint="Kashmir students"
           />
         </div>
         <div>
           <h2 className="font-headline text-3xl font-bold mb-4">Our Story</h2>
           <p className="text-muted-foreground leading-relaxed">
-            EduCareer Compass was born from a simple yet powerful idea: to bridge the awareness gap that prevents countless students from making informed decisions about their education and career. We noticed a decline in government college enrollment, not due to a lack of resources, but due to a lack of guidance. Students and parents were often confused about the value of a degree, the variety of career paths available, and how to choose a stream that aligns with their passion.
+            The J&K Career Portal was established by the Government of Jammu and Kashmir to address the critical need for career guidance among our students. We aim to bridge the information gap, making students and parents aware of the diverse educational and career opportunities available within the Union Territory and across India.
             <br /><br />
-            We decided to build a digital guidance platform to serve as a one-stop, personalized advisor for every student, regardless of their background or location.
+            Our mission is to provide a one-stop, personalized digital advisor for every student, ensuring they can make informed decisions that align with their passions and the future of our region.
           </p>
         </div>
       </section>
@@ -46,7 +46,7 @@ export default function AboutPage() {
                 </CardHeader>
                 <CardContent>
                     <p className="text-muted-foreground">
-                        To empower every student with personalized, accessible, and reliable information, helping them to discover their potential, make informed academic choices, and successfully transition into a fulfilling career. We aim to make quality guidance a right, not a privilege.
+                        To empower every student in Jammu and Kashmir with personalized, accessible, and reliable information, helping them to discover their potential, make informed academic choices, and successfully transition into a fulfilling career.
                     </p>
                 </CardContent>
             </Card>
@@ -57,7 +57,7 @@ export default function AboutPage() {
                 </CardHeader>
                 <CardContent>
                     <p className="text-muted-foreground">
-                        To build a future where every student has the clarity and confidence to pursue their dreams. We envision a world where government colleges are recognized as vibrant hubs for building successful careers, and no student is left behind due to a lack of guidance.
+                        To build a future where every student in Jammu and Kashmir has the clarity and confidence to pursue their dreams, contributing to the growth and prosperity of our region and the nation.
                     </p>
                 </CardContent>
             </Card>

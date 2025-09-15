@@ -1,4 +1,4 @@
-import { BookOpenCheck, Github, Twitter, Linkedin } from 'lucide-react';
+import { Landmark, Github, Twitter, Linkedin } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Footer() {
@@ -8,11 +8,11 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-1">
             <Link href="/" className="flex items-center space-x-2 mb-4">
-              <BookOpenCheck className="h-8 w-8 text-primary" />
-              <span className="font-bold font-headline text-xl">EduCareer Compass</span>
+              <Landmark className="h-8 w-8 text-primary" />
+              <span className="font-bold font-headline text-xl">J&K Career Portal</span>
             </Link>
             <p className="text-sm text-muted-foreground">
-              Your personal guide to a successful career and education journey.
+              Empowering the youth of Jammu and Kashmir.
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 md:col-span-3 gap-8">
@@ -42,7 +42,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-8 pt-8 border-t flex flex-col sm:flex-row justify-between items-center">
-          <p className="text-sm text-muted-foreground">&copy; {new Date().getFullYear()} EduCareer Compass. All rights reserved.</p>
+          <p className="text-sm text-muted-foreground">&copy; {new Date().getFullYear()} Government of Jammu and Kashmir. All rights reserved.</p>
           <div className="flex space-x-4 mt-4 sm:mt-0">
             <Link href="#" className="text-muted-foreground hover:text-primary transition-colors"><Github className="h-5 w-5" /></Link>
             <Link href="#" className="text-muted-foreground hover:text-primary transition-colors"><Twitter className="h-5 w-5" /></Link>

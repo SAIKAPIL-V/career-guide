@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { BookOpenCheck, Menu, X } from 'lucide-react';
+import { BookOpenCheck, Menu, X, Landmark } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { cn } from '@/lib/utils';
@@ -31,7 +31,6 @@ export default function Header() {
   }
 
   const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    // Prevent navigation from auth pages if not logged in
     if (isAuthPage && !user) {
       e.preventDefault();
       return;
@@ -44,9 +43,9 @@ export default function Header() {
       <div className="container flex h-20 items-center">
         <div className="flex items-center space-x-2">
             <Link href="/" className="flex items-center space-x-2" onClick={handleLogoClick}>
-              <BookOpenCheck className="h-8 w-8 text-primary" />
+              <Landmark className="h-8 w-8 text-primary" />
               <span className="font-bold text-xl sm:inline-block">
-                  EduCareer Compass
+                  J&K Career Portal
               </span>
             </Link>
         </div>
@@ -88,8 +87,8 @@ export default function Header() {
                   <div className="flex flex-col h-full">
                       <div className="flex items-center justify-between p-4 border-b">
                       <div className="flex items-center space-x-2">
-                          <BookOpenCheck className="h-6 w-6 text-primary" />
-                          <span className="font-bold text-lg">EduCareer Compass</span>
+                          <Landmark className="h-6 w-6 text-primary" />
+                          <span className="font-bold text-lg">J&K Career Portal</span>
                       </div>
                       <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)}>
                           <X className="h-6 w-6" />
