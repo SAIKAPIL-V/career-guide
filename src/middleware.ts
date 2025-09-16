@@ -9,9 +9,9 @@ export function middleware(request: NextRequest) {
   const protectedPaths = ['/dashboard', '/assessment', '/careers', '/find-colleges', '/notifications'];
   const publicOnlyPaths = ['/login', '/signup'];
 
-  // If user is logged in and trying to access the home page, redirect to dashboard
-  if (userLoggedIn && pathname === '/') {
-    return NextResponse.redirect(new URL('/dashboard', request.url));
+  // If user is not logged in and trying to access the home page, redirect to login
+  if (!userLoggedIn && pathname === '/') {
+    return NextResponse.redirect(new URL('/login', request.url));
   }
   
   // If user is logged in and tries to access login or signup, redirect to dashboard
