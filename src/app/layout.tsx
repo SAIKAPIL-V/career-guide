@@ -20,8 +20,8 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: 'CareerCompass - Government of Jammu and Kashmir',
-  description: 'Official career and education guidance portal for students of Jammu and Kashmir. Discover your path with AI-powered assessments, course-to-career mapping, and a comprehensive college directory.',
+  title: 'CareerCompass - An Initiative by the Government of Jammu and Kashmir',
+  description: 'An official career and education guidance portal by the Govt. of J&K for students across India. Discover your path with AI-powered assessments, course-to-career mapping, and a comprehensive college directory.',
   icons: {
     icon: '/favicon.ico',
   }
