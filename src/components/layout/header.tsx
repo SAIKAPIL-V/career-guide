@@ -53,7 +53,7 @@ export default function Header() {
       <div className="container flex h-20 items-center">
         <div className="mr-4 flex items-center">
             <Link href="/" className="flex items-center space-x-4">
-              <Image src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Government_of_India_logo.svg/1200px-Government_of_India_logo.svg.png" alt="Government of India Emblem" width={50} height={50} />
+              <Image src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Government_of_India_logo.svg/1200px-Government_of_India_logo.svg.png" alt="Government of India Emblem" width={60} height={60} />
               <div className='flex flex-col'>
                 <span className="font-bold text-xl leading-tight sm:inline-block">
                     CareerCompass
