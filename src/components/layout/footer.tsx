@@ -1,5 +1,4 @@
 'use client';
-import { Github, Twitter, Linkedin } from 'lucide-react';
 import Link from 'next/link';
 import EmblemLogo from './emblem-logo';
 import { useAuth } from '@/context/auth-context';
@@ -41,13 +40,6 @@ export default function Footer() {
                 <li><Link href="/contact" className="text-sm hover:text-primary transition-colors">Contact</Link></li>
               </ul>
             </div>
-          </div>
-        </div>
-        <div className="mt-8 pt-8 border-t flex sm:flex-row justify-end items-center">
-          <div className="flex space-x-4 mt-4 sm:mt-0">
-            <Link href="#" className="text-muted-foreground hover:text-primary transition-colors"><Github className="h-5 w-5" /></Link>
-            <Link href="#" className="text-muted-foreground hover:text-primary transition-colors"><Twitter className="h-5 w-5" /></Link>
-            <Link href="#" className="text-muted-foreground hover:text-primary transition-colors"><Linkedin className="h-5 w-5" /></Link>
           </div>
         </div>
       </div>
