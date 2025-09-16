@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/context/auth-context';
 import EmblemLogo from './emblem-logo';
-import GovtIndiaLogo from './govt-india-logo';
+import Image from 'next/image';
 
 const navItems = [
   { label: 'Home', href: '/' },
@@ -54,7 +54,7 @@ export default function Header() {
       <div className="container flex h-20 items-center">
         <div className="mr-4 flex items-center">
             <Link href="/" className="flex items-center space-x-4">
-              <GovtIndiaLogo className="h-12 w-12" />
+              <Image src="https://i.pinimg.com/736x/37/42/bc/3742bcd3b4b5d471dae27a60bd4b5f07.jpg" alt="Government of India Emblem" width={48} height={48} />
               <div className="h-10 w-px bg-border"></div>
               <EmblemLogo className="h-10 w-10 text-primary" />
               <div className='flex flex-col'>
@@ -112,7 +112,7 @@ export default function Header() {
                   <div className="flex flex-col h-full">
                       <div className="flex items-center justify-between p-4 border-b">
                         <Link href="/" className="flex items-center space-x-2" onClick={handleLinkClick('/')}>
-                            <GovtIndiaLogo className="h-10 w-10" />
+                            <Image src="https://i.pinimg.com/736x/37/42/bc/3742bcd3b4b5d471dae27a60bd4b5f07.jpg" alt="Government of India Emblem" width={40} height={40} />
                             <div className="h-8 w-px bg-border"></div>
                             <EmblemLogo className="h-8 w-8 text-primary" />
                             <div className='flex flex-col'>
