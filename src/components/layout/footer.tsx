@@ -41,17 +41,9 @@ export default function Footer() {
                 <li><Link href="/contact" className="text-sm hover:text-primary transition-colors">Contact</Link></li>
               </ul>
             </div>
-            <div>
-              <h3 className="font-headline font-semibold mb-4">Legal</h3>
-              <ul className="space-y-2">
-                <li><Link href="/privacy" className="text-sm hover:text-primary transition-colors">Privacy Policy</Link></li>
-                <li><Link href="/terms" className="text-sm hover:text-primary transition-colors">Terms of Service</Link></li>
-              </ul>
-            </div>
           </div>
         </div>
-        <div className="mt-8 pt-8 border-t flex flex-col sm:flex-row justify-between items-center">
-          <p className="text-sm text-muted-foreground">&copy; {new Date().getFullYear()} Government of Jammu and Kashmir. All rights reserved.</p>
+        <div className="mt-8 pt-8 border-t flex sm:flex-row justify-end items-center">
           <div className="flex space-x-4 mt-4 sm:mt-0">
             <Link href="#" className="text-muted-foreground hover:text-primary transition-colors"><Github className="h-5 w-5" /></Link>
             <Link href="#" className="text-muted-foreground hover:text-primary transition-colors"><Twitter className="h-5 w-5" /></Link>
