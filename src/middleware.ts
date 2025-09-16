@@ -6,20 +6,22 @@ export function middleware(request: NextRequest) {
   const userLoggedIn = request.cookies.get('userLoggedIn')?.value === 'true';
   const { pathname } = request.nextUrl;
 
-  const publicPaths = ['/login', '/signup', '/about', '/contact'];
+  const protectedPaths = ['/dashboard', '/assessment', '/careers', '/find-colleges', '/notifications'];
+  const publicOnlyPaths = ['/login', '/signup'];
 
-  // If user is not logged in and is trying to access a protected route, redirect to login
-  if (!userLoggedIn && !publicPaths.includes(pathname)) {
-    // Allow access to public pages without login
-    const isPublic = publicPaths.some(publicPath => pathname.startsWith(publicPath));
-    if (!isPublic) {
-        return NextResponse.redirect(new URL('/login', request.url));
-    }
+  // If user is logged in and trying to access the home page, redirect to dashboard
+  if (userLoggedIn && pathname === '/') {
+    return NextResponse.redirect(new URL('/dashboard', request.url));
+  }
+  
+  // If user is logged in and tries to access login or signup, redirect to dashboard
+  if (userLoggedIn && publicOnlyPaths.includes(pathname)) {
+    return NextResponse.redirect(new URL('/dashboard', request.url));
   }
 
-  // If user is logged in and tries to access login or signup, redirect to home
-  if (userLoggedIn && (pathname === '/login' || pathname === '/signup')) {
-    return NextResponse.redirect(new URL('/', request.url));
+  // If user is not logged in and is trying to access a protected route, redirect to login
+  if (!userLoggedIn && protectedPaths.some(path => pathname.startsWith(path))) {
+    return NextResponse.redirect(new URL('/login', request.url));
   }
 
   return NextResponse.next();
