@@ -50,7 +50,7 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-header/95 backdrop-blur supports-[backdrop-filter]:bg-header/60">
-      <div className="container flex h-20 items-center">
+      <div className="container flex h-20 items-center px-0">
         <div className="mr-4 flex items-center">
             <Link href="/" className="flex items-center space-x-4">
               <Image src="https://i.pinimg.com/736x/37/42/bc/3742bcd3b4b5d471dae27a60bd4b5f07.jpg" alt="Government of India Emblem" width={40} height={40} />
