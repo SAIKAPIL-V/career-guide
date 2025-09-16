@@ -78,7 +78,7 @@ export default async function UniversityOfKashmirPage() {
                   <CardContent>
                       <div className="relative h-60 rounded-lg overflow-hidden shadow-md">
                           <Image
-                              src="https://picsum.photos/seed/kashmiruni/600/400"
+                              src="https://picsum.photos/seed/college6/600/400"
                               alt="University of Kashmir campus"
                               fill
                               className="object-cover"

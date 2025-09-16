@@ -78,7 +78,7 @@ export default async function NizamCollegePage() {
                   <CardContent>
                      <div className="relative h-60 rounded-lg overflow-hidden shadow-md">
                         <Image
-                            src="https://picsum.photos/seed/nizamcollege/600/400"
+                            src="https://picsum.photos/seed/college5/600/400"
                             alt="College campus"
                             fill
                             className="object-cover"

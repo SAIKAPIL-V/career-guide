@@ -3,31 +3,31 @@
     {
       "id": "hero-1",
       "description": "A diverse group of students collaborating over a laptop in a modern library.",
-      "imageUrl": "https://picsum.photos/seed/students-collaborating/1920/1080",
+      "imageUrl": "https://picsum.photos/seed/students1/1920/1080",
       "imageHint": "students learning"
     },
     {
       "id": "hero-2",
       "description": "A student smiling confidently, looking towards the future in a bright, outdoor setting.",
-      "imageUrl": "https://picsum.photos/seed/student-future/1920/1080",
+      "imageUrl": "https://picsum.photos/seed/students2/1920/1080",
       "imageHint": "student future"
     },
     {
       "id": "hero-3",
       "description": "An abstract visualization of a digital career path with glowing nodes and connections.",
-      "imageUrl": "https://picsum.photos/seed/digital-path/1920/1080",
+      "imageUrl": "https://picsum.photos/seed/students3/1920/1080",
       "imageHint": "career path"
     },
     {
       "id": "hero-4",
       "description": "A close-up of a student using a tablet to explore a college directory, with a campus in the background.",
-      "imageUrl": "https://picsum.photos/seed/college-search/1920/1080",
+      "imageUrl": "https://picsum.photos/seed/students4/1920/1080",
       "imageHint": "college search"
     },
     {
       "id": "hero-5",
       "description": "A split screen showing a student studying and a professional working in their field, representing the journey.",
-      "imageUrl": "https://picsum.photos/seed/student-journey/1920/1080",
+      "imageUrl": "https://picsum.photos/seed/students5/1920/1080",
       "imageHint": "student journey"
     }
   ]

@@ -77,7 +77,7 @@ export default async function NITSrinagarPage() {
                   <CardContent>
                       <div className="relative h-60 rounded-lg overflow-hidden shadow-md">
                           <Image
-                              src="https://picsum.photos/seed/nitsrinagar/600/400"
+                              src="https://picsum.photos/seed/college4/600/400"
                               alt="NIT Srinagar campus"
                               fill
                               className="object-cover"

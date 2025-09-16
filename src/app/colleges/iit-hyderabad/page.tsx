@@ -77,7 +77,7 @@ export default async function IITHyderabadPage() {
                   <CardContent>
                       <div className="relative h-60 rounded-lg overflow-hidden shadow-md">
                           <Image
-                              src="https://picsum.photos/seed/iith/600/400"
+                              src="https://picsum.photos/seed/college3/600/400"
                               alt="IIT campus"
                               fill
                               className="object-cover"
