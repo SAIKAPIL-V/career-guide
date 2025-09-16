@@ -14,6 +14,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'www.logopeople.in',
       },
+      {
+        protocol: 'https',
+        hostname: 'i.pinimg.com',
+      },
     ],
   },
   experimental: {

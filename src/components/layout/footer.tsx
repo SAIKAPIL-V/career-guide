@@ -11,7 +11,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-1">
             <Link href="/" className="flex items-center space-x-2 mb-4">
-              <Image src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Emblem_of_India_with_transparent_background.png" alt="Government of India Emblem" width={40} height={40} />
+              <Image src="https://i.pinimg.com/736x/37/42/bc/3742bcd3b4b5d471dae27a60bd4b5f07.jpg" alt="Government of India Emblem" width={40} height={40} />
               <div className="flex flex-col">
                  <span className="font-bold font-headline text-xl leading-tight">CareerCompass</span>
                  <span className="text-xs text-muted-foreground font-semibold leading-tight">An Initiative by Govt. of J&K</span>
