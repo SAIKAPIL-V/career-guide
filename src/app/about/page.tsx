@@ -19,11 +19,11 @@ export default function AboutPage() {
       <section className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
         <div className="relative h-80 rounded-lg overflow-hidden shadow-lg">
           <Image
-            src="https://picsum.photos/seed/jkstudents/800/600"
-            alt="Students from Jammu and Kashmir"
+            src="https://picsum.photos/seed/students-future/800/600"
+            alt="Students planning their future"
             fill
             className="object-cover"
-            data-ai-hint="Kashmir students"
+            data-ai-hint="students technology"
           />
         </div>
         <div>

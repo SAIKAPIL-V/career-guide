@@ -2,33 +2,33 @@
   "placeholderImages": [
     {
       "id": "hero-1",
-      "description": "Students taking an exam in a classroom in Jammu",
-      "imageUrl": "https://picsum.photos/seed/jkexam/1920/1080",
-      "imageHint": "students exam"
+      "description": "A diverse group of students collaborating over a laptop in a modern library.",
+      "imageUrl": "https://picsum.photos/seed/students-collaborating/1920/1080",
+      "imageHint": "students learning"
     },
     {
       "id": "hero-2",
-      "description": "Graduates celebrating at the University of Kashmir",
-      "imageUrl": "https://picsum.photos/seed/jkgraduates/1920/1080",
-      "imageHint": "Kashmir graduates"
+      "description": "A student smiling confidently, looking towards the future in a bright, outdoor setting.",
+      "imageUrl": "https://picsum.photos/seed/student-future/1920/1080",
+      "imageHint": "student future"
     },
     {
       "id": "hero-3",
-      "description": "A student looking at a digital map showing career paths across Jammu and Kashmir",
-      "imageUrl": "https://picsum.photos/seed/jkcareerpath/1920/1080",
-      "imageHint": "digital roadmap"
+      "description": "An abstract visualization of a digital career path with glowing nodes and connections.",
+      "imageUrl": "https://picsum.photos/seed/digital-path/1920/1080",
+      "imageHint": "career path"
     },
     {
       "id": "hero-4",
-      "description": "A student pointing to a college located in Srinagar on a tablet map.",
-      "imageUrl": "https://picsum.photos/seed/srinagarmap/1920/1080",
-      "imageHint": "interactive map"
+      "description": "A close-up of a student using a tablet to explore a college directory, with a campus in the background.",
+      "imageUrl": "https://picsum.photos/seed/college-search/1920/1080",
+      "imageHint": "college search"
     },
     {
       "id": "hero-5",
-      "description": "A phone screen showing notifications for university deadlines in Jammu.",
-      "imageUrl": "https://picsum.photos/seed/jkdeadlines/1920/1080",
-      "imageHint": "student calendar"
+      "description": "A split screen showing a student studying and a professional working in their field, representing the journey.",
+      "imageUrl": "https://picsum.photos/seed/student-journey/1920/1080",
+      "imageHint": "student journey"
     }
   ]
 }
