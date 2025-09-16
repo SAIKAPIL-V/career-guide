@@ -8,7 +8,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'i.pinimg.com',
+        hostname: 'upload.wikimedia.org',
       },
     ],
   },
