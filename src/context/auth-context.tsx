@@ -12,6 +12,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
   type User,
 } from 'firebase/auth';
 import { doc, setDoc, getDoc, type Firestore } from 'firebase/firestore';
@@ -38,7 +39,7 @@ const setCookie = (name: string, value: string, days: number) => {
   let expires = '';
   if (days) {
     const date = new Date();
-    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
     expires = '; expires=' + date.toUTCString();
   }
   if (typeof window !== 'undefined') {
@@ -83,11 +84,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       password
     );
     const user = userCredential.user;
+    
+    // Set display name in Firebase Auth
+    await updateProfile(user, {
+        displayName: `${details.firstName} ${details.lastName}`
+    });
+    
+    // Save user details to Firestore
     await setDoc(doc(db, 'users', user.uid), {
       uid: user.uid,
       email: user.email,
       firstName: details.firstName,
       lastName: details.lastName,
+      displayName: `${details.firstName} ${details.lastName}`,
       createdAt: new Date(),
     });
     
