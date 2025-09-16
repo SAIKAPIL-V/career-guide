@@ -10,13 +10,18 @@ const nextConfig = {
   },
   experimental: {
     serverComponentsExternalPackages: [
+      '@genkit-ai/ai',
+      '@genkit-ai/core',
       '@genkit-ai/googleai',
       '@google/generative-ai',
       '@opentelemetry/api',
       '@opentelemetry/sdk-trace-base',
       '@opentelemetry/sdk-trace-node',
       '@opentelemetry/exporter-trace-otlp-http',
-      'handlebars'
+      'firebase-admin',
+      'long',
+      'protobufjs',
+      'handlebars',
     ],
   },
 };
