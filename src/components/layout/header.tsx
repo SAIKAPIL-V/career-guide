@@ -50,15 +50,15 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-header/95 backdrop-blur supports-[backdrop-filter]:bg-header/60">
-      <div className="container flex h-20 items-center px-0">
+      <div className="container flex h-20 items-center">
         <div className="mr-4 flex items-center">
             <Link href="/" className="flex items-center space-x-4">
-              <Image src="https://i.pinimg.com/736x/37/42/bc/3742bcd3b4b5d471dae27a60bd4b5f07.jpg" alt="Government of India Emblem" width={40} height={40} />
+              <Image src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Emblem_of_India_with_transparent_background.png" alt="Government of India Emblem" width={40} height={40} />
               <div className='flex flex-col'>
                 <span className="font-bold text-xl leading-tight sm:inline-block">
                     CareerCompass
                 </span>
-                <span className="text-xs text-muted-foreground font-semibold leading-tight">An Initiative by Govt. of J&K</span>
+                <span className="text-xs text-muted-foreground font-semibold leading-tight">An Initiative by Govt. of J&K for all students</span>
               </div>
             </Link>
         </div>
@@ -109,12 +109,12 @@ export default function Header() {
                   <div className="flex flex-col h-full">
                       <div className="flex items-center justify-between p-4 border-b">
                         <Link href="/" className="flex items-center space-x-2" onClick={handleLinkClick('/')}>
-                            <Image src="https://i.pinimg.com/736x/37/42/bc/3742bcd3b4b5d471dae27a60bd4b5f07.jpg" alt="Government of India Emblem" width={32} height={32} />
+                            <Image src="https://upload.wikimedia.org/wikipedia/commons/b/b4/Emblem_of_India_with_transparent_background.png" alt="Government of India Emblem" width={32} height={32} />
                             <div className='flex flex-col'>
                                 <span className="font-bold text-lg leading-tight sm:inline-block">
                                     CareerCompass
                                 </span>
-                                <span className="text-xs text-muted-foreground font-semibold leading-tight">An Initiative by Govt. of J&K</span>
+                                <span className="text-xs text-muted-foreground font-semibold leading-tight">An Initiative by Govt. of J&K for all students</span>
                             </div>
                         </Link>
                       <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)}>
