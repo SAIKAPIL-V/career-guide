@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils';
 import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/context/auth-context';
 import EmblemLogo from './emblem-logo';
+import GovtIndiaLogo from './govt-india-logo';
 
 const navItems = [
   { label: 'Home', href: '/' },
@@ -52,7 +53,9 @@ export default function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-header/95 backdrop-blur supports-[backdrop-filter]:bg-header/60">
       <div className="container flex h-20 items-center">
         <div className="mr-4 flex items-center">
-            <Link href="/" className="flex items-center space-x-2">
+            <Link href="/" className="flex items-center space-x-4">
+              <GovtIndiaLogo className="h-12 w-12" />
+              <div className="h-10 w-px bg-border"></div>
               <EmblemLogo className="h-10 w-10 text-primary" />
               <div className='flex flex-col'>
                 <span className="font-bold text-xl leading-tight sm:inline-block">
@@ -109,6 +112,8 @@ export default function Header() {
                   <div className="flex flex-col h-full">
                       <div className="flex items-center justify-between p-4 border-b">
                         <Link href="/" className="flex items-center space-x-2" onClick={handleLinkClick('/')}>
+                            <GovtIndiaLogo className="h-10 w-10" />
+                            <div className="h-8 w-px bg-border"></div>
                             <EmblemLogo className="h-8 w-8 text-primary" />
                             <div className='flex flex-col'>
                                 <span className="font-bold text-lg leading-tight sm:inline-block">
