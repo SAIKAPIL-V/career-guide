@@ -31,9 +31,17 @@ export default function SignupPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!firstName || !lastName) {
+      toast({
+        variant: "destructive",
+        title: "Missing Information",
+        description: "Please enter your first and last name.",
+      });
+      return;
+    }
     setLoading(true);
     try {
-      await signup(email, password, {firstName, lastName});
+      await signup(email, password, { firstName, lastName });
       toast({
         title: "Account Created!",
         description: "You have successfully signed up. Welcome!",
