@@ -1,7 +1,8 @@
 // lib/firebase.ts
 import { initializeApp, getApps, getApp, type FirebaseApp } from 'firebase/app';
 import { getAuth, type Auth } from 'firebase/auth';
-import { getFirestore, type Firestore, enableIndexedDbPersistence, initializeFirestore } from 'firebase/firestore';
+import { getFirestore, type Firestore, enableIndexedDbPersistence } from 'firebase/firestore';
+import { initializeAppCheck, ReCaptchaV3Provider, getToken, type AppCheck } from 'firebase/app-check';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -13,13 +14,18 @@ const firebaseConfig = {
   appId: "1:84236984952:web:114dd3feb377fca338038d"
 };
 
-
 // Initialize Firebase
 const app: FirebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
 const auth: Auth = getAuth(app);
 const db: Firestore = getFirestore(app);
 
+let appCheck: AppCheck | undefined;
 if (typeof window !== 'undefined') {
+  appCheck = initializeAppCheck(app, {
+    provider: new ReCaptchaV3Provider(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!),
+    isTokenAutoRefreshEnabled: true
+  });
+
   enableIndexedDbPersistence(db)
   .catch((err) => {
       if (err.code == 'failed-precondition') {
@@ -34,5 +40,4 @@ if (typeof window !== 'undefined') {
   });
 }
 
-
-export { app, auth, db };
+export { app, auth, db, appCheck, getToken };
