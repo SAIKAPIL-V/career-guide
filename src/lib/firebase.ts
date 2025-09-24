@@ -2,16 +2,16 @@
 import { initializeApp, getApps, getApp, type FirebaseApp } from 'firebase/app';
 import { getAuth, type Auth } from 'firebase/auth';
 import { getFirestore, type Firestore, enableIndexedDbPersistence } from 'firebase/firestore';
-import { initializeAppCheck, ReCaptchaV3Provider, getToken, type AppCheck } from 'firebase/app-check';
+import { type AppCheck } from 'firebase/app-check';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyANKQfL37GKDMkyhGU4COg_oQpRQibiiao",
-  authDomain: "studio-2525731056-d1386.firebaseapp.com",
-  projectId: "studio-2525731056-d1386",
-  storageBucket: "studio-2525731056-d1386.appspot.com",
-  messagingSenderId: "84236984952",
-  appId: "1:84236984952:web:114dd3feb377fca338038d"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
 };
 
 // Initialize Firebase
@@ -21,11 +21,6 @@ const db: Firestore = getFirestore(app);
 
 let appCheck: AppCheck | undefined;
 if (typeof window !== 'undefined') {
-  appCheck = initializeAppCheck(app, {
-    provider: new ReCaptchaV3Provider(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!),
-    isTokenAutoRefreshEnabled: true
-  });
-
   enableIndexedDbPersistence(db)
   .catch((err) => {
       if (err.code == 'failed-precondition') {
@@ -40,4 +35,4 @@ if (typeof window !== 'undefined') {
   });
 }
 
-export { app, auth, db, appCheck, getToken };
+export { app, auth, db, appCheck };

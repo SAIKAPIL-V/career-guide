@@ -17,7 +17,6 @@ import { Loader2, Eye, EyeOff } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/auth-context';
-import { appCheck, getToken } from '@/lib/firebase';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -32,9 +31,6 @@ export default function LoginPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      if (appCheck) {
-        await getToken(appCheck, /* forceRefresh= */ false);
-      }
       await login(email, password);
       router.push('/dashboard');
     } catch (error: any) {
@@ -42,7 +38,7 @@ export default function LoginPage() {
       toast({
         variant: 'destructive',
         title: 'Login Failed',
-        description: 'Please check your credentials and try again. You may need to verify you are not a robot.',
+        description: 'Please check your credentials and try again.',
       });
     } finally {
       setLoading(false);
