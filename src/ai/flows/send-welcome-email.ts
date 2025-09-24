@@ -61,7 +61,7 @@ const sendWelcomeEmailFlow = ai.defineFlow(
     // For now, we just generate the content and log it.
     const email = await emailPrompt(input);
     console.log('--- Sending Welcome Email ---');
-    console.log(await email.text());
+    console.log(email.text);
     console.log('-----------------------------');
   }
 );
