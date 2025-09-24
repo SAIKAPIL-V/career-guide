@@ -32,7 +32,7 @@ export default function LoginPage() {
     setLoading(true);
     try {
       await login(email, password);
-      router.push('/dashboard');
+      router.push('/');
     } catch (error: any) {
       console.error(error);
       toast({
